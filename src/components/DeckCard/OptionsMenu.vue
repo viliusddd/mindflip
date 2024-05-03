@@ -1,38 +1,50 @@
-<script setup>
+<script setup lang="ts">
 import {ref} from 'vue'
-import {items} from './consts.ts'
-import {useDeckStore} from '@/stores/DeckStore.ts'
+import {items} from './consts'
+import {useDeckStore} from '@/stores/DeckStore'
+
+import type {Card, Deck} from '@/stores/DeckStore'
+import type {OptionsItem} from './consts'
 
 const deckStore = useDeckStore()
 
 const props = defineProps({
-  id: Number
+  id: {
+    type: Number,
+    required: true
+  }
 })
 
 const menu = ref()
 
-const toggleMenu = event => {
-  menu.value.toggle(event)
+const toggleMenu = (evt: Event): void => {
+  menu.value.toggle(evt)
 }
 
 function deleteDeck() {
-  deckStore.decks = deckStore.decks.filter(obj => obj.id !== props.id)
+  deckStore.decks = deckStore.decks.filter((obj) => obj.id !== props.id)
 }
 
 function resetStats() {
-  deckStore.decks[props.id].cards.forEach(card => {
-    card.isDifficult = false
-    card.isLearned = false
-    card.isReadyForReview = false
+  deckStore.decks[props.id].cards.forEach((card: Card) => {
+    card.status = 'new'
   })
 }
 
 function toggleVisibility() {
-  const deck = deckStore.decks.find(obj => obj.id === props.id)
-  deck.isHidden = !deck.isHidden
+  const deck: Deck | undefined = deckStore.decks.find(
+    (obj) => obj.id === props.id
+  )
+  if (deck) deck.isHidden = !deck.isHidden
 }
 
-const menuMap = {
+type MenuMap = {
+  toggle: () => void
+  reset: () => void
+  delete: () => void
+}
+
+const menuMap: MenuMap = {
   toggle: () => toggleVisibility(),
   reset: () => resetStats(),
   delete: () => deleteDeck()
@@ -51,7 +63,7 @@ const menuMap = {
     aria-controls="overlay_menu"
   />
   <PMenu ref="menu" id="overlay_menu" :model="items" :popup="true">
-    <template #item="{item, props}">
+    <template #item="{item, props}: {item: OptionsItem; props: any}">
       <router-link
         v-if="item.name === 'edit'"
         #="{navigate}"

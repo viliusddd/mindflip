@@ -1,4 +1,15 @@
-export const items = [
+export type OptionsItem = {
+  name: string
+  label: string
+  icon: string
+}
+
+export type OptionsItems = {
+  label: string
+  items: OptionsItem[]
+}
+
+export const items: OptionsItems[] = [
   {
     label: 'Options',
     items: [

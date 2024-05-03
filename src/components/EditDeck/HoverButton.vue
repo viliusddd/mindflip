@@ -1,13 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import {ref} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 
 const props = defineProps({
   id: {
-    type: Number
+    type: Number,
+    required: true
   },
   attribute: {
-    type: String
+    type: String,
+    required: true
   },
   size: {
     type: String,
@@ -26,7 +28,7 @@ const editable = ref(false)
 const bold = props.isBold ? 'bold' : 'regular'
 
 const vFocus = {
-  mounted: elm => elm.focus()
+  mounted: (elm: HTMLElement) => elm.focus()
 }
 </script>
 

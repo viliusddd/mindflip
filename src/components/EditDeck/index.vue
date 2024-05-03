@@ -1,23 +1,28 @@
-<script setup>
+<script setup lang="ts">
 import {FilterMatchMode} from 'primevue/api'
 import {ref, computed, onMounted} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 import {useTitle} from '@vueuse/core'
 import Papa from 'papaparse'
 import HoverButton from './HoverButton.vue'
+import type {ComputedRef} from 'vue'
+import type {Card, Deck} from '@/stores/DeckStore'
+import type {FileUploadUploaderEvent} from 'primevue/fileupload'
 
 const props = defineProps({
   id: Number
 })
 
 const deckStore = useDeckStore()
-const deck = computed(() => deckStore.decks.find(obj => obj.id === props.id))
+const deck: ComputedRef<Deck> = computed(() =>
+  deckStore.decks.find((obj) => obj.id === props.id)
+)
 
-function updateCard(newCard) {
+function updateCard(newCard: Card) {
   for (let card of deck.value.cards) {
     if (card.name === newCard.name) {
       deck.value.cards = deck.value.cards.filter(
-        card => card.name !== newCard.name
+        (card) => card.name !== newCard.name
       )
       deck.value.cards.push(newCard)
       break
@@ -28,15 +33,15 @@ function updateCard(newCard) {
 const title = computed(() => `Edit: ${deck.value.name}`)
 useTitle(title)
 
-function onUpload(event) {
-  const file = event.files[0]
+function onUpload(event: FileUploadUploaderEvent) {
+  const file: any = event.files
   if (file) {
     const reader = new FileReader()
     reader.readAsText(file, 'UTF-8')
-    reader.onload = evt => {
-      const parsedData = Papa.parse(evt.target.result, {header: true})
+    reader.onload = (evt: Event) => {
+      const parsedData = Papa.parse(evt?.target.result, {header: true})
 
-      parsedData.data = parsedData.data.map(word => {
+      parsedData.data = parsedData.data.map((word) => {
         if (!word?.status) word.status = 'new'
         return word
       })
@@ -77,7 +82,7 @@ const saveCard = () => {
 
   if (card?.value.name?.trim()) {
     let existingCard = deck.value.cards.filter(
-      obj => obj.name === card.value.name
+      (obj) => obj.name === card.value.name
     )
     if (existingCard.length) {
       updateCard(card.value)
@@ -92,19 +97,19 @@ const saveCard = () => {
     card.value = {}
   }
 }
-const editCard = prod => {
+const editCard = (prod) => {
   card.value = {...prod}
   productDialog.value = true
 }
-const confirmDeleteCard = prod => {
+const confirmDeleteCard = (prod) => {
   card.value = prod
   deleteCardDialog.value = true
 }
 const deleteCard = () => {
   deck.value.cards = deck.value.cards.filter(
-    obj => obj.name !== card.value.name
+    (obj) => obj.name !== card.value.name
   )
-  cards.value = cards.value.filter(val => val.name !== card.value.name)
+  cards.value = cards.value.filter((val) => val.name !== card.value.name)
 
   deleteCardDialog.value = false
   card.value = {}
@@ -118,10 +123,10 @@ const confirmDeleteSelected = () => {
 }
 const deleteSelectedCards = () => {
   deck.value.cards = deck.value.cards.filter(
-    val => !selectedCards.value.includes(val)
+    (val) => !selectedCards.value.includes(val)
   )
 
-  cards.value = cards.value.filter(val => !selectedCards.value.includes(val))
+  cards.value = cards.value.filter((val) => !selectedCards.value.includes(val))
 
   deleteCardsDialog.value = false
   selectedCards.value = null

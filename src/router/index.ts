@@ -19,13 +19,13 @@ const routes = [
     path: '/deck/:id',
     name: 'Deck',
     component: () => import('@/components/TheCourse.vue'),
-    props: route => ({id: parseInt(route.params.id)})
+    props: (route) => ({id: parseInt(route.params.id)})
   },
   {
     path: '/deck/:id/edit',
     name: 'EditDeck',
     component: () => import('@/components/EditDeck/index.vue'),
-    props: route => ({id: parseInt(route.params.id)})
+    props: (route) => ({id: parseInt(route.params.id)})
   }
 ]
 

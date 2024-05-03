@@ -1,34 +1,34 @@
-<script setup>
+<script setup lang="ts">
 import {useDeckStore} from '@/stores/DeckStore'
 
 const deckStore = useDeckStore()
 
 const props = defineProps({
-  id: Number
+  id: {
+    type: Number,
+    required: true
+  }
 })
 
-const deck = deckStore.deck(props.id)
+const deckName = deckStore.deck(props.id)?.name
+const deckDesc = deckStore.deck(props.id)?.description
 </script>
 
 <template>
   <Inplace class="name__inplace" :closable="true">
     <template #display>
-      <span class="name__display">{{ deck.name }}</span>
+      <span class="name__display">{{ deckName }}</span>
     </template>
     <template #content>
-      <InputText class="name__content" v-model="deck.name" autofocus />
+      <InputText class="name__content" v-model="deckName" autofocus />
     </template>
   </Inplace>
   <Inplace class="description__inplace" :closable="true">
     <template #display>
-      <span class="description__display">{{ deck.description }}</span>
+      <span class="description__display">{{ deckDesc }}</span>
     </template>
     <template #content>
-      <PTextarea
-        class="description__content"
-        v-model="deck.description"
-        autofocus
-      />
+      <PTextarea class="description__content" v-model="deckDesc" autofocus />
     </template>
   </Inplace>
 </template>
