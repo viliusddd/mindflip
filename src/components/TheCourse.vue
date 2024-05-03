@@ -38,7 +38,7 @@ function goNextCard() {
   <div class="container">
     <header class="header">
       <div class="header__title">{{ deckStore.deck(id).name }}</div>
-      <Button
+      <PButton
         class="header__tooltip"
         icon="pi pi-info-circle"
         severity="info"
@@ -47,7 +47,7 @@ function goNextCard() {
         aria-label="Hotkeys info"
         v-tooltip.left="'Keyboard shortcuts'"
       />
-      <Button
+      <PButton
         icon="pi pi-times"
         @click="$router.go(-1)"
         style="font-size: 4rem; margin: 0px"
@@ -92,7 +92,7 @@ function goNextCard() {
               />
             </div>
           </div>
-          <Button
+          <PButton
             class="flashcard__button"
             severity="info"
             :label="buttonLabel"
@@ -103,13 +103,13 @@ function goNextCard() {
             @click="goNextCard"
           />
           <div class="flashcard__options">
-            <Button
+            <PButton
               icon="pi pi-bolt"
               rounded
               text
               v-tooltip.bottom="'Mark a word as difficult'"
             />
-            <Button
+            <PButton
               icon="pi pi-ban"
               rounded
               text
@@ -183,7 +183,7 @@ function goNextCard() {
   align-items: center;
   grid-area: button;
 }
-.flashcard__options > Button {
+.flashcard__options > PButton {
   flex-shrink: 0;
 }
 .flashcard__options {

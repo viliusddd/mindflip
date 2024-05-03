@@ -1,5 +1,5 @@
 <script setup>
-import { useDeckStore } from '@/stores/DeckStore'
+import {useDeckStore} from '@/stores/DeckStore'
 
 const deckStore = useDeckStore()
 
@@ -24,7 +24,11 @@ const deck = deckStore.deck(props.id)
       <span class="description__display">{{ deck.description }}</span>
     </template>
     <template #content>
-      <Textarea class="description__content" v-model="deck.description" autofocus />
+      <PTextarea
+        class="description__content"
+        v-model="deck.description"
+        autofocus
+      />
     </template>
   </Inplace>
 </template>

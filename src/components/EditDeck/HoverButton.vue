@@ -34,7 +34,7 @@ const vFocus = {
   <div>
     <div class="pencil__wrapper" v-if="!editable">
       <h2 class="resting-text">{{ deckStore.deck(id)[attribute] }}</h2>
-      <Button
+      <PButton
         class="icon"
         icon="pi pi-pencil"
         text
@@ -50,7 +50,7 @@ const vFocus = {
         @keyup.enter="editable = !editable"
         :placeholder="`${attribute}`"
       />
-      <Button
+      <PButton
         icon="pi pi-check"
         text
         @click="editable = !editable"

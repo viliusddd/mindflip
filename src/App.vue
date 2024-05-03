@@ -14,14 +14,14 @@ deckStore.fill()
       </RouterLink>
       <nav>
         <RouterLink to="/">
-          <Button text>Courses</Button>
+          <PButton label="Courses" text />
         </RouterLink>
         <RouterLink to="/create">
-          <Button text>Create a course</Button>
+          <PButton label="Create a course" text />
         </RouterLink>
       </nav>
       <div class="settings-button">
-        <Button
+        <PButton
           icon="pi pi-user-edit"
           severity="info"
           text

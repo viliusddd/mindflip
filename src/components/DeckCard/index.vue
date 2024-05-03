@@ -49,12 +49,12 @@ const difficultWords = ref(0)
             class="deck__button"
             :to="{name: 'Deck', params: {id: deck?.id}}"
           >
-            <Button
+            <PButton
               icon="pi pi-hammer"
               label="Learn new words"
               size="large"
               :raised="true"
-            ></Button>
+            />
           </RouterLink>
         </div>
       </div>

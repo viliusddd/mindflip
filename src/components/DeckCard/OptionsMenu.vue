@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue'
-import { items } from './consts.ts'
-import { useDeckStore } from '@/stores/DeckStore.ts'
+import {ref} from 'vue'
+import {items} from './consts.ts'
+import {useDeckStore} from '@/stores/DeckStore.ts'
 
 const deckStore = useDeckStore()
 
@@ -11,16 +11,16 @@ const props = defineProps({
 
 const menu = ref()
 
-const toggleMenu = (event) => {
+const toggleMenu = event => {
   menu.value.toggle(event)
 }
 
 function deleteDeck() {
-  deckStore.decks = deckStore.decks.filter((obj) => obj.id !== props.id)
+  deckStore.decks = deckStore.decks.filter(obj => obj.id !== props.id)
 }
 
 function resetStats() {
-  deckStore.decks[props.id].cards.forEach((card) => {
+  deckStore.decks[props.id].cards.forEach(card => {
     card.isDifficult = false
     card.isLearned = false
     card.isReadyForReview = false
@@ -28,7 +28,7 @@ function resetStats() {
 }
 
 function toggleVisibility() {
-  const deck = deckStore.decks.find((obj) => obj.id === props.id)
+  const deck = deckStore.decks.find(obj => obj.id === props.id)
   deck.isHidden = !deck.isHidden
 }
 
@@ -40,7 +40,7 @@ const menuMap = {
 </script>
 
 <template>
-  <Button
+  <PButton
     @click="toggleMenu"
     icon="pi pi-ellipsis-v"
     text
@@ -50,15 +50,15 @@ const menuMap = {
     aria-haspopup="true"
     aria-controls="overlay_menu"
   />
-  <Menu ref="menu" id="overlay_menu" :model="items" :popup="true">
-    <template #item="{ item, props }">
+  <PMenu ref="menu" id="overlay_menu" :model="items" :popup="true">
+    <template #item="{item, props}">
       <router-link
         v-if="item.name === 'edit'"
-        #="{ navigate }"
+        #="{navigate}"
         custom
         :to="{
           name: 'EditDeck',
-          params: { id }
+          params: {id}
         }"
       >
         <a href="" v-bind="props.action" @click="navigate">
@@ -73,11 +73,11 @@ const menuMap = {
         </span>
       </div>
     </template>
-  </Menu>
+  </PMenu>
 </template>
 
 <style scoped>
-Button {
+PButton {
   margin: 0 0 0 auto;
   height: 10px;
 }

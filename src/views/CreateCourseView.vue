@@ -56,7 +56,7 @@ function addNewDeck() {
         class="create-route"
         :to="{name: 'EditDeck', params: {id}}"
       >
-        <Button
+        <PButton
           class="create-btn"
           label="Create Course"
           type="submit"

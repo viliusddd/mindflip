@@ -143,14 +143,14 @@ const statuses = ref([
     <div class="card">
       <Toolbar class="mb-4">
         <template #start>
-          <Button
+          <PButton
             label="New"
             icon="pi pi-plus"
             severity="success"
             class="mr-2"
             @click="openNew"
           />
-          <Button
+          <PButton
             label="Delete"
             icon="pi pi-trash"
             severity="danger"
@@ -171,7 +171,7 @@ const statuses = ref([
             customUpload
             @uploader="onUpload"
           />
-          <Button
+          <PButton
             label="Export"
             icon="pi pi-download"
             severity="help"
@@ -232,14 +232,14 @@ const statuses = ref([
         </Column>
         <Column :exportable="false" style="min-width: 7rem">
           <template #body="slotProps">
-            <Button
+            <PButton
               icon="pi pi-pencil"
               outlined
               rounded
               class="mr-2"
               @click="editCard(slotProps.data)"
             />
-            <Button
+            <PButton
               icon="pi pi-trash"
               outlined
               rounded
@@ -251,7 +251,7 @@ const statuses = ref([
       </DataTable>
     </div>
 
-    <Dialog
+    <PDialog
       v-model:visible="productDialog"
       :style="{width: '450px'}"
       header="Card Details"
@@ -273,7 +273,7 @@ const statuses = ref([
       </div>
       <div class="field">
         <label for="definition">Definition</label>
-        <Textarea
+        <PTextarea
           id="definition"
           v-model="card.definition"
           required="true"
@@ -304,12 +304,12 @@ const statuses = ref([
       </div>
 
       <template #footer>
-        <Button label="Cancel" icon="pi pi-times" text @click="hideDialog" />
-        <Button label="Save" icon="pi pi-check" text @click="saveCard" />
+        <PButton label="Cancel" icon="pi pi-times" text @click="hideDialog" />
+        <PButton label="Save" icon="pi pi-check" text @click="saveCard" />
       </template>
-    </Dialog>
+    </PDialog>
 
-    <Dialog
+    <PDialog
       v-model:visible="deleteCardDialog"
       :style="{width: '450px'}"
       header="Confirm"
@@ -323,17 +323,17 @@ const statuses = ref([
         >
       </div>
       <template #footer>
-        <Button
+        <PButton
           label="No"
           icon="pi pi-times"
           text
           @click="deleteCardDialog = false"
         />
-        <Button label="Yes" icon="pi pi-check" text @click="deleteCard" />
+        <PButton label="Yes" icon="pi pi-check" text @click="deleteCard" />
       </template>
-    </Dialog>
+    </PDialog>
 
-    <Dialog
+    <PDialog
       v-model:visible="deleteCardsDialog"
       :style="{width: '450px'}"
       header="Confirm"
@@ -346,20 +346,20 @@ const statuses = ref([
         >
       </div>
       <template #footer>
-        <Button
+        <PButton
           label="No"
           icon="pi pi-times"
           text
           @click="deleteCardsDialog = false"
         />
-        <Button
+        <PButton
           label="Yes"
           icon="pi pi-check"
           text
           @click="deleteSelectedCards"
         />
       </template>
-    </Dialog>
+    </PDialog>
   </div>
 </template>
 
