@@ -3,27 +3,39 @@
 import {computed, ref} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 
+import type {Ref, ComputedRef} from 'vue'
+import type {Card, Deck} from '@/stores/DeckStore'
+
 const deckStore = useDeckStore()
 
-const name = ref('')
-const description = ref('')
+const name: Ref<string> = ref()
+const description: Ref<string> = ref()
 
-const icons = ['android', 'bitcoin', 'bolt', 'at', 'car', 'home', 'prime']
+const icons: string[] = [
+  'android',
+  'bitcoin',
+  'bolt',
+  'at',
+  'car',
+  'home',
+  'prime'
+]
 
-const icon = ref(icons[0])
+const icon: Ref<string> = ref(icons[0])
 
-const id = deckStore.newId
+const id: number = deckStore.newId
 
-const newDeck = computed(() => {
+const newDeck: ComputedRef<Deck> = computed(() => {
   return {
-    name,
-    description,
     id,
-    icon,
+    name: name.value,
+    description: description.value,
     isHidden: false,
+    icon: icon.value,
     cards: []
   }
 })
+
 function addNewDeck() {
   if (name.value.length && description.value.length) {
     deckStore.addDeck(newDeck.value)

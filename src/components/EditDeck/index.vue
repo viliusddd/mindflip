@@ -1,11 +1,13 @@
 // @ts-nocheck
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import {FilterMatchMode} from 'primevue/api'
 import {ref, computed, onMounted} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 import {useTitle} from '@vueuse/core'
 import Papa from 'papaparse'
 import HoverButton from './HoverButton.vue'
+
+import type {ParseResult} from 'papaparse'
 import type {Ref, ComputedRef} from 'vue'
 import type {Card, Deck} from '@/stores/DeckStore'
 import type {FileUploadUploaderEvent} from 'primevue/fileupload'
@@ -35,21 +37,29 @@ const title = computed(() => `Edit: ${deck.value.name}`)
 useTitle(title)
 
 function onUpload(event: FileUploadUploaderEvent) {
-  const file: any = event.files
+  const file = event.files
+
   if (file) {
     const reader = new FileReader()
-    reader.readAsText(file, 'UTF-8')
-    reader.onload = (evt: Event) => {
-      const parsedData = Papa.parse(evt?.target.result, {header: true})
+    reader.readAsText(file[0], 'UTF-8')
 
-      parsedData.data = parsedData.data.map((word) => {
-        if (!word?.status) word.status = 'new'
-        return word
-      })
+    reader.onload = (evt) => {
+      const rawData = evt.target.result
+      if (typeof rawData === 'string') {
+        const parsedData: ParseResult<Card> = Papa.parse<Card>(rawData, {
+          header: true
+        })
 
-      cards.value = cards.value.concat(parsedData.data)
-      deckStore.deck(props.id).cards = cards.value
+        const newData = parsedData.data.map((word) => {
+          if (!word.status) word.status = 'new'
+          return word
+        })
+
+        cards.value = cards.value.concat(newData)
+        deckStore.deck(props.id).cards = cards.value
+      }
     }
+
     reader.onerror = () => null
   }
 }
@@ -146,9 +156,9 @@ const deleteSelectedCards = () => {
 }
 
 const statuses = ref([
-  {value: 'new', severity: 'danger'},
-  {value: 'learning', severity: 'warning'},
-  {value: 'learned', severity: 'success'}
+  {label: 'danger', value: 'new', severity: 'danger'},
+  {label: 'warning', value: 'learning', severity: 'warning'},
+  {label: 'success', value: 'learned', severity: 'success'}
 ])
 </script>
 
@@ -193,7 +203,7 @@ const statuses = ref([
             label="Export"
             icon="pi pi-download"
             severity="help"
-            @click="exportCSV($event)"
+            @click="exportCSV"
           />
         </template>
       </Toolbar>
@@ -244,7 +254,10 @@ const statuses = ref([
           <template #body="slotProps">
             <Tag
               :value="slotProps.data.status"
-              :severity="slotProps.data.status"
+              :severity="
+                statuses.find((obj) => obj.value === slotProps.data.status)
+                  .severity
+              "
             />
           </template>
         </Column>
@@ -312,8 +325,12 @@ const statuses = ref([
         >
           <template #value="slotProps">
             <div v-if="slotProps.value">
-              <Tag :value="slotProps.value" :severity="slotProps.severity" />
-              <!-- @vue-ignore -->
+              <Tag
+                :value="slotProps.value"
+                :severity="
+                  statuses.find((obj) => obj.value === slotProps.value).severity
+                "
+              />
             </div>
             <span v-else>
               {{ slotProps.placeholder }}

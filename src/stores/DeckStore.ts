@@ -14,6 +14,7 @@ export type Deck = {
   description: string
   isHidden: boolean
   cards: Card[]
+  icon: string
 }
 
 export const useDeckStore = defineStore('DeckStore', () => {
@@ -22,7 +23,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
 
   watch(
     decks,
-    newValue => {
+    (newValue) => {
       localStorage.setItem(key, JSON.stringify(newValue))
     },
     {deep: true}
@@ -33,7 +34,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
   }
 
   function deck(id: number) {
-    return decks.value.find(obj => obj.id === id)
+    return decks.value.find((obj) => obj.id === id)
   }
 
   async function fill() {
