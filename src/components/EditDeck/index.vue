@@ -6,7 +6,7 @@ import {useDeckStore} from '@/stores/DeckStore'
 import {useTitle} from '@vueuse/core'
 import Papa from 'papaparse'
 import HoverButton from './HoverButton.vue'
-import type {ComputedRef} from 'vue'
+import type {Ref, ComputedRef} from 'vue'
 import type {Card, Deck} from '@/stores/DeckStore'
 import type {FileUploadUploaderEvent} from 'primevue/fileupload'
 
@@ -57,12 +57,12 @@ function onUpload(event: FileUploadUploaderEvent) {
 onMounted(() => (cards.value = deck.value.cards))
 
 const dt = ref()
-const cards = ref()
+const cards: Ref<Card[]> = ref()
 
 const productDialog = ref(false)
 const deleteCardDialog = ref(false)
 const deleteCardsDialog = ref(false)
-const card = ref({})
+const card: Ref<Card> = ref()
 const selectedCards = ref()
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS}
@@ -70,7 +70,11 @@ const filters = ref({
 const submitted = ref(false)
 
 const openNew = () => {
-  card.value = {}
+  card.value = {
+    name: '',
+    definition: '',
+    status: 'new'
+  }
   submitted.value = false
   productDialog.value = true
 }
@@ -95,7 +99,11 @@ const saveCard = () => {
     }
 
     productDialog.value = false
-    card.value = {}
+    card.value = {
+      name: '',
+      definition: '',
+      status: 'new'
+    }
   }
 }
 const editCard = (prod) => {
@@ -113,7 +121,11 @@ const deleteCard = () => {
   cards.value = cards.value.filter((val) => val.name !== card.value.name)
 
   deleteCardDialog.value = false
-  card.value = {}
+  card.value = {
+    name: '',
+    definition: '',
+    status: 'new'
+  }
 }
 
 const exportCSV = () => {
@@ -301,6 +313,7 @@ const statuses = ref([
           <template #value="slotProps">
             <div v-if="slotProps.value">
               <Tag :value="slotProps.value" :severity="slotProps.severity" />
+              <!-- @vue-ignore -->
             </div>
             <span v-else>
               {{ slotProps.placeholder }}
