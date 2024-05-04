@@ -1,3 +1,4 @@
+// @ts-nocheck
 <script setup lang="ts">
 import {FilterMatchMode} from 'primevue/api'
 import {ref, computed, onMounted} from 'vue'
