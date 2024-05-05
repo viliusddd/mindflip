@@ -41,13 +41,13 @@ function toggleVisibility() {
 type MenuMap = {
   toggle: () => void
   reset: () => void
-  delete: () => void
+  quit: () => void
 }
 
 const menuMap: MenuMap = {
   toggle: () => toggleVisibility(),
   reset: () => resetStats(),
-  delete: () => deleteDeck()
+  quit: () => deleteDeck()
 }
 </script>
 
@@ -68,10 +68,7 @@ const menuMap: MenuMap = {
         v-if="item.name === 'edit'"
         #="{navigate}"
         custom
-        :to="{
-          name: 'EditDeck',
-          params: {id}
-        }"
+        :to="{name: 'EditDeck', params: {id}}"
       >
         <a href="" v-bind="props.action" @click="navigate">
           <span :class="item.icon" />
