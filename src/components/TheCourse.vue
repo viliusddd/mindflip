@@ -68,7 +68,7 @@ function goNextCard() {
           ></ProgressBar>
           <div
             class="flashcard__score"
-            v-tooltip.left="'How many points you have earned in this session'"
+            v-tooltip.left="'The possicion of current card in deck.'"
           >
             {{ activeCardIndex + 1 }}
           </div>
@@ -96,9 +96,7 @@ function goNextCard() {
             class="flashcard__button"
             severity="info"
             :label="buttonLabel"
-            icon="pi pi-question"
             :raised="true"
-            icon-pos="top"
             aria-label="Hotkeys next"
             @click="goNextCard"
           />
@@ -120,6 +118,12 @@ function goNextCard() {
           </div>
         </div>
       </div>
+    </div>
+    <div class="difficulty__buttons">
+      <PButton :raised="true" v-tooltip.top="'<10m'" label="Again" />
+      <PButton :raised="true" v-tooltip.top="'2d'" label="Hard" />
+      <PButton :raised="true" v-tooltip.top="'7d'" label="Good" />
+      <PButton :raised="true" v-tooltip.top="'14d'" label="Easy" />
     </div>
     <footer></footer>
   </div>
@@ -220,6 +224,11 @@ function goNextCard() {
 }
 .header__tooltip {
   display: none;
+}
+.difficulty__buttons {
+  display: flex;
+  justify-content: center;
+  column-gap: 3px;
 }
 @media (min-width: 40rem) {
   .header__tooltip {
