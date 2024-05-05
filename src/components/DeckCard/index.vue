@@ -90,7 +90,7 @@ const difficultWords = ref(0)
 .deck__header {
   display: flex;
   grid-area: header;
-  margin-bottom: auto;
+  justify-content: space-between;
 }
 .deck__header h1 {
   margin: 4px 0 0 0;
