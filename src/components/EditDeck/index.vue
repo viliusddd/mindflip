@@ -13,7 +13,10 @@ import type {Card, Deck} from '@/stores/DeckStore'
 import type {FileUploadUploaderEvent} from 'primevue/fileupload'
 
 const props = defineProps({
-  id: Number
+  id: {
+    type: Number,
+    required: true
+  }
 })
 
 const deckStore = useDeckStore()
@@ -155,11 +158,11 @@ const deleteSelectedCards = () => {
   selectedCards.value = null
 }
 
-const statuses = ref([
+const statuses = [
   {label: 'danger', value: 'new', severity: 'danger'},
   {label: 'warning', value: 'learning', severity: 'warning'},
   {label: 'success', value: 'learned', severity: 'success'}
-])
+]
 </script>
 
 <template>
