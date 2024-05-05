@@ -47,7 +47,7 @@ function onUpload(event: FileUploadUploaderEvent) {
     reader.readAsText(file[0], 'UTF-8')
 
     reader.onload = (evt) => {
-      const rawData = evt.target.result
+      const rawData = evt?.target?.result
       if (typeof rawData === 'string') {
         const parsedData: ParseResult<Card> = Papa.parse<Card>(rawData, {
           header: true

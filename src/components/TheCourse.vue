@@ -6,7 +6,10 @@ import {useRouter} from 'vue-router'
 const router = useRouter()
 
 const props = defineProps({
-  id: Number
+  id: {
+    type: Number,
+    required: true
+  }
 })
 
 const deckStore = useDeckStore()
@@ -16,7 +19,7 @@ const value = ref('')
 const buttonLabel = ref('Next Card')
 const activeCardIndex = ref(0)
 
-const cards = deckStore.deck(props.id).cards
+const cards = deckStore?.deck(props.id)?.cards
 
 const progressBarValue = computed(() => {
   return (100 / cards.length) * activeCardIndex.value
@@ -37,7 +40,7 @@ function goNextCard() {
 <template>
   <div class="container">
     <header class="header">
-      <div class="header__title">{{ deckStore.deck(id).name }}</div>
+      <div class="header__title">{{ deckStore?.deck(id)?.name }}</div>
       <PButton
         class="header__tooltip"
         icon="pi pi-info-circle"
@@ -80,7 +83,7 @@ function goNextCard() {
               <h1>{{ cards[activeCardIndex].definition }}</h1>
             </div>
             <div>
-              {{ deckStore.deck(id).name }}
+              {{ deckStore?.deck(id)?.name }}
               <InputText
                 class="flashcard__input"
                 type="text"
