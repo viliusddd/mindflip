@@ -8,8 +8,8 @@ import type {Card, Deck} from '@/stores/DeckStore'
 
 const deckStore = useDeckStore()
 
-const name: Ref<string> = ref()
-const description: Ref<string> = ref()
+const deckName: Ref<string> = ref('')
+const deckDescription: Ref<string> = ref('')
 
 const icons: string[] = [
   'android',
@@ -21,6 +21,12 @@ const icons: string[] = [
   'prime'
 ]
 
+const isMeetingRequirements = computed(() => {
+  if (deckName.value.length >= 3 && deckDescription.value.length >= 3)
+    return false
+  else return true
+})
+
 const icon: Ref<string> = ref(icons[0])
 
 const id: number = deckStore.newId
@@ -28,8 +34,8 @@ const id: number = deckStore.newId
 const newDeck: ComputedRef<Deck> = computed(() => {
   return {
     id,
-    name: name.value,
-    description: description.value,
+    name: deckName.value,
+    description: deckDescription.value,
     isHidden: false,
     icon: icon.value,
     cards: []
@@ -37,23 +43,29 @@ const newDeck: ComputedRef<Deck> = computed(() => {
 })
 
 function addNewDeck() {
-  if (name.value.length && description.value.length) {
-    deckStore.addDeck(newDeck.value)
-  }
+  console.log(newDeck.value)
+  deckStore.addDeck(newDeck.value)
 }
 </script>
 
 <template>
   <div class="wrapper">
-    <h2 class="title">Create a new course</h2>
+    <h2 class="title">Create a new deck</h2>
     <div class="fields">
       <label class="name" for="name-field">Name</label>
-      <InputText id="name-field" v-model="name" />
+      <InputText
+        id="name-field"
+        maxlength="50"
+        placeholder="World Capitals"
+        v-model="deckName"
+      />
       <label class="description" for="description-field">Description </label>
       <InputText
         id="description-field"
+        maxlength="200"
         @keyup.enter="addNewDeck"
-        v-model="description"
+        v-model="deckDescription"
+        placeholder="Deck of whole world capitals"
       />
       <label class="icon" for="icon-dropdown">Icon</label>
       <Dropdown
@@ -65,15 +77,16 @@ function addNewDeck() {
       />
       <br />
       <RouterLink
-        @click="addNewDeck"
         class="create-route"
         :to="{name: 'EditDeck', params: {id}}"
+        :class="{disabled: isMeetingRequirements}"
       >
         <PButton
           class="create-btn"
-          label="Create Course"
+          label="Create Deck"
           type="submit"
           :raised="true"
+          @click="addNewDeck"
         />
       </RouterLink>
       <i :class="`icon-preview pi pi-${icon}`"></i>
@@ -82,6 +95,10 @@ function addNewDeck() {
 </template>
 
 <style>
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
 .title {
   text-align: center;
 }

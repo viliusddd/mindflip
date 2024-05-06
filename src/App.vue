@@ -66,6 +66,7 @@ a {
 }
 .settings-button {
   margin: 0 0 0 auto;
+  padding-left: 9px;
 }
 @media (min-width: 40rem) {
   .header__tooltip {
