@@ -10,7 +10,7 @@ deckStore.fill()
   <div v-else class="container">
     <header class="header">
       <RouterLink to="/">
-        <h2 class="header__title">FlashyCards</h2>
+        <h2 class="header__title">MindFlip</h2>
       </RouterLink>
       <nav>
         <RouterLink to="/">
