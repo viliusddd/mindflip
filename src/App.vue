@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import AppLogo from '@/components/AppLogo.vue'
+import AppNav from '@/components/AppNav.vue'
 import {useDeckStore} from '@/stores/DeckStore'
 
 const deckStore = useDeckStore()
@@ -9,27 +11,19 @@ deckStore.fill()
   <RouterView v-if="$route.name === 'Deck'"></RouterView>
   <div v-else class="container">
     <header class="header">
-      <RouterLink to="/">
-        <h2 class="header__title">MindFlip</h2>
-      </RouterLink>
-      <nav>
-        <RouterLink to="/">
-          <PButton label="Courses" text />
-        </RouterLink>
-        <RouterLink to="/create">
-          <PButton label="Create a course" text />
-        </RouterLink>
-      </nav>
-      <div class="settings-button">
-        <PButton
-          icon="pi pi-user-edit"
-          severity="info"
-          text
-          size="large"
-          rounded
-          v-tooltip.left="'Your profile settings'"
-          aria-label="Cancel"
-        />
+      <div class="header__container">
+        <RouterLink to="/"><AppLogo /></RouterLink>
+        <AppNav />
+        <div class="settings-button">
+          <PButton
+            icon="pi pi-cog"
+            text
+            size="large"
+            rounded
+            v-tooltip.left="'Your profile settings'"
+            aria-label="Cancel"
+          />
+        </div>
       </div>
     </header>
     <main class="wrapper">
@@ -54,16 +48,18 @@ deckStore.fill()
 .header {
   display: flex;
   align-items: center;
-  background: lightblue;
-  font-size: 1.5rem;
+  justify-content: center;
+  background: hsl(0, 0%, 5%);
   padding: 1rem;
-}
-.header__title {
-  margin: 0 30px 0 0;
 }
 a {
   text-decoration: none;
-  color: inherit;
+}
+.header__container {
+  display: flex;
+  max-width: 1024px;
+  align-items: center;
+  flex-grow: 1;
 }
 .header__tooltip {
   display: none;
