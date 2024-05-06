@@ -8,10 +8,11 @@
 <style scoped>
 span {
   color: white;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .logo-container {
-  padding: 0 30px 0 0;
+  margin: 0 15px 0 0;
+  padding: 0;
 }
 .first-word {
   font-weight: 100;
@@ -44,6 +45,14 @@ span {
   }
   100% {
     transform: rotateX(-360deg);
+  }
+}
+@media (min-width: 40rem) {
+  span {
+    font-size: 2rem;
+  }
+  .logo-container {
+    margin: 0 30px 0 0;
   }
 }
 </style>

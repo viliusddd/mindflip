@@ -12,7 +12,8 @@
 <style scoped>
 .nav-wrapper {
   display: flex;
-  column-gap: 30px;
+  align-items: center;
+  column-gap: 10px;
 }
 
 * {
@@ -31,5 +32,12 @@
 }
 .active {
   border-bottom: 3px solid white;
+}
+@media (min-width: 40rem) {
+  .nav-wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+  }
 }
 </style>
