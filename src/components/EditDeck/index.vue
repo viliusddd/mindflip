@@ -5,12 +5,13 @@ import {useDeckStore} from '@/stores/DeckStore'
 import {useTitle} from '@vueuse/core'
 import Papa from 'papaparse'
 import HoverButton from './HoverButton.vue'
-
+import {statuses} from './consts'
 import DeleteCardDialog from './DeleteCardDialog.vue'
 import DeleteCardsDialog from './DeleteCardsDialog.vue'
+import CardDialog from './CardDialog.vue'
 
 import type {ParseResult} from 'papaparse'
-import type {Ref, ComputedRef} from 'vue'
+import type {ComputedRef} from 'vue'
 import type {Card, Deck} from '@/stores/DeckStore'
 import type {FileUploadUploaderEvent} from 'primevue/fileupload'
 
@@ -28,18 +29,6 @@ const deck: ComputedRef<Deck> = computed(() =>
 )
 
 deckStore.selectedDeckId = props.id
-
-function updateCard(newCard: Card) {
-  for (let card of deck.value.cards) {
-    if (card.name === newCard.name) {
-      deck.value.cards = deck.value.cards.filter(
-        (card) => card.name !== newCard.name
-      )
-      deck.value.cards.push(newCard)
-      break
-    }
-  }
-}
 
 const title = computed(() => `Edit: ${deck.value.name}`)
 useTitle(title)
@@ -79,47 +68,16 @@ const dt = ref()
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS}
 })
-const submitted = ref(false)
-
 const openNew = () => {
   deckStore.card = {
     name: '',
     definition: '',
     status: 'new'
   }
-  submitted.value = false
+  deckStore.submitted = false
   deckStore.cardDialog = true
 }
-const hideDialog = () => {
-  deckStore.cardDialog = false
-  submitted.value = false
-}
-const saveCard = () => {
-  submitted.value = true
 
-  if (deckStore.card.name.trim()) {
-    let existingCard = deck.value.cards.filter(
-      (obj) => obj.name === deckStore.card.name
-    )
-    if (existingCard.length) {
-      updateCard(deckStore.card)
-
-      existingCard[0] = deckStore.card
-    } else {
-      deckStore.card.status = deckStore.card.status
-        ? deckStore.card.status
-        : 'new'
-      deckStore.cards.push(deckStore.card)
-    }
-
-    deckStore.cardDialog = false
-    deckStore.card = {
-      name: '',
-      definition: '',
-      status: 'new'
-    }
-  }
-}
 const editCard = (prod) => {
   deckStore.card = {...prod}
   deckStore.cardDialog = true
@@ -134,11 +92,6 @@ const exportCSV = () => {
 const confirmDeleteSelected = () => {
   deckStore.deleteCardsDialog = true
 }
-const statuses = [
-  {label: 'danger', value: 'new', severity: 'danger'},
-  {label: 'warning', value: 'learning', severity: 'warning'},
-  {label: 'success', value: 'learned', severity: 'success'}
-]
 </script>
 
 <template>
@@ -147,7 +100,7 @@ const statuses = [
       <HoverButton :id size="2.5ch" :isBold="true" attribute="name" />
       <HoverButton :id :isBold="false" attribute="description" />
     </header>
-    cardDialog: {{ deckStore.cardDialog }} card: {{ deckStore.card }}
+    submitted: {{ deckStore.submitted }} card: {{ deckStore.card }}
     <div class="card">
       <Toolbar class="mb-4">
         <template #start>
@@ -264,69 +217,7 @@ const statuses = [
       </DataTable>
     </div>
 
-    <PDialog
-      v-model:visible="deckStore.cardDialog"
-      :style="{width: '450px'}"
-      header="Card Details"
-      :modal="true"
-      class="p-fluid"
-    >
-      <div class="field">
-        <label for="name">Name</label>
-        <InputText
-          id="name"
-          v-model.trim="deckStore.card.name"
-          required="true"
-          autofocus
-          :invalid="submitted && !deckStore.card.name"
-        />
-        <small class="p-error" v-if="submitted && !deckStore.card.name"
-          >Name is required.</small
-        >
-      </div>
-      <div class="field">
-        <label for="definition">Definition</label>
-        <PTextarea
-          id="definition"
-          v-model="deckStore.card.definition"
-          required="true"
-          rows="3"
-          cols="20"
-        />
-      </div>
-
-      <div class="field">
-        <label for="status">Card Status</label>
-        <Dropdown
-          id="status"
-          v-model="deckStore.card.status"
-          :options="statuses"
-          optionLabel="value"
-          optionValue="value"
-          placeholder="Select a Status"
-        >
-          <template #value="slotProps">
-            <div v-if="slotProps.value">
-              <Tag
-                :value="slotProps.value"
-                :severity="
-                  statuses.find((obj) => obj.value === slotProps.value).severity
-                "
-              />
-            </div>
-            <span v-else>
-              {{ slotProps.placeholder }}
-            </span>
-          </template>
-        </Dropdown>
-      </div>
-
-      <template #footer>
-        <PButton label="Cancel" icon="pi pi-times" text @click="hideDialog" />
-        <PButton label="Save" icon="pi pi-check" text @click="saveCard" />
-      </template>
-    </PDialog>
-
+    <CardDialog />
     <DeleteCardDialog />
     <DeleteCardsDialog />
   </div>
