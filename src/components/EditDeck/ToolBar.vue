@@ -44,9 +44,7 @@ function onUpload(event: FileUploadUploaderEvent) {
           if (!word.status) word.status = 'new'
           return word
         })
-
-        deckStore.cards = deckStore.cards.concat(newData)
-        deckStore.deck(deckStore.selectedDeckId).cards = deckStore.cards
+        deckStore.addCards(newData)
       }
     }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import {computed, onMounted} from 'vue'
+import {computed} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 import {useTitle} from '@vueuse/core'
 import CardDialog from './CardDialog.vue'
