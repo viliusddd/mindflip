@@ -6,6 +6,9 @@ import {useTitle} from '@vueuse/core'
 import Papa from 'papaparse'
 import HoverButton from './HoverButton.vue'
 
+import DeleteCardDialog from './DeleteCardDialog.vue'
+import DeleteCardsDialog from './DeleteCardsDialog.vue'
+
 import type {ParseResult} from 'papaparse'
 import type {Ref, ComputedRef} from 'vue'
 import type {Card, Deck} from '@/stores/DeckStore'
@@ -19,9 +22,12 @@ const props = defineProps({
 })
 
 const deckStore = useDeckStore()
+
 const deck: ComputedRef<Deck> = computed(() =>
   deckStore.decks.find((obj) => obj.id === props.id)
 )
+
+deckStore.selectedDeckId = props.id
 
 function updateCard(newCard: Card) {
   for (let card of deck.value.cards) {
@@ -57,8 +63,8 @@ function onUpload(event: FileUploadUploaderEvent) {
           return word
         })
 
-        cards.value = cards.value.concat(newData)
-        deckStore.deck(props.id).cards = cards.value
+        deckStore.cards = deckStore.cards.concat(newData)
+        deckStore.deck(props.id).cards = deckStore.cards
       }
     }
 
@@ -66,21 +72,18 @@ function onUpload(event: FileUploadUploaderEvent) {
   }
 }
 
-onMounted(() => (cards.value = deck.value.cards))
+onMounted(() => (deckStore.cards = deck.value.cards))
 
 const dt = ref()
-const cards: Ref<Card[]> = ref()
 
 const productDialog = ref(false)
-const card: Ref<Card> = ref()
-const selectedCards = ref()
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS}
 })
 const submitted = ref(false)
 
 const openNew = () => {
-  card.value = {
+  deckStore.card = {
     name: '',
     definition: '',
     status: 'new'
@@ -95,21 +98,23 @@ const hideDialog = () => {
 const saveCard = () => {
   submitted.value = true
 
-  if (card?.value.name?.trim()) {
+  if (deckStore.card.name.trim()) {
     let existingCard = deck.value.cards.filter(
-      (obj) => obj.name === card.value.name
+      (obj) => obj.name === deckStore.card.name
     )
     if (existingCard.length) {
-      updateCard(card.value)
+      updateCard(deckStore.card)
 
-      existingCard[0] = card.value
+      existingCard[0] = deckStore.card
     } else {
-      card.value.status = card.value.status ? card.value.status : 'new'
-      cards.value.push(card.value)
+      deckStore.card.status = deckStore.card.status
+        ? deckStore.card.status
+        : 'new'
+      deckStore.cards.push(deckStore.card)
     }
 
     productDialog.value = false
-    card.value = {
+    deckStore.card = {
       name: '',
       definition: '',
       status: 'new'
@@ -117,44 +122,19 @@ const saveCard = () => {
   }
 }
 const editCard = (prod) => {
-  card.value = {...prod}
+  deckStore.card = {...prod}
   productDialog.value = true
 }
 const confirmDeleteCard = (prod) => {
-  card.value = prod
+  deckStore.card = prod
   deckStore.deleteCardDialog = true
 }
-const deleteCard = () => {
-  deck.value.cards = deck.value.cards.filter(
-    (obj) => obj.name !== card.value.name
-  )
-  cards.value = cards.value.filter((val) => val.name !== card.value.name)
-
-  deckStore.deleteCardDialog = false
-  card.value = {
-    name: '',
-    definition: '',
-    status: 'new'
-  }
-}
-
 const exportCSV = () => {
   dt.value.exportCSV()
 }
 const confirmDeleteSelected = () => {
   deckStore.deleteCardsDialog = true
 }
-const deleteSelectedCards = () => {
-  deck.value.cards = deck.value.cards.filter(
-    (val) => !selectedCards.value.includes(val)
-  )
-
-  cards.value = cards.value.filter((val) => !selectedCards.value.includes(val))
-
-  deckStore.deleteCardsDialog = false
-  selectedCards.value = null
-}
-
 const statuses = [
   {label: 'danger', value: 'new', severity: 'danger'},
   {label: 'warning', value: 'learning', severity: 'warning'},
@@ -168,6 +148,7 @@ const statuses = [
       <HoverButton :id size="2.5ch" :isBold="true" attribute="name" />
       <HoverButton :id :isBold="false" attribute="description" />
     </header>
+    selected: {{ deckStore.selectedCards }} card: {{ deckStore.card }}
     <div class="card">
       <Toolbar class="mb-4">
         <template #start>
@@ -183,7 +164,9 @@ const statuses = [
             icon="pi pi-trash"
             severity="danger"
             @click="confirmDeleteSelected"
-            :disabled="!selectedCards || !selectedCards.length"
+            :disabled="
+              !deckStore.selectedCards || !deckStore.selectedCards.length
+            "
           />
         </template>
 
@@ -210,8 +193,8 @@ const statuses = [
 
       <DataTable
         ref="dt"
-        :value="cards"
-        v-model:selection="selectedCards"
+        :value="deckStore.cards"
+        v-model:selection="deckStore.selectedCards"
         dataKey="id"
         :paginator="true"
         :rows="10"
@@ -293,12 +276,12 @@ const statuses = [
         <label for="name">Name</label>
         <InputText
           id="name"
-          v-model.trim="card.name"
+          v-model.trim="deckStore.card.name"
           required="true"
           autofocus
-          :invalid="submitted && !card.name"
+          :invalid="submitted && !deckStore.card.name"
         />
-        <small class="p-error" v-if="submitted && !card.name"
+        <small class="p-error" v-if="submitted && !deckStore.card.name"
           >Name is required.</small
         >
       </div>
@@ -306,7 +289,7 @@ const statuses = [
         <label for="definition">Definition</label>
         <PTextarea
           id="definition"
-          v-model="card.definition"
+          v-model="deckStore.card.definition"
           required="true"
           rows="3"
           cols="20"
@@ -317,7 +300,7 @@ const statuses = [
         <label for="status">Card Status</label>
         <Dropdown
           id="status"
-          v-model="card.status"
+          v-model="deckStore.card.status"
           :options="statuses"
           optionLabel="value"
           optionValue="value"
@@ -345,57 +328,8 @@ const statuses = [
       </template>
     </PDialog>
 
-    <PDialog
-      v-model:visible="deckStore.deleteCardDialog"
-      :style="{width: '450px'}"
-      header="Confirm"
-      :modal="true"
-    >
-      <div class="confirmation-content">
-        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-        <span v-if="card"
-          >Are you sure you want to delete <b>{{ card.name }}</b
-          >?</span
-        >
-      </div>
-      <template #footer>
-        <PButton
-          label="No"
-          icon="pi pi-times"
-          text
-          @click="deckStore.deleteCardDialog = false"
-        />
-        <PButton label="Yes" icon="pi pi-check" text @click="deleteCard" />
-      </template>
-    </PDialog>
-
-    <PDialog
-      v-model:visible="deckStore.deleteCardsDialog"
-      :style="{width: '450px'}"
-      header="Confirm"
-      :modal="true"
-    >
-      <div class="confirmation-content">
-        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-        <span v-if="card"
-          >Are you sure you want to delete the selected cards?</span
-        >
-      </div>
-      <template #footer>
-        <PButton
-          label="No"
-          icon="pi pi-times"
-          text
-          @click="deckStore.deleteCardsDialog = false"
-        />
-        <PButton
-          label="Yes"
-          icon="pi pi-check"
-          text
-          @click="deleteSelectedCards"
-        />
-      </template>
-    </PDialog>
+    <DeleteCardDialog />
+    <DeleteCardsDialog />
   </div>
 </template>
 
