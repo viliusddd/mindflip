@@ -57,6 +57,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
 
   const deleteCardDialog = ref(false)
   const deleteCardsDialog = ref(false)
+  const cardDialog = ref(false)
   const selectedCards = ref() // with checkbox
   const selectedDeckId: Ref<number> = ref()
   const card: Ref<Card> = ref()
@@ -97,6 +98,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
     newId,
     deleteCardDialog,
     deleteCardsDialog,
+    cardDialog,
     selectedCards,
     selectedDeckId,
     deleteSelectedCards,

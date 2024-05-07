@@ -76,7 +76,6 @@ onMounted(() => (deckStore.cards = deck.value.cards))
 
 const dt = ref()
 
-const productDialog = ref(false)
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS}
 })
@@ -89,10 +88,10 @@ const openNew = () => {
     status: 'new'
   }
   submitted.value = false
-  productDialog.value = true
+  deckStore.cardDialog = true
 }
 const hideDialog = () => {
-  productDialog.value = false
+  deckStore.cardDialog = false
   submitted.value = false
 }
 const saveCard = () => {
@@ -113,7 +112,7 @@ const saveCard = () => {
       deckStore.cards.push(deckStore.card)
     }
 
-    productDialog.value = false
+    deckStore.cardDialog = false
     deckStore.card = {
       name: '',
       definition: '',
@@ -123,7 +122,7 @@ const saveCard = () => {
 }
 const editCard = (prod) => {
   deckStore.card = {...prod}
-  productDialog.value = true
+  deckStore.cardDialog = true
 }
 const confirmDeleteCard = (prod) => {
   deckStore.card = prod
@@ -148,7 +147,7 @@ const statuses = [
       <HoverButton :id size="2.5ch" :isBold="true" attribute="name" />
       <HoverButton :id :isBold="false" attribute="description" />
     </header>
-    selected: {{ deckStore.selectedCards }} card: {{ deckStore.card }}
+    cardDialog: {{ deckStore.cardDialog }} card: {{ deckStore.card }}
     <div class="card">
       <Toolbar class="mb-4">
         <template #start>
@@ -266,7 +265,7 @@ const statuses = [
     </div>
 
     <PDialog
-      v-model:visible="productDialog"
+      v-model:visible="deckStore.cardDialog"
       :style="{width: '450px'}"
       header="Card Details"
       :modal="true"
