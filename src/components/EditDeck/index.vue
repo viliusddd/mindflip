@@ -8,8 +8,8 @@ import DeleteCardDialog from './DeleteCardDialog.vue'
 import DeleteCardsDialog from './DeleteCardsDialog.vue'
 import HoverButton from './HoverButton.vue'
 import ToolBar from './ToolBar.vue'
-import type {ComputedRef} from 'vue'
-import type {Deck} from '@/stores/DeckStore'
+
+const deckStore = useDeckStore()
 
 const props = defineProps({
   id: {
@@ -18,31 +18,20 @@ const props = defineProps({
   }
 })
 
-const deckStore = useDeckStore()
-
-const deck: ComputedRef<Deck> = computed(() =>
-  deckStore.decks.find((obj) => obj.id === props.id)
-)
-
 deckStore.selectedDeckId = props.id
 
-const title = computed(() => `Edit: ${deck.value.name}`)
+const title = computed(() => `Edit: ${deckStore.deck(props.id).name}`)
 useTitle(title)
 
-onMounted(() => (deckStore.cards = deck.value.cards))
+onMounted(() => (deckStore.cards = deckStore.deck(props.id).cards))
 </script>
 
 <template>
   <div>
-    <header>
-      <HoverButton :id size="2.5ch" :isBold="true" attribute="name" />
-      <HoverButton :id :isBold="false" attribute="description" />
-    </header>
-    <div class="card">
-      <ToolBar />
-      <CardsTable />
-    </div>
-
+    <HoverButton :id size="2.5ch" :isBold="true" attribute="name" />
+    <HoverButton :id :isBold="false" attribute="description" />
+    <ToolBar />
+    <CardsTable />
     <CardDialog />
     <DeleteCardDialog />
     <DeleteCardsDialog />
