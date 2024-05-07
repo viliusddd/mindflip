@@ -22,8 +22,6 @@ deckStore.selectedDeckId = props.id
 
 const title = computed(() => `Edit: ${deckStore.deck(props.id).name}`)
 useTitle(title)
-
-onMounted(() => (deckStore.cards = deckStore.deck(props.id).cards))
 </script>
 
 <template>

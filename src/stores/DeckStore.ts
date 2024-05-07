@@ -61,16 +61,12 @@ export const useDeckStore = defineStore('DeckStore', () => {
   const selectedCards = ref() // with checkbox
   const selectedDeckId: Ref<number> = ref()
   const card: Ref<Card> = ref()
-  const cards: Ref<Card[]> = ref()
+  const cards: Ref<Card[]> = computed(() => deck(selectedDeckId.value).cards)
   const submitted = ref(false)
   const dataTable = ref()
 
   const deleteSelectedCards = () => {
     deck(selectedDeckId.value).cards = deck(selectedDeckId.value).cards.filter(
-      (val) => !selectedCards.value.includes(val)
-    )
-
-    cards.value = cards.value.filter(
       (val) => !selectedCards.value.includes(val)
     )
 
@@ -82,7 +78,6 @@ export const useDeckStore = defineStore('DeckStore', () => {
     deck(selectedDeckId.value).cards = deck(selectedDeckId.value).cards.filter(
       (obj) => obj.name !== card.value.name
     )
-    cards.value = cards.value.filter((val) => val.name !== card.value.name)
 
     deleteCardDialog.value = false
     card.value = {

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {statuses} from './consts'
 import {useDeckStore} from '@/stores/DeckStore'
-
 import type {Card} from '@/stores/DeckStore'
 
 const deckStore = useDeckStore()
@@ -27,20 +26,16 @@ const saveCard = () => {
   deckStore.submitted = true
 
   if (deckStore.card.name.trim()) {
-    let existingCard = deckStore
-      .deck(deckStore.selectedDeckId)
-      .cards.filter((obj) => obj.name === deckStore.card.name)
-    if (existingCard.length) {
-      updateCard(deckStore.card)
+    deckStore.card.status = deckStore.card.status
+      ? deckStore.card.status
+      : 'new'
 
-      existingCard[0] = deckStore.card
-    } else {
-      deckStore.card.status = deckStore.card.status
-        ? deckStore.card.status
-        : 'new'
-      deckStore.cards.push(deckStore.card)
-    }
+    // check if card with same name exists. override/update if exists
 
+    // save card
+    deckStore.cards.push(deckStore.card)
+
+    // reset values
     deckStore.cardDialog = false
     deckStore.card = {
       name: '',
