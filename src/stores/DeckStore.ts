@@ -55,11 +55,16 @@ export const useDeckStore = defineStore('DeckStore', () => {
     }
   })
 
+  const deleteCardDialog = ref(false)
+  const deleteCardsDialog = ref(false)
+
   return {
     decks,
     deck,
     addDeck,
     fill,
-    newId
+    newId,
+    deleteCardDialog,
+    deleteCardsDialog
   }
 })

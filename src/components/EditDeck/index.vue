@@ -1,4 +1,3 @@
-// @ts-nocheck
 <script setup lang="ts" generic="T">
 import {FilterMatchMode} from 'primevue/api'
 import {ref, computed, onMounted} from 'vue'
@@ -73,8 +72,6 @@ const dt = ref()
 const cards: Ref<Card[]> = ref()
 
 const productDialog = ref(false)
-const deleteCardDialog = ref(false)
-const deleteCardsDialog = ref(false)
 const card: Ref<Card> = ref()
 const selectedCards = ref()
 const filters = ref({
@@ -125,7 +122,7 @@ const editCard = (prod) => {
 }
 const confirmDeleteCard = (prod) => {
   card.value = prod
-  deleteCardDialog.value = true
+  deckStore.deleteCardDialog = true
 }
 const deleteCard = () => {
   deck.value.cards = deck.value.cards.filter(
@@ -133,7 +130,7 @@ const deleteCard = () => {
   )
   cards.value = cards.value.filter((val) => val.name !== card.value.name)
 
-  deleteCardDialog.value = false
+  deckStore.deleteCardDialog = false
   card.value = {
     name: '',
     definition: '',
@@ -145,7 +142,7 @@ const exportCSV = () => {
   dt.value.exportCSV()
 }
 const confirmDeleteSelected = () => {
-  deleteCardsDialog.value = true
+  deckStore.deleteCardsDialog = true
 }
 const deleteSelectedCards = () => {
   deck.value.cards = deck.value.cards.filter(
@@ -154,7 +151,7 @@ const deleteSelectedCards = () => {
 
   cards.value = cards.value.filter((val) => !selectedCards.value.includes(val))
 
-  deleteCardsDialog.value = false
+  deckStore.deleteCardsDialog = false
   selectedCards.value = null
 }
 
@@ -349,7 +346,7 @@ const statuses = [
     </PDialog>
 
     <PDialog
-      v-model:visible="deleteCardDialog"
+      v-model:visible="deckStore.deleteCardDialog"
       :style="{width: '450px'}"
       header="Confirm"
       :modal="true"
@@ -366,14 +363,14 @@ const statuses = [
           label="No"
           icon="pi pi-times"
           text
-          @click="deleteCardDialog = false"
+          @click="deckStore.deleteCardDialog = false"
         />
         <PButton label="Yes" icon="pi pi-check" text @click="deleteCard" />
       </template>
     </PDialog>
 
     <PDialog
-      v-model:visible="deleteCardsDialog"
+      v-model:visible="deckStore.deleteCardsDialog"
       :style="{width: '450px'}"
       header="Confirm"
       :modal="true"
@@ -389,7 +386,7 @@ const statuses = [
           label="No"
           icon="pi pi-times"
           text
-          @click="deleteCardsDialog = false"
+          @click="deckStore.deleteCardsDialog = false"
         />
         <PButton
           label="Yes"
