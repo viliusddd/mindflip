@@ -6,6 +6,14 @@ export type Card = {
   name: string
   definition: string
   status: string
+  difficulty: number
+  due: Date
+  elapsed_days: number
+  lapses: number
+  reps: number
+  scheduled_days: number
+  stability: number
+  state: number
 }
 
 export type Deck = {
@@ -33,9 +41,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
     decks.value.push(deck)
   }
 
-  function deck(id: number) {
-    return decks.value.find((obj) => obj.id === id)
-  }
+  const deck = () => decks.value.find((obj) => obj.id === selectedDeckId.value)
 
   async function fill() {
     const storageVal: string | null = localStorage.getItem(key)
@@ -63,15 +69,18 @@ export const useDeckStore = defineStore('DeckStore', () => {
   const card: Ref<Card> = ref()
   const submitted = ref(false)
   const dataTable = ref()
-  const cards: Ref<Card[]> = computed(() => deck(selectedDeckId.value).cards)
+
+  const cards: Ref<Card[]> = computed(() => {
+    if (selectedDeckId.value) return deck().cards
+    else return null
+  })
+
   const addCards = (crds: Card[]) => {
-    deck(selectedDeckId.value).cards = deck(selectedDeckId.value).cards.concat(
-      crds
-    )
+    deck().cards = deck().cards.concat(crds)
   }
 
   const deleteSelectedCards = () => {
-    deck(selectedDeckId.value).cards = deck(selectedDeckId.value).cards.filter(
+    deck().cards = deck().cards.filter(
       (val) => !selectedCards.value.includes(val)
     )
 
@@ -80,16 +89,10 @@ export const useDeckStore = defineStore('DeckStore', () => {
   }
 
   const deleteCard = () => {
-    deck(selectedDeckId.value).cards = deck(selectedDeckId.value).cards.filter(
-      (obj) => obj.name !== card.value.name
-    )
+    deck().cards = deck().cards.filter((obj) => obj.name !== card.value.name)
 
     deleteCardDialog.value = false
-    card.value = {
-      name: '',
-      definition: '',
-      status: 'new'
-    }
+    card.value = null
   }
 
   return {

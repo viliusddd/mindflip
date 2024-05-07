@@ -9,9 +9,10 @@ const props = defineProps({
     required: true
   }
 })
+deckStore.selectedDeckId = props.id
 
-const deckName = deckStore.deck(props.id)?.name
-const deckDesc = deckStore.deck(props.id)?.description
+const deckName = deckStore.deck()?.name
+const deckDesc = deckStore.deck()?.description
 </script>
 
 <template>

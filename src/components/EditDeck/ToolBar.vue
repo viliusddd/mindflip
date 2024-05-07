@@ -42,8 +42,17 @@ function onUpload(event: FileUploadUploaderEvent) {
 
         const newData = parsedData.data.map((word) => {
           if (!word.status) word.status = 'new'
+          if (!word.difficulty) word.difficulty = 0
+          if (!word.due) word.due = new Date()
+          if (!word.elapsed_days) word.elapsed_days = 0
+          if (!word.lapses) word.lapses = 0
+          if (!word.reps) word.reps = 0
+          if (!word.scheduled_days) word.scheduled_days = 0
+          if (!word.stability) word.stability = 0
+          if (!word.state) word.state = 0
           return word
         })
+
         deckStore.addCards(newData)
       }
     }
