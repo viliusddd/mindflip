@@ -14,6 +14,8 @@ const props = defineProps({
 
 const deckStore = useDeckStore()
 
+deckStore.deckId = props.id
+
 const value = ref('')
 
 const buttonLabel = ref('Next Card')
@@ -40,7 +42,7 @@ function goNextCard() {
 <template>
   <div class="container">
     <header class="header">
-      <div class="header__title">{{ deckStore?.deck(id)?.name }}</div>
+      <div class="header__title">{{ deckStore?.deck?.name }}</div>
       <PButton
         class="header__tooltip"
         icon="pi pi-info-circle"
@@ -83,7 +85,7 @@ function goNextCard() {
               <h1>{{ cards[activeCardIndex].definition }}</h1>
             </div>
             <div>
-              {{ deckStore?.deck(id)?.name }}
+              {{ deckStore?.deck?.name }}
               <InputText
                 class="flashcard__input"
                 type="text"

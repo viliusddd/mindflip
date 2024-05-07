@@ -41,7 +41,17 @@ export const useDeckStore = defineStore('DeckStore', () => {
     decks.value.push(deck)
   }
 
-  const deck = () => decks.value.find((obj) => obj.id === selectedDeckId.value)
+  const _getDeck: Ref<Deck> = ref(null)
+  _getDeck.value = decks.value.find((obj) => obj.id === deckId.value)
+
+  const deck = computed({
+    get() {
+      return decks.value.find((obj) => obj.id === deckId.value)
+    },
+    set(newVal) {
+      _getDeck.value = newVal
+    }
+  })
 
   async function fill() {
     const storageVal: string | null = localStorage.getItem(key)
@@ -65,22 +75,22 @@ export const useDeckStore = defineStore('DeckStore', () => {
   const deleteCardsDialog = ref(false)
   const cardDialog = ref(false)
   const selectedCards = ref() // with checkbox
-  const selectedDeckId: Ref<number> = ref()
+  const deckId: Ref<number> = ref()
   const card: Ref<Card> = ref()
   const submitted = ref(false)
   const dataTable = ref()
 
   const cards: Ref<Card[]> = computed(() => {
-    if (selectedDeckId.value) return deck().cards
+    if (deckId.value) return deck.value.cards
     else return null
   })
 
   const addCards = (crds: Card[]) => {
-    deck().cards = deck().cards.concat(crds)
+    deck.value.cards = deck.value.cards.concat(crds)
   }
 
   const deleteSelectedCards = () => {
-    deck().cards = deck().cards.filter(
+    deck.value.cards = deck.value.cards.filter(
       (val) => !selectedCards.value.includes(val)
     )
 
@@ -89,7 +99,9 @@ export const useDeckStore = defineStore('DeckStore', () => {
   }
 
   const deleteCard = () => {
-    deck().cards = deck().cards.filter((obj) => obj.name !== card.value.name)
+    deck.value.cards = deck.value.cards.filter(
+      (obj) => obj.name !== card.value.name
+    )
 
     deleteCardDialog.value = false
     card.value = null
@@ -105,7 +117,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
     deleteCardsDialog,
     cardDialog,
     selectedCards,
-    selectedDeckId,
+    deckId,
     deleteSelectedCards,
     deleteCard,
     submitted,

@@ -4,7 +4,7 @@ import {computed, ref} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 
 import type {Ref, ComputedRef} from 'vue'
-import type {Card, Deck} from '@/stores/DeckStore'
+import type {Deck} from '@/stores/DeckStore'
 
 const deckStore = useDeckStore()
 

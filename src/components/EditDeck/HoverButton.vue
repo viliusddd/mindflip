@@ -23,6 +23,8 @@ const props = defineProps({
 
 const deckStore = useDeckStore()
 
+deckStore.deckId = props.id
+
 const editable = ref(false)
 
 const bold = props.isBold ? 'bold' : 'regular'
@@ -35,7 +37,7 @@ const vFocus = {
 <template>
   <div>
     <div class="pencil__wrapper" v-if="!editable">
-      <h2 class="resting-text">{{ deckStore.deck(id)[attribute] }}</h2>
+      <h2 class="resting-text">{{ deckStore.deck[attribute] }}</h2>
       <PButton
         class="icon"
         icon="pi pi-pencil"
@@ -48,7 +50,7 @@ const vFocus = {
       <InputText
         class="p-inputtext"
         v-focus
-        v-model="deckStore.deck(id)[attribute]"
+        v-model="deckStore.deck[attribute]"
         @keyup.enter="editable = !editable"
         :placeholder="`${attribute}`"
       />

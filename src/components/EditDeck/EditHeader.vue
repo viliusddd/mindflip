@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import {useDeckStore} from '@/stores/DeckStore'
 
-const deckStore = useDeckStore()
-
 const props = defineProps({
   id: {
     type: Number,
     required: true
   }
 })
-deckStore.selectedDeckId = props.id
 
-const deckName = deckStore.deck()?.name
-const deckDesc = deckStore.deck()?.description
+const deckStore = useDeckStore()
+
+deckStore.deckId = props.id
+
+const deckName = deckStore.deck?.name
+const deckDesc = deckStore.deck?.description
 </script>
 
 <template>

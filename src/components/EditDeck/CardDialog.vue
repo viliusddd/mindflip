@@ -11,12 +11,12 @@ const hideDialog = () => {
 }
 
 function updateCard(newCard: Card) {
-  for (let card of deckStore.deck(deckStore.selectedDeckId).cards) {
+  for (let card of deckStore.deck.cards) {
     if (card.name === newCard.name) {
-      deckStore.deck(deckStore.selectedDeckId).cards = deckStore
-        .deck(deckStore.selectedDeckId)
-        .cards.filter((card) => card.name !== newCard.name)
-      deckStore.deck(deckStore.selectedDeckId).cards.push(newCard)
+      deckStore.deck.cards = deckStore.deck.cards.filter(
+        (card) => card.name !== newCard.name
+      )
+      deckStore.deck.cards.push(newCard)
       break
     }
   }
@@ -33,15 +33,13 @@ const saveCard = () => {
     // check if card with same name exists. override/update if exists
 
     // save card
-    deckStore.cards.push(deckStore.card)
+    deckStore.cards.push(
+      Object.assign({}, deckStore.card, createEmptyCard(new Date()))
+    )
 
     // reset values
     deckStore.cardDialog = false
-    deckStore.card = {
-      name: '',
-      definition: '',
-      status: 'new'
-    }
+    deckStore.card = null
   }
 }
 </script>

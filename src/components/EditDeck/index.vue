@@ -18,9 +18,9 @@ const props = defineProps({
   }
 })
 
-deckStore.selectedDeckId = props.id
+deckStore.deckId = props.id
 
-const title = computed(() => `Edit: ${deckStore.deck(props.id).name}`)
+const title = computed(() => `Edit: ${deckStore.deck.name}`)
 useTitle(title)
 </script>
 
