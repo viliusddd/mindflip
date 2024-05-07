@@ -1,19 +1,17 @@
 <script setup lang="ts" generic="T">
 import {FilterMatchMode} from 'primevue/api'
-import {ref, computed, onMounted} from 'vue'
+import {ref, watch, computed, onMounted} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 import {useTitle} from '@vueuse/core'
-import Papa from 'papaparse'
 import HoverButton from './HoverButton.vue'
 import {statuses} from './consts'
 import DeleteCardDialog from './DeleteCardDialog.vue'
 import DeleteCardsDialog from './DeleteCardsDialog.vue'
 import CardDialog from './CardDialog.vue'
+import ToolBar from './ToolBar.vue'
 
-import type {ParseResult} from 'papaparse'
 import type {ComputedRef} from 'vue'
-import type {Card, Deck} from '@/stores/DeckStore'
-import type {FileUploadUploaderEvent} from 'primevue/fileupload'
+import type {Deck} from '@/stores/DeckStore'
 
 const props = defineProps({
   id: {
@@ -33,51 +31,11 @@ deckStore.selectedDeckId = props.id
 const title = computed(() => `Edit: ${deck.value.name}`)
 useTitle(title)
 
-function onUpload(event: FileUploadUploaderEvent) {
-  const file = event.files
-
-  if (file) {
-    const reader = new FileReader()
-    reader.readAsText(file[0], 'UTF-8')
-
-    reader.onload = (evt) => {
-      const rawData = evt?.target?.result
-      if (typeof rawData === 'string') {
-        const parsedData: ParseResult<Card> = Papa.parse<Card>(rawData, {
-          header: true
-        })
-
-        const newData = parsedData.data.map((word) => {
-          if (!word.status) word.status = 'new'
-          return word
-        })
-
-        deckStore.cards = deckStore.cards.concat(newData)
-        deckStore.deck(props.id).cards = deckStore.cards
-      }
-    }
-
-    reader.onerror = () => null
-  }
-}
-
 onMounted(() => (deckStore.cards = deck.value.cards))
-
-const dt = ref()
 
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS}
 })
-const openNew = () => {
-  deckStore.card = {
-    name: '',
-    definition: '',
-    status: 'new'
-  }
-  deckStore.submitted = false
-  deckStore.cardDialog = true
-}
-
 const editCard = (prod) => {
   deckStore.card = {...prod}
   deckStore.cardDialog = true
@@ -86,12 +44,12 @@ const confirmDeleteCard = (prod) => {
   deckStore.card = prod
   deckStore.deleteCardDialog = true
 }
-const exportCSV = () => {
-  dt.value.exportCSV()
-}
-const confirmDeleteSelected = () => {
-  deckStore.deleteCardsDialog = true
-}
+
+const dataTable = ref()
+
+watch(dataTable, () => (deckStore.dataTable = dataTable.value))
+
+deckStore.dataTable
 </script>
 
 <template>
@@ -100,51 +58,10 @@ const confirmDeleteSelected = () => {
       <HoverButton :id size="2.5ch" :isBold="true" attribute="name" />
       <HoverButton :id :isBold="false" attribute="description" />
     </header>
-    submitted: {{ deckStore.submitted }} card: {{ deckStore.card }}
     <div class="card">
-      <Toolbar class="mb-4">
-        <template #start>
-          <PButton
-            label="New"
-            icon="pi pi-plus"
-            severity="success"
-            class="mr-2"
-            @click="openNew"
-          />
-          <PButton
-            label="Delete"
-            icon="pi pi-trash"
-            severity="danger"
-            @click="confirmDeleteSelected"
-            :disabled="
-              !deckStore.selectedCards || !deckStore.selectedCards.length
-            "
-          />
-        </template>
-
-        <template #end>
-          <FileUpload
-            mode="basic"
-            accept=".csv, text/csv"
-            :maxFileSize="1000000"
-            label="Import"
-            chooseLabel="Import"
-            class="mr-2 inline-block"
-            auto
-            customUpload
-            @uploader="onUpload"
-          />
-          <PButton
-            label="Export"
-            icon="pi pi-download"
-            severity="help"
-            @click="exportCSV"
-          />
-        </template>
-      </Toolbar>
-
+      <ToolBar />
       <DataTable
-        ref="dt"
+        ref="dataTable"
         :value="deckStore.cards"
         v-model:selection="deckStore.selectedCards"
         dataKey="id"

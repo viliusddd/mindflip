@@ -63,6 +63,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
   const card: Ref<Card> = ref()
   const cards: Ref<Card[]> = ref()
   const submitted = ref(false)
+  const dataTable = ref()
 
   const deleteSelectedCards = () => {
     deck(selectedDeckId.value).cards = deck(selectedDeckId.value).cards.filter(
@@ -105,6 +106,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
     deleteSelectedCards,
     deleteCard,
     submitted,
+    dataTable,
     card,
     cards
   }
