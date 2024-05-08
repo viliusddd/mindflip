@@ -13,7 +13,16 @@ const openNew = () => {
   deckStore.card = {
     name: '',
     definition: '',
-    status: 'new'
+    status: 'new',
+    difficulty: 0,
+    due: new Date(),
+    elapsed_days: 0,
+    lapses: 0,
+    reps: 0,
+    scheduled_days: 0,
+    stability: 0,
+    state: 0,
+    id: createId()
   }
   deckStore.submitted = false
   deckStore.cardDialog = true
