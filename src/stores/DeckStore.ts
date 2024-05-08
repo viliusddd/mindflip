@@ -6,6 +6,7 @@ export type Card = {
   name: string
   definition: string
   status: string
+  id: string
   difficulty: number
   due: Date
   elapsed_days: number

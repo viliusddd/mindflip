@@ -2,6 +2,7 @@
 import {useDeckStore} from '@/stores/DeckStore'
 import type {FileUploadUploaderEvent} from 'primevue/fileupload'
 import Papa from 'papaparse'
+import {createId} from './utils'
 
 import type {Card} from '@/stores/DeckStore'
 import type {ParseResult} from 'papaparse'
@@ -50,6 +51,7 @@ function onUpload(event: FileUploadUploaderEvent) {
           if (!word.scheduled_days) word.scheduled_days = 0
           if (!word.stability) word.stability = 0
           if (!word.state) word.state = 0
+          if (!word.id) word.id = createId()
           return word
         })
 

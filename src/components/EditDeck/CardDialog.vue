@@ -2,6 +2,7 @@
 import {statuses} from './consts'
 import {useDeckStore} from '@/stores/DeckStore'
 import type {Card} from '@/stores/DeckStore'
+import {createId} from './utils'
 
 const deckStore = useDeckStore()
 
@@ -33,6 +34,7 @@ const saveCard = () => {
     // check if card with same name exists. override/update if exists
 
     // save card
+    deckStore.card['id'] = createId()
     deckStore.cards.push(
       Object.assign({}, deckStore.card, createEmptyCard(new Date()))
     )
