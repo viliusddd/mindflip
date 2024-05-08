@@ -2,6 +2,7 @@
 import {computed, ref} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 import {useRouter} from 'vue-router'
+import {formatDate, fsrs, generatorParameters, Rating, Grades} from 'ts-fsrs'
 
 import type {Card} from '@/stores/DeckStore'
 import type {ComputedRef} from 'vue'
@@ -19,37 +20,40 @@ const deckStore = useDeckStore()
 
 deckStore.deckId = props.id
 
-const cards = deckStore.cardsDue
+const cardIndex = ref(0)
+const cardsDue = deckStore.cardsDue
+const card = computed(() => cardsDue[cardIndex.value])
 
 const progressBarValue = computed(() => {
-  return (100 / cards.length) * cardIndex.value
+  return (100 / deckStore.cardsDue.length) * cardIndex.value
 })
 
-const value = ref('')
+const inputValue = ref('')
 
 const buttonLabel = ref('Next Card')
-const cardIndex = ref(0)
 
 function goNextCard() {
-  if (cardIndex.value === cards.length - 2) {
+  if (cardIndex.value === cardsDue.length - 2) {
     buttonLabel.value = 'Finish'
-    cardIndex.value += 1
-  } else if (cardIndex.value === cards.length - 1) {
+    cardIndex.value++
+  } else if (cardIndex.value === cardsDue.length - 1) {
     router.go(-1)
   } else {
-    cardIndex.value += 1
+    cardIndex.value++
   }
 }
+
+const fsrsParams = generatorParameters({enable_fuzz: true})
+const fsrsInstance = fsrs(fsrsParams)
+
+const schedulingCards = fsrsInstance.repeat(card.value, new Date())
+
 
 function saveCard(evt) {
   const btnVal = evt.target.innerText
   const btnRating = Rating[btnVal]
-  for (let crd of cards) {
-    if (crd.id === schedulingCards[btnRating].card.id) {
-      crd = schedulingCards[btnRating].card
-    }
-  }
-  goNextCard()
+  deckStore.deleteCard(card.value)
+  deckStore.cards.push(schedulingCards[btnRating].card)
 }
 </script>
 
@@ -96,14 +100,14 @@ function saveCard(evt) {
               <p>Type the correct answer</p>
             </div>
             <div class="flashcard__definition">
-              <h1>{{ cards[cardIndex].definition }}</h1>
+              <h1>{{ card.definition }}</h1>
             </div>
             <div>
               {{ deckStore?.deck?.name }}
               <InputText
                 class="flashcard__input"
                 type="text"
-                v-model="value"
+                v-model="inputValue"
                 spellcheck="false"
                 autocapitalize="off"
                 autocomplete="off"

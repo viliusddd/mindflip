@@ -107,9 +107,11 @@ export const useDeckStore = defineStore('DeckStore', () => {
     selectedCards.value = null
   }
 
-  const deleteCard = () => {
+  const deleteCard = (cardToDelete) => {
+    if (!cardToDelete) cardToDelete = card.value
+
     deck.value.cards = deck.value.cards.filter(
-      (obj) => obj.name !== card.value.name
+      (obj) => obj.id !== cardToDelete.id
     )
 
     deleteCardDialog.value = false
