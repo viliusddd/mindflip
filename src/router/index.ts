@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import HomeView from '@/views/CoursesView.vue'
+import HomeView from '@/views/DecksView.vue'
 
 const routes = [
   {
@@ -13,7 +13,7 @@ const routes = [
   {
     path: '/create',
     name: 'create',
-    component: () => import('@/views/CreateCourseView.vue')
+    component: () => import('@/views/CreateNewDeckView.vue')
   },
   {
     path: '/deck/:id',

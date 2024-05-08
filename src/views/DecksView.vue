@@ -6,7 +6,7 @@ const deckStore = useDeckStore()
 
 <template>
   <main v-for="(deck, index) of deckStore.decks" :key="index">
-    <Deck :deck :id="deck.id" />
+    <Deck :id="deck.id" />
   </main>
 </template>
 

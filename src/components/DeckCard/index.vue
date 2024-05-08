@@ -1,38 +1,50 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import OptionsMenu from './OptionsMenu.vue'
+import {useDeckStore} from '@/stores/DeckStore'
 
 const props = defineProps({
-  deck: Object
+  id: {
+    type: Number,
+    required: true
+  }
 })
+
+const deckStore = useDeckStore()
+
+deckStore.deckId = props.id
 
 const cardsLearned = ref(0)
 
 const progressValue = computed(() =>
-  cardsLearned.value
-    ? (cardsLearned.value / props?.deck?.cards?.length) * 100
-    : 0
+  cardsLearned.value ? (cardsLearned.value / deckStore.cards.length) * 100 : 0
 )
 
-const reviewWords = ref(0)
-const difficultWords = ref(0)
+const dueWordsCount = computed(() => {
+  return deckStore.cards.reduce((dueCards, card) => {
+    console.log(new Date(card.due), new Date())
+    if (new Date(card.due) <= new Date()) return (dueCards += 1)
+    else return dueCards
+  }, 0)
+})
+const difficultWordsCount = ref(0)
 </script>
 
 <template>
   <div class="wrapper">
     <div class="container">
       <div class="deck">
-        <i :class="`deck__avatar pi pi-${deck?.icon}`"></i>
+        <i :class="`deck__avatar pi pi-${deckStore.deck?.icon}`"></i>
         <div class="deck__header">
-          <h1>{{ deck?.name }}</h1>
-          <OptionsMenu :id="deck?.id" />
+          <h1>{{ deckStore.deck?.name }}</h1>
+          <OptionsMenu :id="deckStore.deck?.id" />
         </div>
         <div class="deck__stats">
           <p>
             <b>{{ progressValue }}%</b>
           </p>
           <p>
-            <b>{{ cardsLearned }}/{{ deck?.cards?.length }}</b> items learned
+            <b>{{ cardsLearned }}/{{ deckStore.cards.length }}</b> items learned
           </p>
         </div>
         <ProgressBar
@@ -42,13 +54,10 @@ const difficultWords = ref(0)
         />
         <div class="deck__footer">
           <div class="deck__footer-stats">
-            <div><i class="pi pi-eye" /> {{ reviewWords }}</div>
-            <div><i class="pi pi-bolt" /> {{ difficultWords }}</div>
+            <div><i class="pi pi-eye" /> {{ dueWordsCount }}</div>
+            <div><i class="pi pi-bolt" /> {{ difficultWordsCount }}</div>
           </div>
-          <RouterLink
-            class="deck__button"
-            :to="{name: 'Deck', params: {id: deck?.id}}"
-          >
+          <RouterLink class="deck__button" :to="{name: 'Deck', params: {id}}">
             <PButton
               icon="pi pi-hammer"
               label="Learn new words"
