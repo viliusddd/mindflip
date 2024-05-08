@@ -3,6 +3,9 @@ import {computed, ref} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 import {useRouter} from 'vue-router'
 
+import type {Card} from '@/stores/DeckStore'
+import type {ComputedRef} from 'vue'
+
 const router = useRouter()
 
 const props = defineProps({
@@ -16,26 +19,37 @@ const deckStore = useDeckStore()
 
 deckStore.deckId = props.id
 
+const cards = deckStore.cardsDue
+
+const progressBarValue = computed(() => {
+  return (100 / cards.length) * cardIndex.value
+})
+
 const value = ref('')
 
 const buttonLabel = ref('Next Card')
-const activeCardIndex = ref(0)
-
-const cards = deckStore?.deck(props.id)?.cards
-
-const progressBarValue = computed(() => {
-  return (100 / cards.length) * activeCardIndex.value
-})
+const cardIndex = ref(0)
 
 function goNextCard() {
-  if (activeCardIndex.value === cards.length - 2) {
+  if (cardIndex.value === cards.length - 2) {
     buttonLabel.value = 'Finish'
-    activeCardIndex.value += 1
-  } else if (activeCardIndex.value === cards.length - 1) {
+    cardIndex.value += 1
+  } else if (cardIndex.value === cards.length - 1) {
     router.go(-1)
   } else {
-    activeCardIndex.value += 1
+    cardIndex.value += 1
   }
+}
+
+function saveCard(evt) {
+  const btnVal = evt.target.innerText
+  const btnRating = Rating[btnVal]
+  for (let crd of cards) {
+    if (crd.id === schedulingCards[btnRating].card.id) {
+      crd = schedulingCards[btnRating].card
+    }
+  }
+  goNextCard()
 }
 </script>
 
@@ -75,14 +89,14 @@ function goNextCard() {
             class="flashcard__score"
             v-tooltip.left="'The possicion of current card in deck.'"
           >
-            {{ activeCardIndex + 1 }}
+            {{ cardIndex + 1 }}
           </div>
           <div class="flashcard__body">
             <div class="flashcard__title">
               <p>Type the correct answer</p>
             </div>
             <div class="flashcard__definition">
-              <h1>{{ cards[activeCardIndex].definition }}</h1>
+              <h1>{{ cards[cardIndex].definition }}</h1>
             </div>
             <div>
               {{ deckStore?.deck?.name }}
@@ -125,10 +139,30 @@ function goNextCard() {
       </div>
     </div>
     <div class="difficulty__buttons">
-      <PButton :raised="true" v-tooltip.top="'<10m'" label="Again" />
-      <PButton :raised="true" v-tooltip.top="'2d'" label="Hard" />
-      <PButton :raised="true" v-tooltip.top="'7d'" label="Good" />
-      <PButton :raised="true" v-tooltip.top="'14d'" label="Easy" />
+      <PButton
+        :raised="true"
+        @click="saveCard"
+        v-tooltip.top="'<10m'"
+        label="Again"
+      />
+      <PButton
+        :raised="true"
+        @click="saveCard"
+        v-tooltip.top="'2d'"
+        label="Hard"
+      />
+      <PButton
+        :raised="true"
+        @click="saveCard"
+        v-tooltip.top="'7d'"
+        label="Good"
+      />
+      <PButton
+        :raised="true"
+        @click="saveCard"
+        v-tooltip.top="'14d'"
+        label="Easy"
+      />
     </div>
     <footer></footer>
   </div>

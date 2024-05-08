@@ -42,6 +42,14 @@ export const useDeckStore = defineStore('DeckStore', () => {
     decks.value.push(deck)
   }
 
+  const cardsDue: ComputedRef<Card[]> = computed(() => {
+    const cardsArray = []
+    for (const crd of cards.value) {
+      if (new Date(crd.due) <= new Date()) cardsArray.push(crd)
+    }
+    return cardsArray
+  })
+
   const _getDeck: Ref<Deck> = ref(null)
   _getDeck.value = decks.value.find((obj) => obj.id === deckId.value)
 
@@ -125,6 +133,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
     dataTable,
     card,
     cards,
-    addCards
+    addCards,
+    cardsDue
   }
 })

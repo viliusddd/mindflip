@@ -3,6 +3,7 @@ import {statuses} from './consts'
 import {useDeckStore} from '@/stores/DeckStore'
 import type {Card} from '@/stores/DeckStore'
 import {createId} from './utils'
+import {createEmptyCard} from 'ts-fsrs'
 
 const deckStore = useDeckStore()
 

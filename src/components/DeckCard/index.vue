@@ -20,13 +20,7 @@ const progressValue = computed(() =>
   cardsLearned.value ? (cardsLearned.value / deckStore.cards.length) * 100 : 0
 )
 
-const dueWordsCount = computed(() => {
-  return deckStore.cards.reduce((dueCards, card) => {
-    console.log(new Date(card.due), new Date())
-    if (new Date(card.due) <= new Date()) return (dueCards += 1)
-    else return dueCards
-  }, 0)
-})
+const dueWordsCount = deckStore.cardsDue.length
 const difficultWordsCount = ref(0)
 </script>
 
