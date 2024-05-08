@@ -107,6 +107,12 @@ export const useDeckStore = defineStore('DeckStore', () => {
     selectedCards.value = null
   }
 
+  function replaceCard(crd) {
+    const pos = cards.value.map((e) => e.id).indexOf(crd.id)
+    deck.value.cards.splice(pos, 1)
+    deck.value.cards.push(crd)
+  }
+
   const deleteCard = (cardToDelete) => {
     if (!cardToDelete) cardToDelete = card.value
 
@@ -136,6 +142,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
     card,
     cards,
     addCards,
-    cardsDue
+    cardsDue,
+    replaceCard
   }
 })

@@ -48,16 +48,16 @@ const fsrsInstance = fsrs(fsrsParams)
 
 const schedulingCards = fsrsInstance.repeat(card.value, new Date())
 
-
 function saveCard(evt) {
   const btnVal = evt.target.innerText
   const btnRating = Rating[btnVal]
-  deckStore.deleteCard(card.value)
-  deckStore.cards.push(schedulingCards[btnRating].card)
+  const newCardVal = schedulingCards[btnRating].card
+  deckStore.replaceCard(newCardVal)
 }
 </script>
 
 <template>
+  <pre>{{ cardsDue }}</pre>
   <div class="container">
     <header class="header">
       <div class="header__title">{{ deckStore?.deck?.name }}</div>
