@@ -3,7 +3,6 @@ import {createEmptyCard, State} from 'ts-fsrs'
 import {createId} from './utils'
 import {states} from './consts'
 import {useDeckStore} from '@/stores/DeckStore'
-import type {Card} from '@/stores/DeckStore'
 
 const deckStore = useDeckStore()
 
@@ -12,24 +11,11 @@ const hideDialog = () => {
   deckStore.submitted = false
 }
 
-function updateCard(newCard: Card) {
-  for (let card of deckStore.deck.cards) {
-    if (card.name === newCard.name) {
-      deckStore.deck.cards = deckStore.deck.cards.filter(
-        (card) => card.name !== newCard.name
-      )
-      deckStore.deck.cards.push(newCard)
-      break
-    }
-  }
-}
-
 const saveCard = () => {
   deckStore.submitted = true
 
   if (deckStore.card.name.trim()) {
-    deckStore.card['id'] = createId()
-    deckStore.replaceCard(
+    deckStore.addCard(
       Object.assign({}, createEmptyCard(new Date()), deckStore.card)
     )
 

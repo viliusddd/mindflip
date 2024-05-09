@@ -107,18 +107,17 @@ export const useDeckStore = defineStore('DeckStore', () => {
     selectedCards.value = null
   }
 
-  function replaceCard(crd) {
-    const pos = cards.value.map((obj) => obj.id).indexOf(crd.id)
-    // deck.value.cards.splice(pos, 1)
-    // deck.value.cards.push(crd)
-    deck.value.cards[pos] = crd
+  /** Add new or update existing card */
+  function addCard(crd: Card) {
+    const pos = cards.value.map((e) => e.id).indexOf(crd.id)
+    if (pos === -1) deck.value.cards.push(crd)
+    else deck.value.cards[pos] = crd
   }
 
   const deleteCard = () => {
     deck.value.cards = deck.value.cards.filter(
       (obj) => obj.id !== card.value.id
     )
-
     deleteCardDialog.value = false
     card.value = null
   }
@@ -144,7 +143,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
     cards,
     addCards,
     cardsDue,
-    replaceCard,
-    dueReview
+    dueReview,
+    addCard
   }
 })
