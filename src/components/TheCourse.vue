@@ -66,9 +66,11 @@ function saveCard(evt) {
 
 function markAsKnown() {
   card.value.state = 2
+  goNextCard()
 }
 function markAsDifficult() {
   card.value.difficulty = 10
+  goNextCard()
 }
 </script>
 
