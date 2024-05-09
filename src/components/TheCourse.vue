@@ -56,7 +56,7 @@ const schedulingCards = fsrsInstance.repeat(card.value, new Date())
 
 // function saveCard(evt: PointerEvent) {
 function saveCard(evt) {
-  const btnVal = evt.target.innerHtml
+  const btnVal = evt.target.innerText
   const btnRating = Rating[btnVal]
   const newCardVal = schedulingCards[btnRating].card
   deckStore.addCard(newCardVal)
