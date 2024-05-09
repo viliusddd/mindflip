@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import {FilterMatchMode} from 'primevue/api'
 import {ref, watch} from 'vue'
-import {statuses} from './consts'
+import {states} from './consts'
 import {useDeckStore} from '@/stores/DeckStore'
+import {State} from 'ts-fsrs'
 
 const deckStore = useDeckStore()
 
@@ -66,12 +67,12 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
       sortable
       style="min-width: 5rem"
     ></Column>
-    <Column field="status" header="Status" sortable style="min-width: 3rem">
+    <Column field="state" header="State" sortable style="min-width: 3rem">
       <template #body="slotProps">
         <Tag
-          :value="slotProps.data.status"
+          :value="State[slotProps.data.state]"
           :severity="
-            statuses.find((obj) => obj.value === slotProps.data.status).severity
+            states.find((obj) => obj.value === slotProps.data.state).severity
           "
         />
       </template>

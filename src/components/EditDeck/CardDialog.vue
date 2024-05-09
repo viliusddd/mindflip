@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {statuses} from './consts'
+import {states} from './consts'
 import {useDeckStore} from '@/stores/DeckStore'
 import type {Card} from '@/stores/DeckStore'
 import {createId} from './utils'
@@ -28,9 +28,7 @@ const saveCard = () => {
   deckStore.submitted = true
 
   if (deckStore.card.name.trim()) {
-    deckStore.card.status = deckStore.card.status
-      ? deckStore.card.status
-      : 'new'
+    deckStore.card.state = deckStore.card.state ? deckStore.card.state : 0
 
     // check if card with same name exists. override/update if exists
 
@@ -80,21 +78,21 @@ const saveCard = () => {
     </div>
 
     <div class="field">
-      <label for="status">Card Status</label>
+      <label for="state">Card State</label>
       <Dropdown
-        id="status"
-        v-model="deckStore.card.status"
-        :options="statuses"
-        optionLabel="value"
+        id="state"
+        v-model="deckStore.card.state"
+        :options="states"
+        optionLabel="label"
         optionValue="value"
-        placeholder="Select a Status"
+        placeholder="Select a state"
       >
         <template #value="slotProps">
           <div v-if="slotProps.value">
             <Tag
               :value="slotProps.value"
               :severity="
-                statuses.find((obj) => obj.value === slotProps.value).severity
+                states.find((obj) => obj.value === slotProps.value).severity
               "
             />
           </div>
