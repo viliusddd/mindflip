@@ -30,11 +30,8 @@ const saveCard = () => {
   if (deckStore.card.name.trim()) {
     deckStore.card.state = deckStore.card.state ? deckStore.card.state : 0
 
-    // check if card with same name exists. override/update if exists
-
-    // save card
     deckStore.card['id'] = createId()
-    deckStore.cards.push(
+    deckStore.replaceCard(
       Object.assign({}, deckStore.card, createEmptyCard(new Date()))
     )
 
