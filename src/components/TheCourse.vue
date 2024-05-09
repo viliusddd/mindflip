@@ -147,7 +147,7 @@ function markAsDifficult() {
               rounded
               text
               @click="markAsDifficult"
-              v-tooltip.bottom="'Mark a word as difficult'"
+              v-tooltip.bottom="'Mark a card as difficult'"
             />
             <PButton
               icon="pi pi-ban"
@@ -155,7 +155,7 @@ function markAsDifficult() {
               text
               @click="markAsKnown"
               v-tooltip.bottom="
-                'Mark this word as known and you will not be tested on it again'
+                'Mark this card as known and you will not be tested on it again'
               "
             />
           </div>

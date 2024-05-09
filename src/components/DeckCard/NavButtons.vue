@@ -11,20 +11,20 @@ defineProps({
   }
 })
 
-const dueWordsCount = computed(() => deckStore.cardsDue.length)
+const dueCardsCount = computed(() => deckStore.cardsDue.length)
 
 const reviewAllMsg = `Review all ${deckStore.cards.length} cards`
-const reviewDueMsg = `Review ${dueWordsCount.value} due cards`
+const reviewDueMsg = `Review ${dueCardsCount.value} due cards`
 </script>
 
 <template>
-  <nav v-if="dueWordsCount" class="deck__buttons">
+  <nav v-if="dueCardsCount" class="deck__buttons">
     <RouterLink class="deck__button" :to="{name: 'Deck', params: {id}}">
       <PButton
         label="Review"
         size="large"
         :raised="true"
-        :badge="dueWordsCount.toString()"
+        :badge="dueCardsCount.toString()"
         @click="deckStore.dueReview = true"
         v-tooltip.top="reviewDueMsg"
       />
@@ -41,7 +41,7 @@ const reviewDueMsg = `Review ${dueWordsCount.value} due cards`
   <nav v-else>
     <RouterLink class="deck__button" :to="{name: 'Deck', params: {id}}">
       <PButton
-        label="Learn all words"
+        label="Learn all cards"
         icon="pi pi-hammer"
         size="large"
         :raised="true"

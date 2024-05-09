@@ -23,8 +23,8 @@ const progressValue = computed(() =>
   cardsLearned.value ? (cardsLearned.value / deckStore.cards.length) * 100 : 0
 )
 
-const dueWordsCount = deckStore.cardsDue.length.toString()
-const difficultWordsCount = computed(
+const dueCardsCount = deckStore.cardsDue.length.toString()
+const difficultCardsCount = computed(
   () => deckStore.cards.filter((card) => card.difficulty >= 6).length
 )
 </script>
@@ -53,12 +53,12 @@ const difficultWordsCount = computed(
         />
         <div class="deck__footer">
           <div class="deck__footer-stats">
-            <div v-tooltip.bottom="'Words ready for review'">
-              <i class="pi pi-eye" /> {{ dueWordsCount }}
+            <div v-tooltip.bottom="'Cards ready for review'">
+              <i class="pi pi-eye" /> {{ dueCardsCount }}
             </div>
-            <div v-tooltip.bottom="'Difficult words'">
+            <div v-tooltip.bottom="'Difficult cards'">
               <i class="pi pi-bolt" />
-              {{ difficultWordsCount }}
+              {{ difficultCardsCount }}
             </div>
           </div>
           <NavButtons :id />
