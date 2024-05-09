@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import OptionsMenu from './OptionsMenu.vue'
 import {useDeckStore} from '@/stores/DeckStore'
+import NavButtons from './NavButtons.vue'
+import OptionsMenu from './OptionsMenu.vue'
 
 const props = defineProps({
   id: {
@@ -22,7 +23,7 @@ const progressValue = computed(() =>
   cardsLearned.value ? (cardsLearned.value / deckStore.cards.length) * 100 : 0
 )
 
-const dueWordsCount = deckStore.cardsDue.length
+const dueWordsCount = deckStore.cardsDue.length.toString()
 const difficultWordsCount = computed(
   () => deckStore.cards.filter((card) => card.difficulty >= 6).length
 )
@@ -60,26 +61,7 @@ const difficultWordsCount = computed(
               {{ difficultWordsCount }}
             </div>
           </div>
-          <nav class="deck__buttons">
-            <RouterLink class="deck__button" :to="{name: 'Deck', params: {id}}">
-              <PButton
-                label="Review"
-                size="large"
-                :raised="true"
-                :badge="dueWordsCount.toString()"
-                @click="deckStore.dueReview = true"
-                v-tooltip.top="'Review due cards'"
-              />
-            </RouterLink>
-            <RouterLink class="deck__button" :to="{name: 'Deck', params: {id}}">
-              <PButton
-                icon="pi pi-hammer"
-                size="large"
-                :raised="true"
-                v-tooltip.top="'Review all cards'"
-              />
-            </RouterLink>
-          </nav>
+          <NavButtons :id />
         </div>
       </div>
     </div>
@@ -106,10 +88,6 @@ const difficultWordsCount = computed(
     'stats stats'
     'progress progress'
     'footer footer';
-}
-.deck__buttons {
-  display: flex;
-  column-gap: 5px;
 }
 .deck__avatar {
   grid-area: avatar;
