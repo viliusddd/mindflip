@@ -51,14 +51,26 @@ const difficultWordsCount = ref(0)
             <div><i class="pi pi-eye" /> {{ dueWordsCount }}</div>
             <div><i class="pi pi-bolt" /> {{ difficultWordsCount }}</div>
           </div>
-          <RouterLink class="deck__button" :to="{name: 'Deck', params: {id}}">
-            <PButton
-              icon="pi pi-hammer"
-              label="Learn new words"
-              size="large"
-              :raised="true"
-            />
-          </RouterLink>
+          <nav class="deck__buttons">
+            <RouterLink class="deck__button" :to="{name: 'Deck', params: {id}}">
+              <PButton
+                label="Review"
+                size="large"
+                :raised="true"
+                :badge="dueWordsCount.toString()"
+                @click="deckStore.dueReview = true"
+                v-tooltip.top="'Review due cards'"
+              />
+            </RouterLink>
+            <RouterLink class="deck__button" :to="{name: 'Deck', params: {id}}">
+              <PButton
+                icon="pi pi-hammer"
+                size="large"
+                :raised="true"
+                v-tooltip.top="'Review all cards'"
+              />
+            </RouterLink>
+          </nav>
         </div>
       </div>
     </div>
@@ -85,6 +97,10 @@ const difficultWordsCount = ref(0)
     'stats stats'
     'progress progress'
     'footer footer';
+}
+.deck__buttons {
+  display: flex;
+  column-gap: 5px;
 }
 .deck__avatar {
   grid-area: avatar;
@@ -116,6 +132,7 @@ const difficultWordsCount = ref(0)
   grid-area: footer;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .deck__footer-stats {
   display: flex;

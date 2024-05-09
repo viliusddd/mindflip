@@ -122,6 +122,8 @@ export const useDeckStore = defineStore('DeckStore', () => {
     card.value = null
   }
 
+  const dueReview = ref(false)
+
   return {
     decks,
     deck,
@@ -141,6 +143,7 @@ export const useDeckStore = defineStore('DeckStore', () => {
     cards,
     addCards,
     cardsDue,
-    replaceCard
+    replaceCard,
+    dueReview
   }
 })

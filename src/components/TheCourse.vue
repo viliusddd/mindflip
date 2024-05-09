@@ -3,9 +3,7 @@ import {computed, ref} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 import {useRouter} from 'vue-router'
 import {formatDate, fsrs, generatorParameters, Rating, Grades} from 'ts-fsrs'
-
 import type {Card} from '@/stores/DeckStore'
-import type {ComputedRef} from 'vue'
 
 const router = useRouter()
 
@@ -21,11 +19,19 @@ const deckStore = useDeckStore()
 deckStore.deckId = props.id
 
 const cardIndex = ref(0)
-const cardsDue = deckStore.cardsDue
-const card = computed(() => cardsDue[cardIndex.value])
+let cards: Card[]
+
+if (deckStore.dueReview) {
+  cards = deckStore.cardsDue
+  deckStore.dueReview = false
+} else {
+  cards = deckStore.cards
+}
+
+const card = computed(() => cards[cardIndex.value])
 
 const progressBarValue = computed(() => {
-  return (100 / deckStore.cardsDue.length) * cardIndex.value
+  return (100 / deckStore.cards.length) * cardIndex.value
 })
 
 const inputValue = ref('')
@@ -33,10 +39,10 @@ const inputValue = ref('')
 const buttonLabel = ref('Next Card')
 
 function goNextCard() {
-  if (cardIndex.value === cardsDue.length - 2) {
+  if (cardIndex.value === cards.length - 2) {
     buttonLabel.value = 'Finish'
     cardIndex.value++
-  } else if (cardIndex.value === cardsDue.length - 1) {
+  } else if (cardIndex.value === cards.length - 1) {
     router.go(-1)
   } else {
     cardIndex.value++
@@ -57,7 +63,7 @@ function saveCard(evt) {
 </script>
 
 <template>
-  <pre>{{ cardsDue }}</pre>
+  <!-- <pre>{{ $route }}</pre> -->
   <div class="container">
     <header class="header">
       <div class="header__title">{{ deckStore?.deck?.name }}</div>
