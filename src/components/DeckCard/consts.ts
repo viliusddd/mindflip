@@ -19,11 +19,6 @@ export const items: OptionsItems[] = [
         icon: 'pi pi-file-edit'
       },
       {
-        name: 'toggle',
-        label: 'Toggle Visibility',
-        icon: 'pi pi-eye'
-      },
-      {
         name: 'reset',
         label: 'Reset Statistics',
         icon: 'pi pi-history'
