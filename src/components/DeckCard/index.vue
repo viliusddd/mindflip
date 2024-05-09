@@ -21,7 +21,9 @@ const cardsLearned = computed(
 console.log(cardsLearned)
 
 const progressValue = computed(() =>
-  cardsLearned.value ? (cardsLearned.value / deckStore.cards.length) * 100 : 0
+  cardsLearned.value
+    ? ((cardsLearned.value / deckStore.cards.length) * 100).toFixed(1)
+    : 0
 )
 
 const dueWordsCount = deckStore.cardsDue.length

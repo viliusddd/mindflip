@@ -59,6 +59,15 @@ function saveCard(evt) {
   const btnRating = Rating[btnVal]
   const newCardVal = schedulingCards[btnRating].card
   deckStore.replaceCard(newCardVal)
+
+  goNextCard()
+}
+
+function markAsKnown() {
+  card.value.state = 2
+}
+function markAsDifficult() {
+  card.value.difficulty = 10
 }
 </script>
 
@@ -134,12 +143,14 @@ function saveCard(evt) {
               icon="pi pi-bolt"
               rounded
               text
+              @click="markAsDifficult"
               v-tooltip.bottom="'Mark a word as difficult'"
             />
             <PButton
               icon="pi pi-ban"
               rounded
               text
+              @click="markAsKnown"
               v-tooltip.bottom="
                 'Mark this word as known and you will not be tested on it again'
               "
