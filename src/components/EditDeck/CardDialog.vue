@@ -3,7 +3,7 @@ import {states} from './consts'
 import {useDeckStore} from '@/stores/DeckStore'
 import type {Card} from '@/stores/DeckStore'
 import {createId} from './utils'
-import {createEmptyCard} from 'ts-fsrs'
+import {createEmptyCard, State} from 'ts-fsrs'
 
 const deckStore = useDeckStore()
 
@@ -28,11 +28,9 @@ const saveCard = () => {
   deckStore.submitted = true
 
   if (deckStore.card.name.trim()) {
-    deckStore.card.state = deckStore.card.state ? deckStore.card.state : 0
-
     deckStore.card['id'] = createId()
     deckStore.replaceCard(
-      Object.assign({}, deckStore.card, createEmptyCard(new Date()))
+      Object.assign({}, createEmptyCard(new Date()), deckStore.card)
     )
 
     // reset values
@@ -75,19 +73,19 @@ const saveCard = () => {
     </div>
 
     <div class="field">
-      <label for="state">Card State</label>
+      <label for="state">State</label>
       <Dropdown
         id="state"
         v-model="deckStore.card.state"
         :options="states"
         optionLabel="label"
         optionValue="value"
-        placeholder="Select a state"
+        :placeholder="State[0]"
       >
         <template #value="slotProps">
           <div v-if="slotProps.value">
             <Tag
-              :value="slotProps.value"
+              :value="State[slotProps.value]"
               :severity="
                 states.find((obj) => obj.value === slotProps.value).severity
               "
