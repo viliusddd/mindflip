@@ -15,7 +15,7 @@ export const items: OptionsItems[] = [
     items: [
       {
         name: 'edit',
-        label: 'Edit Course',
+        label: 'Edit Deck',
         icon: 'pi pi-file-edit'
       },
       {
@@ -25,12 +25,12 @@ export const items: OptionsItems[] = [
       },
       {
         name: 'reset',
-        label: 'Reset statistics',
+        label: 'Reset Statistics',
         icon: 'pi pi-history'
       },
       {
         name: 'quit',
-        label: 'Quit Course',
+        label: 'Remove Deck',
         icon: 'pi pi-ban'
       }
     ]
