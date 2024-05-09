@@ -36,6 +36,7 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
     :rowsPerPageOptions="[5, 10, 25]"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} cards"
+    size="small"
   >
     <template #header>
       <div class="cards__title">
@@ -50,23 +51,24 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
       </div>
     </template>
 
-    <Column
-      selectionMode="multiple"
-      style="width: 1rem"
-      :exportable="false"
-    ></Column>
-    <Column
-      field="name"
-      header="Name"
-      sortable
-      style="min-width: 5rem"
-    ></Column>
+    <Column selectionMode="multiple" style="width: 1rem" :exportable="false" />
+    <Column field="name" header="Question" sortable style="min-width: 5rem" />
     <Column
       field="definition"
-      header="Definition"
+      header="Answer"
       sortable
       style="min-width: 5rem"
-    ></Column>
+    />
+    <Column field="due" header="Due">
+      <template #body="slotProps">
+        {{
+          new Date(slotProps.data.due).toLocaleString('Lt', {
+            dateStyle: 'short',
+            timeStyle: 'short'
+          })
+        }}
+      </template>
+    </Column>
     <Column field="state" header="State" sortable style="min-width: 3rem">
       <template #body="slotProps">
         <Tag
@@ -81,15 +83,14 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
       <template #body="slotProps">
         <PButton
           icon="pi pi-pencil"
-          outlined
           rounded
-          class="mr-2"
+          text
           @click="editCard(slotProps.data)"
         />
         <PButton
           icon="pi pi-trash"
-          outlined
           rounded
+          text
           severity="danger"
           @click="confirmDeleteCard(slotProps.data)"
         />
@@ -97,3 +98,19 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
     </Column>
   </DataTable>
 </template>
+
+<style>
+.cards__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.p-datatable .p-datatable-tbody > tr > td {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.p-row-even:hover,
+.p-row-odd:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+</style>

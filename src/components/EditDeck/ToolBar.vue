@@ -74,42 +74,59 @@ function onUpload(event: FileUploadUploaderEvent) {
 </script>
 
 <template>
-  <Toolbar class="mb-4">
+  <Toolbar class="toolbar">
     <template #start>
-      <PButton
-        label="New"
-        icon="pi pi-plus"
-        severity="success"
-        class="mr-2"
-        @click="openNew"
-      />
-      <PButton
-        label="Delete"
-        icon="pi pi-trash"
-        severity="danger"
-        @click="confirmDeleteSelected"
-        :disabled="!deckStore.selectedCards || !deckStore.selectedCards.length"
-      />
+      <div class="btns-left">
+        <PButton
+          label="New"
+          icon="pi pi-plus"
+          severity="success"
+          @click="openNew"
+        />
+        <PButton
+          label="Delete"
+          icon="pi pi-trash"
+          severity="danger"
+          @click="confirmDeleteSelected"
+          :disabled="
+            !deckStore.selectedCards || !deckStore.selectedCards.length
+          "
+        />
+      </div>
     </template>
 
     <template #end>
-      <FileUpload
-        mode="basic"
-        accept=".csv, text/csv"
-        :maxFileSize="1000000"
-        label="Import"
-        chooseLabel="Import"
-        class="mr-2 inline-block"
-        auto
-        customUpload
-        @uploader="onUpload"
-      />
-      <PButton
-        label="Export"
-        icon="pi pi-download"
-        severity="help"
-        @click="exportCSV"
-      />
+      <dir class="btns-right">
+        <FileUpload
+          mode="basic"
+          accept=".csv, text/csv"
+          :maxFileSize="1000000"
+          label="Import"
+          chooseLabel="Import"
+          auto
+          customUpload
+          @uploader="onUpload"
+        />
+        <PButton
+          label="Export"
+          icon="pi pi-download"
+          severity="help"
+          @click="exportCSV"
+        />
+      </dir>
     </template>
   </Toolbar>
 </template>
+
+<style scoped>
+.btns-left,
+.btns-right {
+  display: flex;
+  column-gap: 5px;
+}
+.toolbar {
+  margin-top: 15px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+</style>

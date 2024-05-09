@@ -122,15 +122,6 @@ function markAsDifficult() {
             </div>
             <div>
               {{ deckStore?.deck?.name }}
-              <InputText
-                class="flashcard__input"
-                type="text"
-                v-model="inputValue"
-                spellcheck="false"
-                autocapitalize="off"
-                autocomplete="off"
-                autocorrect="off"
-              />
             </div>
           </div>
           <PButton

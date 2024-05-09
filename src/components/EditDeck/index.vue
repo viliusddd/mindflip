@@ -40,9 +40,4 @@ useTitle(title)
 header {
   margin: 0 0 20px 0;
 }
-.cards__title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 </style>
