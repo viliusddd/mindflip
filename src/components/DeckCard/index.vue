@@ -14,14 +14,20 @@ const deckStore = useDeckStore()
 
 deckStore.deckId = props.id
 
-const cardsLearned = ref(0)
+const cardsLearned = computed(
+  () => deckStore.cards.filter((card) => card.state === 2).length
+)
+
+console.log(cardsLearned)
 
 const progressValue = computed(() =>
   cardsLearned.value ? (cardsLearned.value / deckStore.cards.length) * 100 : 0
 )
 
 const dueWordsCount = deckStore.cardsDue.length
-const difficultWordsCount = ref(0)
+const difficultWordsCount = computed(
+  () => deckStore.cards.filter((card) => card.difficulty >= 6).length
+)
 </script>
 
 <template>
@@ -48,8 +54,13 @@ const difficultWordsCount = ref(0)
         />
         <div class="deck__footer">
           <div class="deck__footer-stats">
-            <div><i class="pi pi-eye" /> {{ dueWordsCount }}</div>
-            <div><i class="pi pi-bolt" /> {{ difficultWordsCount }}</div>
+            <div v-tooltip.bottom="'Words ready for review'">
+              <i class="pi pi-eye" /> {{ dueWordsCount }}
+            </div>
+            <div v-tooltip.bottom="'Difficult words'">
+              <i class="pi pi-bolt" />
+              {{ difficultWordsCount }}
+            </div>
           </div>
           <nav class="deck__buttons">
             <RouterLink class="deck__button" :to="{name: 'Deck', params: {id}}">

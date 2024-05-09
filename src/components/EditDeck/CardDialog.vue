@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import {createEmptyCard, State} from 'ts-fsrs'
+import {createId} from './utils'
 import {states} from './consts'
 import {useDeckStore} from '@/stores/DeckStore'
 import type {Card} from '@/stores/DeckStore'
-import {createId} from './utils'
-import {createEmptyCard, State} from 'ts-fsrs'
 
 const deckStore = useDeckStore()
 
