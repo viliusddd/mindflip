@@ -18,8 +18,6 @@ const cardsLearned = computed(
   () => deckStore.cards.filter((card) => card.state === 2).length
 )
 
-console.log(cardsLearned)
-
 const progressValue = computed(() =>
   cardsLearned.value ? (cardsLearned.value / deckStore.cards.length) * 100 : 0
 )

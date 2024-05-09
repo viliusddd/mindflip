@@ -42,7 +42,6 @@ const newDeck: ComputedRef<Deck> = computed(() => {
 })
 
 function addNewDeck() {
-  console.log(newDeck.value)
   deckStore.addDeck(newDeck.value)
 }
 </script>
