@@ -21,6 +21,8 @@ deckStore.deckId = props.id
 const cardIndex = ref(0)
 let cards: Card[]
 
+const showAnswer = ref(false)
+
 if (deckStore.dueReview) {
   cards = deckStore.cardsDue
   deckStore.dueReview = false
@@ -34,13 +36,8 @@ const progressBarValue = computed(() => {
   return (100 / deckStore.cards.length) * cardIndex.value
 })
 
-const inputValue = ref('')
-
-const buttonLabel = ref('Next Card')
-
 function goNextCard() {
   if (cardIndex.value === cards.length - 2) {
-    buttonLabel.value = 'Finish'
     cardIndex.value++
   } else if (cardIndex.value === cards.length - 1) {
     router.go(-1)
@@ -60,6 +57,8 @@ function saveCard(evt) {
   const btnRating = Rating[btnVal]
   const newCardVal = schedulingCards[btnRating].card
   deckStore.addCard(newCardVal)
+
+  showAnswer.value = false
 
   goNextCard()
 }
@@ -109,29 +108,23 @@ function markAsDifficult() {
           ></ProgressBar>
           <div
             class="flashcard__score"
-            v-tooltip.left="'The possicion of current card in deck.'"
+            v-tooltip.left="'The position of current card in the deck.'"
           >
             {{ cardIndex + 1 }}
           </div>
           <div class="flashcard__body">
-            <div class="flashcard__title">
-              <p>Type the correct answer</p>
-            </div>
             <div class="flashcard__definition">
-              <h1>{{ card.definition }}</h1>
+              <h1>{{ card.name }}</h1>
             </div>
-            <div>
-              {{ deckStore?.deck?.name }}
+            <div class="flashcard__answer">
+              <button v-if="!showAnswer" @click="showAnswer = true">
+                <p>show answer</p>
+              </button>
+              <div v-else class="flashcard__answer-revealed">
+                <p>{{ card.definition }}</p>
+              </div>
             </div>
           </div>
-          <PButton
-            class="flashcard__button"
-            severity="info"
-            :label="buttonLabel"
-            :raised="true"
-            aria-label="Hotkeys next"
-            @click="goNextCard"
-          />
           <div class="flashcard__options">
             <PButton
               icon="pi pi-bolt"
@@ -184,6 +177,10 @@ function markAsDifficult() {
 </template>
 
 <style scoped>
+:root {
+  --answer-hidden-bg: hwb(0 84% 16%);
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -256,19 +253,34 @@ function markAsDifficult() {
   width: 100%;
   margin: 15px 0;
 }
-.flashcard__title {
-  display: none;
-  height: 65.9px;
+.flashcard__answer {
+  display: flex;
+  justify-content: center;
+  background-color: var(--answer-hidden-bg);
 }
-.flashcard__title > p {
+.flashcard__answer > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90px;
+  width: 100%;
+  border: 0;
+}
+.flashcard__answer:hover button {
+  opacity: 0.75;
+  cursor: pointer;
+}
+.flashcard__answer > p {
   font-size: 3ch;
   margin: 0 0 30px 0;
+  text-align: center;
+  background-color: var(--answer-hidden-bg);
 }
 .flashcard__definition {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 108.75px;
+  height: 50px;
   margin: 8px;
 }
 .flashcard__definition > h1 {
@@ -288,8 +300,11 @@ function markAsDifficult() {
   .header__tooltip {
     display: flex;
   }
-  .flashcard__title {
-    display: block;
+  .flashcard__answer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
   }
   .flashcard {
     gap: 2rem 1.5rem;
