@@ -2,10 +2,13 @@
 import {computed, ref} from 'vue'
 import type {ComputedRef} from 'vue'
 import type {Deck, Card} from '@/stores/DeckStore'
+import {useDeckStore} from '@/stores/DeckStore'
 
 const props = defineProps<{
   deck: Deck
 }>()
+
+const deckStore = useDeckStore()
 
 const cardsDue: ComputedRef<Card[]> = computed(() => {
   const cardsArray = []
@@ -15,14 +18,27 @@ const cardsDue: ComputedRef<Card[]> = computed(() => {
   return cardsArray
 })
 
-const dueReview = ref(false)
 const dueCardsCount = computed(() => cardsDue.value.length)
 const reviewDueMsg = `Review ${dueCardsCount.value} due cards`
 const reviewAllMsg = `Review all ${props.deck.cards.length} cards`
+const emptyDeckMsg = "Add new cards to the deck, since it's empty"
 </script>
 
 <template>
-  <nav v-if="dueCardsCount" class="deck__buttons">
+  <nav v-if="!deck.cards.length">
+    <RouterLink
+      class="deck__button"
+      :to="{name: 'EditDeck', params: {id: deck.id}}"
+    >
+      <PButton
+        label="Add New Cards"
+        size="large"
+        :raised="true"
+        v-tooltip.top="emptyDeckMsg"
+      />
+    </RouterLink>
+  </nav>
+  <nav v-else-if="dueCardsCount === deck.cards.length">
     <RouterLink
       class="deck__button"
       :to="{name: 'Deck', params: {id: deck.id}}"
@@ -32,7 +48,25 @@ const reviewAllMsg = `Review all ${props.deck.cards.length} cards`
         size="large"
         :raised="true"
         :badge="dueCardsCount.toString()"
-        @click="dueReview = true"
+        @click="deckStore.dueReview = true"
+        v-tooltip.top="reviewDueMsg"
+      />
+    </RouterLink>
+  </nav>
+  <nav
+    v-else-if="dueCardsCount && dueCardsCount !== deck.cards.length"
+    class="deck__buttons"
+  >
+    <RouterLink
+      class="deck__button"
+      :to="{name: 'Deck', params: {id: deck.id}}"
+    >
+      <PButton
+        label="Review"
+        size="large"
+        :raised="true"
+        :badge="dueCardsCount.toString()"
+        @click="deckStore.dueReview = true"
         v-tooltip.top="reviewDueMsg"
       />
     </RouterLink>
