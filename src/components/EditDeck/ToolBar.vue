@@ -125,7 +125,5 @@ function onUpload(event: FileUploadUploaderEvent) {
 }
 .toolbar {
   margin-top: 15px;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed} from 'vue'
 import type {ComputedRef} from 'vue'
 import type {Deck, Card} from '@/stores/DeckStore'
 import {useDeckStore} from '@/stores/DeckStore'
