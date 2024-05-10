@@ -51,7 +51,7 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
       </div>
     </template>
 
-    <Column selectionMode="multiple" style="width: 1rem" :exportable="false" />
+    <Column selectionMode="multiple" :exportable="false" />
     <Column field="name" header="Question" sortable style="min-width: 5rem" />
     <Column
       field="definition"
@@ -59,7 +59,12 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
       sortable
       style="min-width: 5rem"
     />
-    <Column field="due" header="Due">
+    <Column
+      field="due"
+      header="Due"
+      sortable
+      style="min-width: 7rem; width: 10rem"
+    >
       <template #body="slotProps">
         {{
           new Date(slotProps.data.due).toLocaleString('Lt', {
@@ -69,7 +74,7 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
         }}
       </template>
     </Column>
-    <Column field="state" header="State" sortable style="min-width: 3rem">
+    <Column field="state" header="State" sortable>
       <template #body="slotProps">
         <Tag
           :value="State[slotProps.data.state]"
@@ -79,7 +84,7 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
         />
       </template>
     </Column>
-    <Column :exportable="false" style="min-width: 7rem">
+    <Column :exportable="false" style="min-width: 6rem">
       <template #body="slotProps">
         <PButton
           @click="editCard(slotProps.data)"
