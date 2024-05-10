@@ -54,7 +54,7 @@ const menuMap: MenuMap = {
     aria-haspopup="true"
     aria-label="Deck options"
     icon="pi pi-ellipsis-v"
-    severity="info"
+    severity="contrast"
     size="large"
     text
   />
