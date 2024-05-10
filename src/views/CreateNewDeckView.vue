@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
-
-import type {Ref, ComputedRef} from 'vue'
 import type {Deck} from '@/stores/DeckStore'
+import type {Ref, ComputedRef} from 'vue'
 
 const deckStore = useDeckStore()
 
@@ -12,9 +11,9 @@ const deckDescription: Ref<string> = ref('')
 
 const icons: string[] = [
   'android',
+  'at',
   'bitcoin',
   'bolt',
-  'at',
   'car',
   'home',
   'prime'
@@ -32,12 +31,12 @@ const id: number = deckStore.newId
 
 const newDeck: ComputedRef<Deck> = computed(() => {
   return {
-    id,
-    name: deckName.value,
+    cards: [],
     description: deckDescription.value,
-    isHidden: false,
     icon: icon.value,
-    cards: []
+    id,
+    isHidden: false,
+    name: deckName.value
   }
 })
 
@@ -59,32 +58,32 @@ function addNewDeck() {
       />
       <label class="description" for="description-field">Description </label>
       <InputText
+        @keyup.enter="addNewDeck"
         id="description-field"
         maxlength="200"
-        @keyup.enter="addNewDeck"
-        v-model="deckDescription"
         placeholder="Deck of whole world capitals"
+        v-model="deckDescription"
       />
       <label class="icon" for="icon-dropdown">Icon</label>
       <Dropdown
+        :options="icons"
+        :placeholder="icons[0]"
         id="icon-dropdown"
         v-model="icon"
         variant="filled"
-        :placeholder="icons[0]"
-        :options="icons"
       />
       <br />
       <RouterLink
-        class="create-route"
-        :to="{name: 'EditDeck', params: {id}}"
         :class="{disabled: isMeetingRequirements}"
+        :to="{name: 'EditDeck', params: {id}}"
+        class="create-route"
       >
         <PButton
+          :raised="true"
+          @click="addNewDeck"
           class="create-btn"
           label="Create Deck"
           type="submit"
-          :raised="true"
-          @click="addNewDeck"
         />
       </RouterLink>
       <i :class="`icon-preview pi pi-${icon}`"></i>

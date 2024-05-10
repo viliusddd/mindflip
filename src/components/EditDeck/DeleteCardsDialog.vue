@@ -6,10 +6,10 @@ const deckStore = useDeckStore()
 
 <template>
   <PDialog
-    v-model:visible="deckStore.deleteCardsDialog"
+    :modal="true"
     :style="{width: '450px'}"
     header="Confirm"
-    :modal="true"
+    v-model:visible="deckStore.deleteCardsDialog"
   >
     <div class="confirmation-content">
       <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
@@ -19,16 +19,16 @@ const deckStore = useDeckStore()
     </div>
     <template #footer>
       <PButton
-        label="No"
-        icon="pi pi-times"
-        text
         @click="deckStore.deleteCardsDialog = false"
+        icon="pi pi-times"
+        label="No"
+        text
       />
       <PButton
-        label="Yes"
-        icon="pi pi-check"
-        text
         @click="deckStore.deleteSelectedCards"
+        icon="pi pi-check"
+        label="Yes"
+        text
       />
     </template>
   </PDialog>

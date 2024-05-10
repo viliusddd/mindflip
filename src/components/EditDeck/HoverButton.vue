@@ -29,26 +29,26 @@ const vFocus = {
     <div class="pencil__wrapper" v-if="!editable">
       <h2 class="resting-text">{{ deckStore.deck[attribute] }}</h2>
       <PButton
+        :aria-label="`Edit ${attribute}`"
+        @click="editable = !editable"
         class="icon"
         icon="pi pi-pencil"
         text
-        @click="editable = !editable"
-        :aria-label="`Edit ${attribute}`"
       />
     </div>
     <div class="pencil__wrapper" v-else>
       <InputText
+        :placeholder="`${attribute}`"
+        @keyup.enter="editable = !editable"
         class="p-inputtext"
         v-focus
         v-model="deckStore.deck[attribute]"
-        @keyup.enter="editable = !editable"
-        :placeholder="`${attribute}`"
       />
       <PButton
+        :aria-label="`Close edit of ${attribute}`"
+        @click="editable = !editable"
         icon="pi pi-check"
         text
-        @click="editable = !editable"
-        :aria-label="`Close edit of ${attribute}`"
       />
     </div>
   </div>

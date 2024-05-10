@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import {ref} from 'vue'
 import {items} from './consts'
+import {ref} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
-
 import type {Card, Deck} from '@/stores/DeckStore'
 import type {OptionsItem} from './consts'
-
-const deckStore = useDeckStore()
 
 const props = defineProps<{
   id: number
 }>()
+
+const deckStore = useDeckStore()
 
 const menu = ref()
 
@@ -36,28 +35,28 @@ function toggleVisibility() {
 }
 
 type MenuMap = {
-  toggle: () => void
-  reset: () => void
   quit: () => void
+  reset: () => void
+  toggle: () => void
 }
 
 const menuMap: MenuMap = {
-  toggle: () => toggleVisibility(),
+  quit: () => deleteDeck(),
   reset: () => resetStats(),
-  quit: () => deleteDeck()
+  toggle: () => toggleVisibility()
 }
 </script>
 
 <template>
   <PButton
     @click="toggleMenu"
+    aria-controls="overlay_menu"
+    aria-haspopup="true"
+    aria-label="Deck options"
     icon="pi pi-ellipsis-v"
-    text
     severity="info"
     size="large"
-    aria-label="Deck options"
-    aria-haspopup="true"
-    aria-controls="overlay_menu"
+    text
   />
   <PMenu ref="menu" id="overlay_menu" :model="items" :popup="true">
     <template #item="{item, props}: {item: OptionsItem; props: any}">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import {useDeckStore} from '@/stores/DeckStore'
 import AppLogo from '@/components/AppLogo.vue'
 import AppNav from '@/components/AppNav.vue'
-import {useDeckStore} from '@/stores/DeckStore'
 
 const deckStore = useDeckStore()
 deckStore.fill()

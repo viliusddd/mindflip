@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
+import {fsrs, generatorParameters, Rating} from 'ts-fsrs'
 import {useDeckStore} from '@/stores/DeckStore'
 import {useRouter} from 'vue-router'
-import {formatDate, fsrs, generatorParameters, Rating, Grades} from 'ts-fsrs'
 import type {Card} from '@/stores/DeckStore'
 
 const router = useRouter()

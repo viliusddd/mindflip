@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {FilterMatchMode} from 'primevue/api'
 import {ref, watch} from 'vue'
+import {State} from 'ts-fsrs'
 import {states} from './consts'
 import {useDeckStore} from '@/stores/DeckStore'
-import {State} from 'ts-fsrs'
 
 const deckStore = useDeckStore()
 
@@ -26,17 +26,17 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
 
 <template>
   <DataTable
-    ref="dataTable"
-    :value="deckStore.cards"
-    v-model:selection="deckStore.selectedCards"
-    dataKey="id"
+    :filters="filters"
     :paginator="true"
     :rows="10"
-    :filters="filters"
-    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
     :rowsPerPageOptions="[5, 10, 25]"
+    :value="deckStore.cards"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} cards"
+    dataKey="id"
+    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+    ref="dataTable"
     size="small"
+    v-model:selection="deckStore.selectedCards"
   >
     <template #header>
       <div class="cards__title">
@@ -82,17 +82,17 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
     <Column :exportable="false" style="min-width: 7rem">
       <template #body="slotProps">
         <PButton
+          @click="editCard(slotProps.data)"
           icon="pi pi-pencil"
           rounded
           text
-          @click="editCard(slotProps.data)"
         />
         <PButton
+          @click="confirmDeleteCard(slotProps.data)"
           icon="pi pi-trash"
           rounded
-          text
           severity="danger"
-          @click="confirmDeleteCard(slotProps.data)"
+          text
         />
       </template>
     </Column>

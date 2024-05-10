@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import Deck from '@/components/DeckCard/index.vue'
 import {useDeckStore} from '@/stores/DeckStore'
+import Deck from '@/components/DeckCard/index.vue'
+
 const deckStore = useDeckStore()
 </script>
 
@@ -12,6 +13,6 @@ const deckStore = useDeckStore()
 
 <style scoped>
 main {
-  margin: 20px 0 0 0;
+  margin: 0 0 0 0;
 }
 </style>

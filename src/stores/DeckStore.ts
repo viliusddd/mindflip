@@ -1,34 +1,34 @@
-import {defineStore} from 'pinia'
 import {computed, watch, ref} from 'vue'
+import {defineStore} from 'pinia'
 import type {Ref, ComputedRef} from 'vue'
 
 export type Card = {
-  name: string
   definition: string
-  status: string
-  id: string
   difficulty: number
   due: Date
   elapsed_days: number
+  id: string
   lapses: number
+  name: string
   reps: number
   scheduled_days: number
   stability: number
   state: number
+  status: string
 }
 
 export type Deck = {
-  id: number
-  name: string
-  description: string
-  isHidden: boolean
   cards: Card[]
+  description: string
   icon: string
+  id: number
+  isHidden: boolean
+  name: string
 }
 
 export const useDeckStore = defineStore('DeckStore', () => {
-  const key: string = 'decks'
   const decks: Ref<Deck[]> = ref([])
+  const key: string = 'decks'
 
   watch(
     decks,
@@ -80,14 +80,14 @@ export const useDeckStore = defineStore('DeckStore', () => {
     }
   })
 
+  const card: Ref<Card> = ref()
+  const cardDialog = ref(false)
+  const dataTable = ref()
+  const deckId: Ref<number> = ref()
   const deleteCardDialog = ref(false)
   const deleteCardsDialog = ref(false)
-  const cardDialog = ref(false)
   const selectedCards = ref() // with checkbox
-  const deckId: Ref<number> = ref()
-  const card: Ref<Card> = ref()
   const submitted = ref(false)
-  const dataTable = ref()
 
   const cards: Ref<Card[]> = computed(() => {
     if (deckId.value) return deck.value.cards
@@ -125,25 +125,25 @@ export const useDeckStore = defineStore('DeckStore', () => {
   const dueReview = ref(false)
 
   return {
-    decks,
-    deck,
+    addCard,
+    addCards,
     addDeck,
-    fill,
-    newId,
+    card,
+    cardDialog,
+    cards,
+    cardsDue,
+    dataTable,
+    deck,
+    deckId,
+    decks,
+    deleteCard,
     deleteCardDialog,
     deleteCardsDialog,
-    cardDialog,
-    selectedCards,
-    deckId,
     deleteSelectedCards,
-    deleteCard,
-    submitted,
-    dataTable,
-    card,
-    cards,
-    addCards,
-    cardsDue,
     dueReview,
-    addCard
+    fill,
+    newId,
+    selectedCards,
+    submitted
   }
 })
