@@ -11,12 +11,9 @@ import ToolBar from './ToolBar.vue'
 
 const deckStore = useDeckStore()
 
-const props = defineProps({
-  id: {
-    type: Number,
-    required: true
-  }
-})
+const props = defineProps<{
+  id: number
+}>()
 
 deckStore.deckId = props.id
 
@@ -27,7 +24,7 @@ useTitle(title)
 <template>
   <div>
     <HoverButton :id size="2.5ch" :isBold="true" attribute="name" />
-    <HoverButton :id :isBold="false" attribute="description" />
+    <HoverButton :id size="2ch" :isBold="false" attribute="description" />
     <ToolBar />
     <CardsTable />
     <CardDialog />

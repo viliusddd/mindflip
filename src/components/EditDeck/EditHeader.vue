@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import {useDeckStore} from '@/stores/DeckStore'
 
-const props = defineProps({
-  id: {
-    type: Number,
-    required: true
-  }
-})
+const props = defineProps<{
+  id: number
+}>()
 
 const deckStore = useDeckStore()
 

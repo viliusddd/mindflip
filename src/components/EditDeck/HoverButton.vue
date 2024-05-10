@@ -2,24 +2,14 @@
 import {ref} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 
-const props = defineProps({
-  id: {
-    type: Number,
-    required: true
-  },
-  attribute: {
-    type: String,
-    required: true
-  },
-  size: {
-    type: String,
-    default: '2ch'
-  },
-  isBold: {
-    type: Boolean,
-    default: false
-  }
-})
+type Props = {
+  id: number
+  attribute: string
+  size: string
+  isBold: boolean
+}
+
+const props = defineProps<Props>()
 
 const deckStore = useDeckStore()
 

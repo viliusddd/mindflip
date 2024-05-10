@@ -8,12 +8,9 @@ import type {OptionsItem} from './consts'
 
 const deckStore = useDeckStore()
 
-const props = defineProps({
-  id: {
-    type: Number,
-    required: true
-  }
-})
+const props = defineProps<{
+  id: number
+}>()
 
 const menu = ref()
 

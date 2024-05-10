@@ -7,12 +7,9 @@ import type {Card} from '@/stores/DeckStore'
 
 const router = useRouter()
 
-const props = defineProps({
-  id: {
-    type: Number,
-    required: true
-  }
-})
+const props = defineProps<{
+  id: number
+}>()
 
 const deckStore = useDeckStore()
 
