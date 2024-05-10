@@ -1,31 +1,27 @@
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {computed} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 import NavButtons from './NavButtons.vue'
 import OptionsMenu from './OptionsMenu.vue'
 
-const props = defineProps({
-  id: {
-    type: Number,
-    required: true
-  }
-})
+const props = defineProps<{
+  id: number
+}>()
 
 const deckStore = useDeckStore()
 
-deckStore.deckId = props.id
+const deck = deckStore.decks.find((obj) => obj.id === props.id)
 
 const cardsLearned = computed(
-  () => deckStore.cards.filter((card) => card.state === 2).length
+  () => deck.cards.filter((card) => card.state === 2).length
 )
 
 const progressValue = computed(() =>
-  cardsLearned.value ? (cardsLearned.value / deckStore.cards.length) * 100 : 0
+  cardsLearned.value ? (cardsLearned.value / deck.cards.length) * 100 : 0
 )
 
-const dueCardsCount = deckStore.cardsDue.length.toString()
 const difficultCardsCount = computed(
-  () => deckStore.cards.filter((card) => card.difficulty >= 6).length
+  () => deck.cards.filter((card) => card.difficulty >= 6).length
 )
 </script>
 
@@ -33,17 +29,17 @@ const difficultCardsCount = computed(
   <div class="wrapper">
     <div class="container">
       <div class="deck">
-        <i :class="`deck__avatar pi pi-${deckStore.deck?.icon}`"></i>
+        <i :class="`deck__avatar pi pi-${deck.icon}`"></i>
         <div class="deck__header">
-          <h1>{{ deckStore.deck?.name }}</h1>
-          <OptionsMenu :id="deckStore.deck?.id" />
+          <h1>{{ deck.name }}</h1>
+          <OptionsMenu :id="deck.id" />
         </div>
         <div class="deck__stats">
           <p>
             <b>{{ progressValue.toFixed(1) }}%</b>
           </p>
           <p>
-            <b>{{ cardsLearned }}/{{ deckStore.cards.length }}</b> items learned
+            <b>{{ cardsLearned }}/{{ deck.cards.length }}</b> items learned
           </p>
         </div>
         <ProgressBar
@@ -53,15 +49,12 @@ const difficultCardsCount = computed(
         />
         <div class="deck__footer">
           <div class="deck__footer-stats">
-            <div v-tooltip.bottom="'Cards ready for review'">
-              <i class="pi pi-eye" /> {{ dueCardsCount }}
-            </div>
             <div v-tooltip.bottom="'Difficult cards'">
               <i class="pi pi-bolt" />
               {{ difficultCardsCount }}
             </div>
           </div>
-          <NavButtons :id />
+          <NavButtons :deck />
         </div>
       </div>
     </div>
