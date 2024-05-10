@@ -36,7 +36,7 @@ deckStore.fill()
 .wrapper {
   display: grid;
   grid-template-columns: 1fr min(80ch, 100%) 1fr;
-  margin: 0 15px 0;
+  margin: 15px 0px;
 }
 .wrapper > * {
   grid-column: 2;
