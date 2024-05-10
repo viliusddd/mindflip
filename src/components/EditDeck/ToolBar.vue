@@ -96,7 +96,7 @@ function onUpload(event: FileUploadUploaderEvent) {
     </template>
 
     <template #end>
-      <dir class="btns-right">
+      <div class="btns-right">
         <FileUpload
           mode="basic"
           accept=".csv, text/csv"
@@ -113,7 +113,7 @@ function onUpload(event: FileUploadUploaderEvent) {
           severity="help"
           @click="exportCSV"
         />
-      </dir>
+      </div>
     </template>
   </Toolbar>
 </template>
