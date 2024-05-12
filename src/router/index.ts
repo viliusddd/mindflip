@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import HomeView from '@/views/DecksView.vue'
+import HomeView from '@/views/ShowDecksView.vue'
 
 const routes = [
   {
@@ -18,7 +18,7 @@ const routes = [
   {
     path: '/deck/:id',
     name: 'Deck',
-    component: () => import('@/components/TheCourse.vue'),
+    component: () => import('@/views/ReviewView.vue'),
     props: (route: any) => ({id: parseInt(route.params.id)})
   },
   {

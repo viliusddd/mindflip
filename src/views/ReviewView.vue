@@ -104,25 +104,21 @@ function markAsDifficult() {
             class="flashcard__progress"
             :show-value="false"
             :value="progressBarValue"
-          ></ProgressBar>
+          />
           <div
-            class="flashcard__score"
+            class="flashcard__position"
             v-tooltip.left="'The position of current card in the deck.'"
           >
             {{ cardIndex + 1 }}
           </div>
-          <div class="flashcard__body">
-            <div class="flashcard__definition">
-              <h1>{{ card.name }}</h1>
-            </div>
-            <div class="flashcard__answer">
-              <button v-if="!showAnswer" @click="showAnswer = true">
-                <p>show answer</p>
-              </button>
-              <div v-else class="flashcard__answer-revealed">
-                <p>{{ card.definition }}</p>
-              </div>
-            </div>
+          <h1 class="flashcard__question">{{ card.name }}</h1>
+          <div class="flashcard__answer">
+            <button v-if="!showAnswer" @click="showAnswer = true">
+              <p>show answer</p>
+            </button>
+            <p v-else class="flashcard__answer-revealed">
+              {{ card.definition }}
+            </p>
           </div>
           <div class="flashcard__options">
             <PButton
@@ -213,22 +209,11 @@ function markAsDifficult() {
   width: 100%;
   grid-column: 1/4;
 }
-.flashcard {
-  display: grid;
-  align-items: center;
-  grid-template-columns: 1fr 3rem 5rem;
-  padding: 1rem;
-  gap: 1rem 0.5rem;
-  grid-template-areas:
-    'progress score options'
-    'body body body'
-    'difficulty difficulty difficulty';
-}
 .flashcard__progress {
   grid-area: progress;
   height: 30px;
 }
-.flashcard__score {
+.flashcard__position {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -237,64 +222,59 @@ function markAsDifficult() {
   height: 30px;
   vertical-align: center;
 }
-.flashcard__body {
-  grid-area: body;
-}
-.flashcard__button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-area: button;
-}
-.flashcard__options > PButton {
-  flex-shrink: 0;
-}
 .flashcard__options {
   display: flex;
   flex-shrink: 0;
   grid-area: options;
 }
-.flashcard__input {
-  background: hsl(214, 32%, 91%);
-  height: 60px;
-  font-size: 3ch;
-  width: 100%;
-  margin: 15px 0;
+.flashcard__options > PButton {
+  flex-shrink: 0;
 }
-.flashcard__answer {
+.flashcard__question {
+  grid-area: question;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin: 8px;
+}
+.flashcard__question > h1 {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+.flashcard__answer {
+  grid-area: answer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: var(--answer-hidden-bg);
+  min-height: 140px;
+  height: fit-content;
+  width: 100%;
+  border: 0;
 }
 .flashcard__answer > button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90px;
+  flex-grow: 1;
+  align-self: stretch;
+  max-height: 100%;
   width: 100%;
   border: 0;
 }
-.flashcard__answer:hover button {
+.flashcard__answer:hover > button {
   opacity: 0.75;
   cursor: pointer;
 }
 .flashcard__answer > p {
-  font-size: 3ch;
-  margin: 0 0 30px 0;
-  text-align: center;
-  background-color: var(--answer-hidden-bg);
+  font-size: calc(2vw + 2vh);
 }
-.flashcard__definition {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  margin: 8px;
-}
-.flashcard__definition > h1 {
-  text-align: center;
-  margin: 0;
-  padding: 0;
+.flashcard__answer-revealed {
+  margin: 0 0 0 0;
 }
 .header__tooltip {
   display: none;
@@ -305,15 +285,21 @@ function markAsDifficult() {
   justify-content: center;
   column-gap: 3px;
 }
+.flashcard {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 3rem 5rem;
+  padding: 1rem;
+  gap: 1rem 0.5rem;
+  grid-template-areas:
+    'progress score options'
+    'question question question'
+    'answer answer answer'
+    'difficulty difficulty difficulty';
+}
 @media (min-width: 40rem) {
   .header__tooltip {
     display: flex;
-  }
-  .flashcard__answer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 100%;
   }
   .flashcard {
     gap: 2rem 1.5rem;
@@ -323,14 +309,21 @@ function markAsDifficult() {
     align-items: center;
     grid-template-areas:
       'progress score'
-      'body options'
+      'question options'
+      'answer options'
       'difficulty options';
+  }
+  .flashcard__answer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+  }
+  .flashcard__answer > p {
+    font-size: 3ch;
   }
   .flashcard__options {
     margin-bottom: auto;
-  }
-  .flashcard__button {
-    height: 113.59px;
   }
 }
 </style>
