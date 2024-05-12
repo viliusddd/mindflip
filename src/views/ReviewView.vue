@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import {fsrs, generatorParameters, Rating} from 'ts-fsrs'
+import {onKeyUp} from '@vueuse/core'
 import {useDeckStore} from '@/stores/DeckStore'
 import {useRouter} from 'vue-router'
 import type {Card} from '@/stores/DeckStore'
@@ -50,11 +51,10 @@ const fsrsInstance = fsrs(fsrsParams)
 const schedulingCards = fsrsInstance.repeat(card.value, new Date())
 
 // function saveCard(evt: PointerEvent) {
-function saveCard(evt) {
-  const btnVal = evt.target.innerText
-  const btnRating = Rating[btnVal]
-  const newCardVal = schedulingCards[btnRating].card
+function saveCard(rating) {
+  const newCardVal = schedulingCards[Rating[rating]].card
   deckStore.addCard(newCardVal)
+  console.log(newCardVal)
 
   goNextCard()
 }
@@ -63,10 +63,25 @@ function markAsKnown() {
   card.value.state = 2
   goNextCard()
 }
+
 function markAsDifficult() {
   card.value.difficulty = 10
   goNextCard()
 }
+
+onKeyUp('Enter', (evt) => evt.preventDefault())
+
+onKeyUp(' ', (evt) => {
+  evt.preventDefault()
+  showAnswer.value = true
+})
+
+onKeyUp(['1', 'a'], () => saveCard('Again'))
+onKeyUp(['2', 's'], () => saveCard('Hard'))
+onKeyUp(['3', 'd'], () => saveCard('Good'))
+onKeyUp(['4', 'f'], () => saveCard('Easy'))
+onKeyUp('h', () => markAsDifficult())
+onKeyUp('k', () => markAsKnown())
 </script>
 
 <template>
@@ -140,25 +155,25 @@ function markAsDifficult() {
           <div class="difficulty__buttons">
             <PButton
               :raised="true"
-              @click="saveCard"
+              @click="saveCard('Again')"
               v-tooltip.bottom="'<10m'"
               label="Again"
             />
             <PButton
               :raised="true"
-              @click="saveCard"
+              @click="saveCard('Hard')"
               v-tooltip.bottom="'2d'"
               label="Hard"
             />
             <PButton
               :raised="true"
-              @click="saveCard"
+              @click="saveCard('Good')"
               v-tooltip.bottom="'7d'"
               label="Good"
             />
             <PButton
               :raised="true"
-              @click="saveCard"
+              @click="saveCard('Easy')"
               v-tooltip.bottom="'14d'"
               label="Easy"
             />
