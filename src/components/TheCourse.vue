@@ -140,34 +140,34 @@ function markAsDifficult() {
               "
             />
           </div>
+          <div class="difficulty__buttons">
+            <PButton
+              :raised="true"
+              @click="saveCard"
+              v-tooltip.bottom="'<10m'"
+              label="Again"
+            />
+            <PButton
+              :raised="true"
+              @click="saveCard"
+              v-tooltip.bottom="'2d'"
+              label="Hard"
+            />
+            <PButton
+              :raised="true"
+              @click="saveCard"
+              v-tooltip.bottom="'7d'"
+              label="Good"
+            />
+            <PButton
+              :raised="true"
+              @click="saveCard"
+              v-tooltip.bottom="'14d'"
+              label="Easy"
+            />
+          </div>
         </div>
       </div>
-    </div>
-    <div class="difficulty__buttons">
-      <PButton
-        :raised="true"
-        @click="saveCard"
-        v-tooltip.top="'<10m'"
-        label="Again"
-      />
-      <PButton
-        :raised="true"
-        @click="saveCard"
-        v-tooltip.top="'2d'"
-        label="Hard"
-      />
-      <PButton
-        :raised="true"
-        @click="saveCard"
-        v-tooltip.top="'7d'"
-        label="Good"
-      />
-      <PButton
-        :raised="true"
-        @click="saveCard"
-        v-tooltip.top="'14d'"
-        label="Easy"
-      />
     </div>
     <footer></footer>
   </div>
@@ -211,7 +211,7 @@ function markAsDifficult() {
   grid-template-areas:
     'progress score options'
     'body body body'
-    'button button button';
+    'difficulty difficulty difficulty';
 }
 .flashcard__progress {
   grid-area: progress;
@@ -289,6 +289,7 @@ function markAsDifficult() {
   display: none;
 }
 .difficulty__buttons {
+  grid-area: difficulty;
   display: flex;
   justify-content: center;
   column-gap: 3px;
@@ -311,8 +312,8 @@ function markAsDifficult() {
     align-items: center;
     grid-template-areas:
       'progress score'
-      'body button'
-      'body options';
+      'body options'
+      'difficulty options';
   }
   .flashcard__options {
     margin-bottom: auto;
