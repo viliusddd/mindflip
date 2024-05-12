@@ -74,26 +74,28 @@ function markAsDifficult() {
   <!-- <pre>{{ $route }}</pre> -->
   <div class="container">
     <header class="header">
-      <div class="header__title">{{ deckStore?.deck?.name }}</div>
-      <PButton
-        class="header__tooltip"
-        icon="pi pi-info-circle"
-        severity="info"
-        text
-        rounded
-        aria-label="Hotkeys info"
-        v-tooltip.left="'Keyboard shortcuts'"
-      />
-      <PButton
-        icon="pi pi-times"
-        @click="$router.go(-1)"
-        style="font-size: 4rem; margin: 0px"
-        severity="info"
-        text
-        rounded
-        aria-label="Cancel"
-        v-tooltip.left="'Exit the session'"
-      />
+      <div class="header__container">
+        <div class="header__title">{{ deckStore?.deck?.name }}</div>
+        <PButton
+          class="header__tooltip"
+          icon="pi pi-info-circle"
+          severity="info"
+          text
+          rounded
+          aria-label="Hotkeys info"
+          v-tooltip.left="'Keyboard shortcuts'"
+        />
+        <PButton
+          icon="pi pi-times"
+          @click="$router.go(-1)"
+          style="font-size: 4rem; margin: 0px"
+          severity="info"
+          text
+          rounded
+          aria-label="Cancel"
+          v-tooltip.left="'Exit the session'"
+        />
+      </div>
     </header>
     <div class="wrapper">
       <div class="container">
@@ -181,9 +183,16 @@ function markAsDifficult() {
 .header {
   display: flex;
   align-items: center;
+  justify-content: center;
   background: lightblue;
   font-size: 1.5rem;
   padding: 1rem;
+}
+.header__container {
+  display: flex;
+  max-width: 1024px;
+  align-items: center;
+  flex-grow: 1;
 }
 .footer {
   margin-top: auto;
