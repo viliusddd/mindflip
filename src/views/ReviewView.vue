@@ -41,6 +41,7 @@ function goNextCard() {
   } else {
     cardIndex.value++
   }
+  showAnswer.value = false
 }
 
 const fsrsParams = generatorParameters({enable_fuzz: true})
@@ -54,8 +55,6 @@ function saveCard(evt) {
   const btnRating = Rating[btnVal]
   const newCardVal = schedulingCards[btnRating].card
   deckStore.addCard(newCardVal)
-
-  showAnswer.value = false
 
   goNextCard()
 }
