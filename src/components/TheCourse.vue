@@ -190,6 +190,8 @@ function markAsDifficult() {
 }
 .header__title {
   margin: 0 auto 0 0;
+  font-weight: 700;
+  font-size: 2rem;
 }
 .wrapper {
   display: grid;
