@@ -20,6 +20,7 @@ const cardIndex = ref(0)
 let cards: Card[]
 
 const showAnswer = ref(false)
+const hotkeysVisible = ref(false)
 
 if (deckStore.dueReview) {
   cards = deckStore.cardsDue
@@ -97,8 +98,38 @@ onKeyUp('k', () => markAsKnown())
           text
           rounded
           aria-label="Hotkeys info"
-          v-tooltip.left="'Keyboard shortcuts'"
+          v-tooltip.left="'Keyboard Shortcuts'"
+          @click="hotkeysVisible = !hotkeysVisible"
         />
+        <PDialog
+          v-model:visible="hotkeysVisible"
+          header="Keyboard Shortcuts"
+          :style="{width: '19.4rem'}"
+          modal
+        >
+          <div class="hotkeys">
+            <p>
+              <b><code>space</code></b>
+            </p>
+            <p><code>reveal card</code></p>
+            <p>
+              <b><code>1 or a</code></b>
+            </p>
+            <p><code>Again</code></p>
+            <p>
+              <b><code>2 or s</code></b>
+            </p>
+            <p><code>Hard</code></p>
+            <p>
+              <b><code>3 or d</code></b>
+            </p>
+            <p><code>Good</code></p>
+            <p>
+              <b><code>4 or f</code></b>
+            </p>
+            <p><code>Easy</code></p>
+          </div>
+        </PDialog>
         <PButton
           icon="pi pi-times"
           @click="$router.go(-1)"
@@ -188,6 +219,16 @@ onKeyUp('k', () => markAsKnown())
 <style scoped>
 :root {
   --answer-hidden-bg: hwb(0 84% 16%);
+}
+
+.hotkeys {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 20px;
+}
+.hotkeys p {
+  margin: 5px 0;
+  padding: 0 0 0 20px;
 }
 
 .header {
