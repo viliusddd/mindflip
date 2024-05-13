@@ -12,7 +12,7 @@ const deckStore = useDeckStore()
     v-model:visible="deckStore.deleteCardsDialog"
   >
     <div class="confirmation-content">
-      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+      <i class="pi pi-exclamation-triangle" style="font-size: 2rem" />
       <span v-if="deckStore.card"
         >Are you sure you want to delete the selected cards?</span
       >

@@ -68,13 +68,13 @@ const menuMap: MenuMap = {
       >
         <a href="" v-bind="props.action" @click="navigate">
           <span :class="item.icon" />
-          <span class="ml-2"> {{ item.label }}</span>
+          <span> {{ item.label }}</span>
         </a>
       </router-link>
       <div v-else>
         <span v-bind="props.action" @click="menuMap[item.name]">
           <span :class="item.icon" />
-          <span class="ml-2"> {{ item.label }}</span>
+          <span> {{ item.label }}</span>
         </span>
       </div>
     </template>
