@@ -87,7 +87,11 @@ const saveCard = () => {
 
     <template #footer>
       <PButton
-        v-if="deckStore.card.question.length"
+        v-if="
+          deckStore.deck.cards.find(
+            (q) => q.question === deckStore.card.question
+          )
+        "
         class="delete-btn"
         label="Delete"
         icon="pi pi-trash"
