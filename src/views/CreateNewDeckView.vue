@@ -11,11 +11,11 @@ const deckDescription: Ref<string> = ref('')
 
 const icons: string[] = [
   'android',
-  'at',
+  'reddit',
   'bitcoin',
-  'bolt',
-  'car',
-  'home',
+  'vimeo',
+  'slack',
+  'twitch',
   'prime'
 ]
 
