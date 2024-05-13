@@ -14,7 +14,7 @@ const deckStore = useDeckStore()
     <div class="confirmation-content">
       <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
       <span v-if="deckStore.card"
-        >Are you sure you want to delete <b>{{ deckStore.card.name }}</b
+        >Are you sure you want to delete <b>{{ deckStore.card.question }}</b
         >?</span
       >
     </div>

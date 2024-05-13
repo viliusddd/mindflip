@@ -155,13 +155,13 @@ onKeyUp('k', () => markAsKnown())
           >
             {{ cardIndex + 1 }}
           </div>
-          <h1 class="flashcard__question">{{ card.name }}</h1>
+          <h1 class="flashcard__question">{{ card.question }}</h1>
           <div class="flashcard__answer">
             <button v-if="!showAnswer" @click="showAnswer = true">
               <p>show answer</p>
             </button>
             <p v-else class="flashcard__answer-revealed">
-              {{ card.definition }}
+              {{ card.answer }}
             </p>
           </div>
           <div class="flashcard__options">

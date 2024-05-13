@@ -13,7 +13,7 @@ const hideDialog = () => {
 const saveCard = () => {
   deckStore.submitted = true
 
-  if (deckStore.card.name.trim()) {
+  if (deckStore.card.question.trim()) {
     deckStore.addCard(
       Object.assign({}, createEmptyCard(new Date()), deckStore.card)
     )
@@ -36,24 +36,26 @@ const saveCard = () => {
     <div class="field">
       <label for="name">Name</label>
       <InputText
-        :invalid="deckStore.submitted && !deckStore.card.name"
+        :invalid="deckStore.submitted && !deckStore.card.question"
         autofocus
-        id="name"
+        id="question"
         required="true"
-        v-model.trim="deckStore.card.name"
+        v-model.trim="deckStore.card.question"
       />
-      <small class="p-error" v-if="deckStore.submitted && !deckStore.card.name"
-        >Name is required.</small
+      <small
+        class="p-error"
+        v-if="deckStore.submitted && !deckStore.card.question"
+        >Question is required.</small
       >
     </div>
     <div class="field">
-      <label for="definition">Definition</label>
+      <label for="answer">Answer</label>
       <PTextarea
         cols="20"
-        id="definition"
+        id="answer"
         required="true"
         rows="3"
-        v-model="deckStore.card.definition"
+        v-model="deckStore.card.answer"
       />
     </div>
 
@@ -85,7 +87,7 @@ const saveCard = () => {
 
     <template #footer>
       <PButton
-        v-if="deckStore.card.name.length"
+        v-if="deckStore.card.question.length"
         class="delete-btn"
         label="Delete"
         icon="pi pi-trash"

@@ -52,13 +52,13 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
     </template>
 
     <Column selectionMode="multiple" :exportable="false" />
-    <Column field="name" header="Question" sortable style="min-width: 5rem" />
     <Column
-      field="definition"
-      header="Answer"
+      field="question"
+      header="Question"
       sortable
       style="min-width: 5rem"
     />
+    <Column field="answer" header="Answer" sortable style="min-width: 5rem" />
     <Column
       v-if="smallerMq"
       field="due"

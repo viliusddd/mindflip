@@ -14,13 +14,13 @@ const smallerMq = useMediaQuery('(min-width: 28.5rem)')
 
 const openNew = () => {
   deckStore.card = {
-    definition: '',
+    answer: '',
     difficulty: 0,
     due: new Date(),
     elapsed_days: 0,
     id: createId(),
     lapses: 0,
-    name: '',
+    question: '',
     reps: 0,
     scheduled_days: 0,
     stability: 0,

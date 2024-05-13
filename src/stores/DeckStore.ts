@@ -3,13 +3,13 @@ import {defineStore} from 'pinia'
 import type {Ref, ComputedRef} from 'vue'
 
 export type Card = {
-  definition: string
+  answer: string
   difficulty: number
   due: Date
   elapsed_days: number
   id: string
   lapses: number
-  name: string
+  question: string
   reps: number
   scheduled_days: number
   stability: number
