@@ -84,8 +84,23 @@ const saveCard = () => {
     </div>
 
     <template #footer>
+      <PButton
+        v-if="deckStore.card.name.length"
+        class="delete-btn"
+        label="Delete"
+        icon="pi pi-trash"
+        text
+        @click="deckStore.deleteCardDialog = true"
+        severity="danger"
+      />
       <PButton label="Cancel" icon="pi pi-times" text @click="hideDialog" />
-      <PButton label="Save" icon="pi pi-check" text @click="saveCard" />
+      <PButton label="Save" icon="pi pi-check" @click="saveCard" />
     </template>
   </PDialog>
 </template>
+
+<style scoped>
+.delete-btn {
+  margin-right: auto;
+}
+</style>

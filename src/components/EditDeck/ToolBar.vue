@@ -9,7 +9,8 @@ import type {ParseResult} from 'papaparse'
 
 const deckStore = useDeckStore()
 
-const isBigScreen = useMediaQuery('(min-width: 30.6rem)')
+const biggerMq = useMediaQuery('(min-width: 32rem)')
+const smallerMq = useMediaQuery('(min-width: 28.5rem)')
 
 const openNew = () => {
   deckStore.card = {
@@ -78,11 +79,11 @@ function onUpload(event: FileUploadUploaderEvent) {
 <template>
   <Toolbar class="toolbar">
     <template #start>
-      <div v-if="isBigScreen" class="btns-left">
+      <div class="btns-left">
         <PButton
           @click="openNew"
           icon="pi pi-plus"
-          label="New"
+          :label="biggerMq ? 'New' : null"
           severity="success"
         />
         <PButton
@@ -91,31 +92,14 @@ function onUpload(event: FileUploadUploaderEvent) {
           "
           @click="confirmDeleteSelected"
           icon="pi pi-trash"
-          label="Delete"
+          :label="smallerMq ? 'Delete' : null"
           severity="danger"
-        />
-      </div>
-      <div v-else class="btns-left">
-        <PButton
-          @click="openNew"
-          icon="pi pi-plus"
-          severity="success"
-          v-tooltip.right="'Add new card'"
-        />
-        <PButton
-          :disabled="
-            !deckStore.selectedCards || !deckStore.selectedCards.length
-          "
-          @click="confirmDeleteSelected"
-          icon="pi pi-trash"
-          severity="danger"
-          v-tooltip.bottom="'Delete cards'"
         />
       </div>
     </template>
 
     <template #end>
-      <div v-if="isBigScreen" class="btns-right">
+      <div class="btns-right">
         <FileUpload
           :maxFileSize="1000000"
           @uploader="onUpload"
@@ -125,24 +109,6 @@ function onUpload(event: FileUploadUploaderEvent) {
           customUpload
           label="Import"
           mode="basic"
-        />
-        <PButton
-          label="Export"
-          icon="pi pi-download"
-          severity="help"
-          @click="exportCSV"
-        />
-      </div>
-      <div v-else class="btns-right">
-        <FileUpload
-          :maxFileSize="1000000"
-          @uploader="onUpload"
-          accept=".csv, text/csv"
-          auto
-          customUpload
-          mode="basic"
-          chooseLabel="Import"
-          icon="pi pi-download"
         />
         <PButton
           label="Export"
