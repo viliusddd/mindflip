@@ -25,7 +25,7 @@ const isMeetingRequirements = computed(() => {
   else return true
 })
 
-const icon: Ref<string> = ref(icons[0])
+const icon: Ref<string> = ref(icons[Math.floor(Math.random() * icons.length)])
 
 const id: number = deckStore.newId
 
