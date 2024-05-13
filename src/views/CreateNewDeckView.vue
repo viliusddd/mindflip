@@ -9,14 +9,14 @@ const deckStore = useDeckStore()
 const deckName: Ref<string> = ref('')
 const deckDescription: Ref<string> = ref('')
 
-const icons: string[] = [
-  'android',
-  'reddit',
-  'bitcoin',
-  'vimeo',
-  'slack',
-  'twitch',
-  'prime'
+const icons = [
+  {name: 'android'},
+  {name: 'reddit'},
+  {name: 'bitcoin'},
+  {name: 'vimeo'},
+  {name: 'slack'},
+  {name: 'twitch'},
+  {name: 'prime'}
 ]
 
 const isMeetingRequirements = computed(() => {
@@ -25,7 +25,7 @@ const isMeetingRequirements = computed(() => {
   else return true
 })
 
-const icon: Ref<string> = ref(icons[Math.floor(Math.random() * icons.length)])
+const icon = ref(icons[Math.floor(Math.random() * icons.length)])
 
 const id: number = deckStore.newId
 
@@ -33,7 +33,7 @@ const newDeck: ComputedRef<Deck> = computed(() => {
   return {
     cards: [],
     description: deckDescription.value,
-    icon: icon.value,
+    icon: icon.value.name,
     id,
     isHidden: false,
     name: deckName.value
@@ -53,7 +53,7 @@ function addNewDeck() {
       <InputText
         id="name-field"
         maxlength="50"
-        placeholder="World Capitals"
+        placeholder="Anatomy"
         v-model="deckName"
       />
       <label class="description" for="description-field">Description </label>
@@ -61,17 +61,30 @@ function addNewDeck() {
         @keyup.enter="addNewDeck"
         id="description-field"
         maxlength="200"
-        placeholder="Deck of whole world capitals"
+        placeholder="bones and muscles"
         v-model="deckDescription"
       />
       <label class="icon" for="icon-dropdown">Icon</label>
       <Dropdown
         :options="icons"
-        :placeholder="icons[0]"
         id="icon-dropdown"
         v-model="icon"
         variant="filled"
-      />
+        optionLabel="name"
+      >
+        <template #value="slotProps">
+          <div v-if="slotProps.value" class="dropdown__option">
+            <i :class="`icon-preview pi pi-${slotProps.value.name}`" />
+            <div>{{ slotProps.value.name }}</div>
+          </div>
+        </template>
+        <template #option="slotProps">
+          <div class="dropdown__option">
+            <i :class="`icon-preview pi pi-${slotProps.option.name}`" />
+            <div>{{ slotProps.option.name }}</div>
+          </div>
+        </template>
+      </Dropdown>
       <br />
       <RouterLink
         :class="{disabled: isMeetingRequirements}"
@@ -86,12 +99,19 @@ function addNewDeck() {
           type="submit"
         />
       </RouterLink>
-      <i :class="`icon-preview pi pi-${icon}`"></i>
     </div>
   </div>
 </template>
 
 <style>
+.dropdown__option {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+.dropdown__option > i {
+  font-size: 1.1rem;
+}
 .disabled {
   opacity: 0.5;
   pointer-events: none;
