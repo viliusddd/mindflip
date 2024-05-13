@@ -23,16 +23,16 @@ const showAnswer = ref(false)
 const hotkeysVisible = ref(false)
 
 if (deckStore.dueReview) {
-  cards = deckStore.cardsDue
+  cards = deckStore.cardsDue.slice(0, deckStore.cardsPerReview)
   deckStore.dueReview = false
 } else {
-  cards = deckStore.cards
+  cards = deckStore.cards.slice(0, deckStore.cardsPerReview)
 }
 
 const card = computed(() => cards[cardIndex.value])
 
 const progressBarValue = computed(() => {
-  return (100 / deckStore.cards.length) * cardIndex.value
+  return (100 / cards.length) * cardIndex.value
 })
 
 function goNextCard() {
@@ -55,7 +55,6 @@ const schedulingCards = fsrsInstance.repeat(card.value, new Date())
 function saveCard(rating) {
   const newCardVal = schedulingCards[Rating[rating]].card
   deckStore.addCard(newCardVal)
-  console.log(newCardVal)
 
   goNextCard()
 }

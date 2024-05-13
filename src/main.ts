@@ -16,11 +16,13 @@ import IconField from 'primevue/iconfield'
 import Inplace from 'primevue/inplace'
 import InputIcon from 'primevue/inputicon'
 import InputSwitch from 'primevue/inputswitch'
+import InputNumber from 'primevue/inputnumber'
 import InputText from 'primevue/inputtext'
 import Menu from 'primevue/menu'
 import PrimeVue from 'primevue/config'
 import ProgressBar from 'primevue/progressbar'
 import router from './router'
+import Slider from 'primevue/slider'
 import Tag from 'primevue/tag'
 import Textarea from 'primevue/textarea'
 import Toast from 'primevue/toast'
@@ -42,12 +44,14 @@ app.component('IconField', IconField)
 app.component('Inplace', Inplace)
 app.component('InputIcon', InputIcon)
 app.component('InputSwitch', InputSwitch)
+app.component('InputNumber', InputNumber)
 app.component('InputText', InputText)
 app.component('PButton', Button)
 app.component('PDialog', Dialog)
 app.component('PMenu', Menu)
 app.component('ProgressBar', ProgressBar)
 app.component('PTextarea', Textarea)
+app.component('Slider', Slider)
 app.component('Tag', Tag)
 app.component('Toast', Toast)
 app.component('Toolbar', Toolbar)

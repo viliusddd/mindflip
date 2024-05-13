@@ -2,6 +2,7 @@
 import {useDeckStore} from '@/stores/DeckStore'
 import AppLogo from '@/components/AppLogo.vue'
 import AppNav from '@/components/AppNav.vue'
+import SettingsDialog from '@/components/SettingsDialog.vue'
 
 const deckStore = useDeckStore()
 deckStore.fill()
@@ -22,12 +23,14 @@ deckStore.fill()
             rounded
             v-tooltip.left="'Your profile settings'"
             aria-label="Cancel"
+            @click="deckStore.settingsDialog = true"
           />
         </div>
       </div>
     </header>
     <main class="wrapper">
       <RouterView />
+      <SettingsDialog />
     </main>
   </div>
 </template>
