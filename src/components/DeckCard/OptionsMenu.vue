@@ -18,7 +18,8 @@ const toggleMenu = (evt: Event): void => {
 }
 
 function deleteDeck() {
-  deckStore.decks = deckStore.decks.filter((obj) => obj.id !== props.id)
+  const pos = deckStore.decks.map((dck: Deck) => dck.id).indexOf(props.id)
+  deckStore.decks.splice(pos, 1)
 }
 
 function resetStats() {
@@ -27,23 +28,14 @@ function resetStats() {
   })
 }
 
-function toggleVisibility() {
-  const deck: Deck | undefined = deckStore.decks.find(
-    (obj) => obj.id === props.id
-  )
-  if (deck) deck.isHidden = !deck.isHidden
-}
-
 type MenuMap = {
   quit: () => void
   reset: () => void
-  toggle: () => void
 }
 
 const menuMap: MenuMap = {
   quit: () => deleteDeck(),
-  reset: () => resetStats(),
-  toggle: () => toggleVisibility()
+  reset: () => resetStats()
 }
 </script>
 

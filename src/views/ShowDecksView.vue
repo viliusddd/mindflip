@@ -9,7 +9,7 @@ const deckStore = useDeckStore()
   <p v-if="!deckStore.decks.length" class="nodecks-msg">
     There are no decks to show
   </p>
-  <main v-else v-for="(deck, index) of deckStore.decks" :key="index">
+  <main v-else v-for="deck of deckStore.decks" :key="deck.id">
     <Deck :id="deck.id" />
   </main>
 </template>
