@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {useMediaQuery} from '@vueuse/core'
 import {createId} from './utils'
 import {useDeckStore} from '@/stores/DeckStore'
 import Papa from 'papaparse'
@@ -7,6 +8,8 @@ import type {FileUploadUploaderEvent} from 'primevue/fileupload'
 import type {ParseResult} from 'papaparse'
 
 const deckStore = useDeckStore()
+
+const isBigScreen = useMediaQuery('(min-width: 30.6rem)')
 
 const openNew = () => {
   deckStore.card = {
@@ -75,7 +78,7 @@ function onUpload(event: FileUploadUploaderEvent) {
 <template>
   <Toolbar class="toolbar">
     <template #start>
-      <div class="btns-left">
+      <div v-if="isBigScreen" class="btns-left">
         <PButton
           @click="openNew"
           icon="pi pi-plus"
@@ -92,10 +95,27 @@ function onUpload(event: FileUploadUploaderEvent) {
           severity="danger"
         />
       </div>
+      <div v-else class="btns-left">
+        <PButton
+          @click="openNew"
+          icon="pi pi-plus"
+          severity="success"
+          v-tooltip.right="'Add new card'"
+        />
+        <PButton
+          :disabled="
+            !deckStore.selectedCards || !deckStore.selectedCards.length
+          "
+          @click="confirmDeleteSelected"
+          icon="pi pi-trash"
+          severity="danger"
+          v-tooltip.bottom="'Delete cards'"
+        />
+      </div>
     </template>
 
     <template #end>
-      <div class="btns-right">
+      <div v-if="isBigScreen" class="btns-right">
         <FileUpload
           :maxFileSize="1000000"
           @uploader="onUpload"
@@ -105,6 +125,24 @@ function onUpload(event: FileUploadUploaderEvent) {
           customUpload
           label="Import"
           mode="basic"
+        />
+        <PButton
+          label="Export"
+          icon="pi pi-download"
+          severity="help"
+          @click="exportCSV"
+        />
+      </div>
+      <div v-else class="btns-right">
+        <FileUpload
+          :maxFileSize="1000000"
+          @uploader="onUpload"
+          accept=".csv, text/csv"
+          auto
+          customUpload
+          mode="basic"
+          chooseLabel="Import"
+          icon="pi pi-download"
         />
         <PButton
           label="Export"
