@@ -36,14 +36,10 @@ deckStore.fill()
 .wrapper {
   display: grid;
   grid-template-columns: 1fr min(80ch, 100%) 1fr;
-  margin: 15px 0px;
+  margin: 15px 7px;
 }
 .wrapper > * {
   grid-column: 2;
-}
-.full-bleed {
-  width: 100%;
-  grid-column: 1/4;
 }
 .header {
   display: flex;
@@ -66,7 +62,6 @@ a {
 }
 .settings-button {
   margin: 0 0 0 auto;
-  padding-left: 9px;
 }
 @media (min-width: 40rem) {
   .header__tooltip {
