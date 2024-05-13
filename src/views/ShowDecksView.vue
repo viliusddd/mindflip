@@ -6,7 +6,10 @@ const deckStore = useDeckStore()
 </script>
 
 <template>
-  <main v-for="(deck, index) of deckStore.decks" :key="index">
+  <p v-if="!deckStore.decks.length" class="nodecks-msg">
+    There are no decks to show
+  </p>
+  <main v-else v-for="(deck, index) of deckStore.decks" :key="index">
     <Deck :id="deck.id" />
   </main>
 </template>
@@ -14,5 +17,11 @@ const deckStore = useDeckStore()
 <style scoped>
 main {
   margin: 0 0 0 0;
+}
+.nodecks-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
 }
 </style>
