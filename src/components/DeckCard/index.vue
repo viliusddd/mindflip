@@ -36,7 +36,7 @@ const difficultCardsCount = computed(
         </div>
         <div class="deck__stats">
           <p>
-            <b>{{ progressValue.toFixed(1) }}%</b>
+            <b>{{ progressValue.toFixed(0) }}%</b>
           </p>
           <p>
             <b>{{ cardsLearned }}/{{ deck.cards.length }}</b> items learned
