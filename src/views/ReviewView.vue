@@ -59,11 +59,6 @@ function saveCard(rating) {
   goNextCard()
 }
 
-function markAsKnown() {
-  card.value.state = 2
-  goNextCard()
-}
-
 function markAsDifficult() {
   card.value.difficulty = 10
   goNextCard()
@@ -81,7 +76,6 @@ onKeyUp(['2', 's'], () => saveCard('Hard'))
 onKeyUp(['3', 'd'], () => saveCard('Good'))
 onKeyUp(['4', 'f'], () => saveCard('Easy'))
 onKeyUp('h', () => markAsDifficult())
-onKeyUp('k', () => markAsKnown())
 </script>
 
 <template>
@@ -93,7 +87,6 @@ onKeyUp('k', () => markAsKnown())
         <PButton
           class="header__tooltip"
           icon="pi pi-info-circle"
-          severity="info"
           text
           rounded
           aria-label="Hotkeys info"
@@ -103,7 +96,7 @@ onKeyUp('k', () => markAsKnown())
         <PDialog
           v-model:visible="hotkeysVisible"
           header="Keyboard Shortcuts"
-          :style="{width: '19.4rem'}"
+          :style="{width: '370px'}"
           modal
         >
           <div class="hotkeys">
@@ -133,7 +126,6 @@ onKeyUp('k', () => markAsKnown())
           icon="pi pi-times"
           @click="$router.go(-1)"
           style="font-size: 4rem; margin: 0px"
-          severity="info"
           text
           rounded
           aria-label="Cancel"
@@ -172,15 +164,6 @@ onKeyUp('k', () => markAsKnown())
               @click="markAsDifficult"
               v-tooltip.bottom="'Mark a card as difficult'"
             />
-            <PButton
-              icon="pi pi-ban"
-              rounded
-              text
-              @click="markAsKnown"
-              v-tooltip.bottom="
-                'Mark this card as known and you will not be tested on it again'
-              "
-            />
           </div>
           <div class="difficulty__buttons">
             <PButton
@@ -211,7 +194,6 @@ onKeyUp('k', () => markAsKnown())
         </div>
       </div>
     </div>
-    <footer></footer>
   </div>
 </template>
 
@@ -278,6 +260,7 @@ onKeyUp('k', () => markAsKnown())
 }
 .flashcard__options {
   display: flex;
+  justify-content: center;
   flex-shrink: 0;
   grid-area: options;
 }

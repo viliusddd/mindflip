@@ -95,7 +95,7 @@ const menuMap: MenuMap = {
   </PMenu>
   <PDialog
     :modal="true"
-    :style="{width: '450px'}"
+    :style="{width: '370px'}"
     header="Confirm"
     v-model:visible="deleteDeckDialog"
   >
@@ -125,7 +125,7 @@ const menuMap: MenuMap = {
   </PDialog>
   <PDialog
     :modal="true"
-    :style="{width: '450px'}"
+    :style="{width: '370px'}"
     header="Confirm"
     v-model:visible="resetDeckDialog"
   >

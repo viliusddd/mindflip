@@ -28,7 +28,7 @@ const saveCard = () => {
 <template>
   <PDialog
     :modal="true"
-    :style="{width: '450px'}"
+    :style="{width: '370px'}"
     class="p-fluid"
     header="Card Details"
     v-model:visible="deckStore.cardDialog"

@@ -7,7 +7,7 @@ const deckStore = useDeckStore()
 <template>
   <PDialog
     :modal="true"
-    :style="{width: '450px'}"
+    :style="{width: '370px'}"
     header="Confirm"
     v-model:visible="deckStore.deleteCardDialog"
   >
