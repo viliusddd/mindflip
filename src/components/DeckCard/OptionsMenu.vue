@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {items} from './consts'
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 import {useDeckStore} from '@/stores/DeckStore'
 import type {Card, Deck} from '@/stores/DeckStore'
 import type {OptionsItem} from './consts'
@@ -17,13 +17,24 @@ const toggleMenu = (evt: Event): void => {
   menu.value.toggle(evt)
 }
 
+const deckIndex = computed(() =>
+  deckStore.decks.map((dck: Deck) => dck.id).indexOf(props.id)
+)
+
 function deleteDeck() {
-  const pos = deckStore.decks.map((dck: Deck) => dck.id).indexOf(props.id)
-  deckStore.decks.splice(pos, 1)
+  deckStore.decks.splice(deckIndex.value, 1)
 }
 
 function resetStats() {
-  deckStore.decks[props.id].cards.forEach((card: Card) => {
+  deckStore.decks[deckIndex.value].cards.forEach((card: Card) => {
+    card.state = 0
+    card.difficulty = 0
+    card.due = new Date()
+    card.elapsed_days = 0
+    card.lapses = 0
+    card.reps = 0
+    card.scheduled_days = 0
+    card.stability = 0
     card.state = 0
   })
 }
