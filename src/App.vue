@@ -24,7 +24,7 @@ settingsStore.fill()
             text
             size="large"
             rounded
-            v-tooltip.left="'Your profile settings'"
+            v-tooltip.left="'General settings'"
             aria-label="Cancel"
             @click="deckStore.settingsDialog = true"
           />
