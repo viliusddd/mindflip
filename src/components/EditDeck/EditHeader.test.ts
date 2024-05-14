@@ -1,7 +1,7 @@
 import {mount} from '@vue/test-utils'
-import {test, expect} from 'vitest'
-import EditHeader from './EditHeader.vue'
 import {createPinia, setActivePinia} from 'pinia'
+import {beforeEach, describe, expect, test} from 'vitest'
+import EditHeader from './EditHeader.vue'
 
 describe('EditHeader component', () => {
   beforeEach(() => {
