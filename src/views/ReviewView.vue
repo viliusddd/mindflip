@@ -49,11 +49,11 @@ function goNextCard() {
 const fsrsParams = generatorParameters({enable_fuzz: true})
 const fsrsInstance = fsrs(fsrsParams)
 
-const schedulingCards = fsrsInstance.repeat(card.value, new Date())
+const schedulingCards = (crd: Card) => fsrsInstance.repeat(crd, new Date())
 
-// function saveCard(evt: PointerEvent) {
 function saveCard(rating) {
-  const newCardVal = schedulingCards[Rating[rating]].card
+  const cardLog = schedulingCards(card.value)
+  const newCardVal: Card = cardLog[Rating[rating]].card
   deckStore.addCard(newCardVal)
 
   goNextCard()
