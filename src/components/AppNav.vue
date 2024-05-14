@@ -1,9 +1,9 @@
 <template>
   <div class="nav-wrapper">
-    <RouterLink to="/">
+    <RouterLink class="router-lnk" to="/">
       <PButton label="decks" text />
     </RouterLink>
-    <RouterLink to="/create">
+    <RouterLink class="router-lnk" to="/create">
       <PButton label="create a deck" text />
     </RouterLink>
   </div>
@@ -15,16 +15,16 @@
   align-items: center;
   column-gap: 10px;
 }
-
 * {
   font-size: 1.2rem;
   font-weight: 100;
 }
 .p-button {
   color: white;
-  border: 0;
   padding: 0;
-  margin: 0;
+}
+.router-lnk {
+  border-bottom: 3px solid transparent;
 }
 .p-button:hover {
   color: rgb(209, 209, 209);
