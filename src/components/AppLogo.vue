@@ -1,5 +1,9 @@
+<script setup lang="ts">
+import {ref} from 'vue'
+</script>
+
 <template>
-  <PButton class="logo-container flip-horizontal-bottom" text>
+  <PButton class="logo-container flip" text>
     <span class="first-word">Mind</span>
     <span cl class="second-word">Flip</span>
   </PButton>
@@ -21,16 +25,14 @@ span {
   font-weight: 300;
 }
 
-.flip-horizontal-bottom:hover {
-  animation: flip-horizontal-bottom 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955)
-    both;
+.flip:hover {
+  animation: flip-bottom 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
 }
-.flip-horizontal-bottom:not(:hover) {
-  animation: flip-horizontal-top 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955)
-    reverse both;
+.flip:not(:hover) {
+  animation: flip-top 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955) reverse both;
 }
 
-@keyframes flip-horizontal-bottom {
+@keyframes flip-bottom {
   0% {
     transform: rotateX(0);
   }
@@ -39,7 +41,7 @@ span {
   }
 }
 
-@keyframes flip-horizontal-top {
+@keyframes flip-top {
   0% {
     transform: rotateX(0);
   }
