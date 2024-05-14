@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {items} from './consts'
 import {computed, ref} from 'vue'
+import {items} from './consts'
 import {useDeckStore} from '@/stores/DeckStore'
 import type {Card, Deck} from '@/stores/DeckStore'
 import type {OptionsItem} from './consts'
@@ -20,9 +20,14 @@ const toggleMenu = (evt: Event): void => {
 const deckIndex = computed(() =>
   deckStore.decks.map((dck: Deck) => dck.id).indexOf(props.id)
 )
+const deleteDeckDialog = ref(false)
 
 function deleteDeck() {
   deckStore.decks.splice(deckIndex.value, 1)
+}
+
+function confirmDeleteDeck() {
+  deleteDeckDialog.value = true
 }
 
 function resetStats() {
@@ -45,7 +50,7 @@ type MenuMap = {
 }
 
 const menuMap: MenuMap = {
-  quit: () => deleteDeck(),
+  quit: () => confirmDeleteDeck(),
   reset: () => resetStats()
 }
 </script>
@@ -82,6 +87,30 @@ const menuMap: MenuMap = {
       </div>
     </template>
   </PMenu>
+  <PDialog
+    :modal="true"
+    :style="{width: '450px'}"
+    header="Confirm"
+    v-model:visible="deleteDeckDialog"
+  >
+    <div class="confirmation-content">
+      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+      <span
+        >Are you sure you want to delete
+        <b>{{ deckStore.decks[deckIndex].name }}</b
+        >?</span
+      >
+    </div>
+    <template #footer>
+      <PButton
+        @click="deleteDeckDialog = false"
+        icon="pi pi-times"
+        label="No"
+        text
+      />
+      <PButton @click="deleteDeck" icon="pi pi-check" label="Yes" text />
+    </template>
+  </PDialog>
 </template>
 
 <style scoped>

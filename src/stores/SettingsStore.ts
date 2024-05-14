@@ -18,7 +18,6 @@ export const useSettingsStore = defineStore('SettingsStore', () => {
     const storageVal: string | null = localStorage.getItem(key)
     if (storageVal) {
       cardsPerReview.value = JSON.parse(storageVal)
-      console.log(cardsPerReview.value)
     } else {
       localStorage.setItem(key, cardsPerReview.value.toString())
     }
