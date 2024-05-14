@@ -3,6 +3,7 @@ import {computed, ref} from 'vue'
 import {fsrs, generatorParameters, Rating} from 'ts-fsrs'
 import {onKeyUp} from '@vueuse/core'
 import {useDeckStore} from '@/stores/DeckStore'
+import {useSettingsStore} from '@/stores/SettingsStore'
 import {useRouter} from 'vue-router'
 import type {Card} from '@/stores/DeckStore'
 
@@ -13,6 +14,7 @@ const props = defineProps<{
 }>()
 
 const deckStore = useDeckStore()
+const SettingsStore = useSettingsStore()
 
 deckStore.deckId = props.id
 
@@ -23,10 +25,10 @@ const showAnswer = ref(false)
 const hotkeysVisible = ref(false)
 
 if (deckStore.dueReview) {
-  cards = deckStore.cardsDue.slice(0, deckStore.cardsPerReview)
+  cards = deckStore.cardsDue.slice(0, SettingsStore.cardsPerReview)
   deckStore.dueReview = false
 } else {
-  cards = deckStore.cards.slice(0, deckStore.cardsPerReview)
+  cards = deckStore.cards.slice(0, SettingsStore.cardsPerReview)
 }
 
 const card = computed(() => cards[cardIndex.value])
@@ -145,7 +147,7 @@ onKeyUp('h', () => markAsDifficult())
             class="flashcard__position"
             v-tooltip.left="'The position of current card in the deck.'"
           >
-            {{ cardIndex + 1 }}
+            {{ cardIndex + 1 }}/{{ cards.length }}
           </div>
           <h1 class="flashcard__question">{{ card.question }}</h1>
           <div class="flashcard__answer">
@@ -162,7 +164,7 @@ onKeyUp('h', () => markAsDifficult())
               rounded
               text
               @click="markAsDifficult"
-              v-tooltip.bottom="'Mark a card as difficult'"
+              v-tooltip.bottom="'Mark this card as difficult'"
             />
           </div>
           <div class="difficulty__buttons">

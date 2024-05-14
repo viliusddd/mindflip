@@ -123,7 +123,6 @@ export const useDeckStore = defineStore('DeckStore', () => {
 
   const dueReview = ref(false)
   const settingsDialog = ref(false)
-  const cardsPerReview: Ref<number> = ref(10)
 
   return {
     addCard,
@@ -133,7 +132,6 @@ export const useDeckStore = defineStore('DeckStore', () => {
     cardDialog,
     cards,
     cardsDue,
-    cardsPerReview,
     dataTable,
     deck,
     deckId,
