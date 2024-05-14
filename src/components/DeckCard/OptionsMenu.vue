@@ -21,6 +21,7 @@ const deckIndex = computed(() =>
   deckStore.decks.map((dck: Deck) => dck.id).indexOf(props.id)
 )
 const deleteDeckDialog = ref(false)
+const resetDeckDialog = ref(false)
 
 function deleteDeck() {
   deckStore.decks.splice(deckIndex.value, 1)
@@ -30,7 +31,12 @@ function confirmDeleteDeck() {
   deleteDeckDialog.value = true
 }
 
+function confirmResetDeck() {
+  resetDeckDialog.value = true
+}
+
 function resetStats() {
+  resetDeckDialog.value = false
   deckStore.decks[deckIndex.value].cards.forEach((card: Card) => {
     card.state = 0
     card.difficulty = 0
@@ -51,7 +57,7 @@ type MenuMap = {
 
 const menuMap: MenuMap = {
   quit: () => confirmDeleteDeck(),
-  reset: () => resetStats()
+  reset: () => confirmResetDeck()
 }
 </script>
 
@@ -94,12 +100,12 @@ const menuMap: MenuMap = {
     v-model:visible="deleteDeckDialog"
   >
     <div class="confirmation-content">
-      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-      <span
-        >Are you sure you want to delete
-        <b>{{ deckStore.decks[deckIndex].name }}</b
-        >?</span
-      >
+      <i class="pi pi-exclamation-triangle" style="font-size: 2rem" />
+      <p>
+        Are you sure you want to delete &#32;
+        <b>{{ deckStore.decks[deckIndex].name }}</b>
+        ?
+      </p>
     </div>
     <template #footer>
       <PButton
@@ -108,7 +114,44 @@ const menuMap: MenuMap = {
         label="No"
         text
       />
-      <PButton @click="deleteDeck" icon="pi pi-check" label="Yes" text />
+      <PButton
+        @click="deleteDeck"
+        icon="pi pi-check"
+        label="Yes"
+        severity="danger"
+        text
+      />
+    </template>
+  </PDialog>
+  <PDialog
+    class="dialog"
+    :modal="true"
+    :style="{width: '450px'}"
+    header="Confirm"
+    v-model:visible="resetDeckDialog"
+  >
+    <div class="confirmation-content">
+      <i class="pi pi-exclamation-triangle" />
+      <p>
+        Are you sure you want to reset &#32;
+        <b>{{ deckStore.decks[deckIndex].name }}</b>
+        ?
+      </p>
+    </div>
+    <template #footer>
+      <PButton
+        @click="resetDeckDialog = false"
+        icon="pi pi-times"
+        label="No"
+        text
+      />
+      <PButton
+        @click="resetStats"
+        severity="danger"
+        icon="pi pi-check"
+        label="Yes"
+        text
+      />
     </template>
   </PDialog>
 </template>
@@ -117,5 +160,14 @@ const menuMap: MenuMap = {
 PButton {
   margin: 0 0 0 auto;
   height: 10px;
+}
+.confirmation-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.confirmation-content i {
+  font-size: 2rem;
+  margin-right: 10px;
 }
 </style>
