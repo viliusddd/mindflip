@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import {useDeckStore} from '@/stores/DeckStore'
+import {useSettingsStore} from '@/stores/SettingsStore'
 import AppLogo from '@/components/AppLogo.vue'
 import AppNav from '@/components/AppNav.vue'
 import SettingsDialog from '@/components/SettingsDialog.vue'
 
 const deckStore = useDeckStore()
+const settingsStore = useSettingsStore()
 deckStore.fill()
+settingsStore.fill()
 </script>
 
 <template>

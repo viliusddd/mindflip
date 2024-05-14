@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import {useDeckStore} from '@/stores/DeckStore'
+import {useSettingsStore} from '@/stores/SettingsStore'
 
 const deckStore = useDeckStore()
+const settingsStore = useSettingsStore()
 </script>
 
 <template>
@@ -12,10 +14,10 @@ const deckStore = useDeckStore()
     v-model:visible="deckStore.settingsDialog"
   >
     <div class="cards-number">
-      <label for="num-per-review">Number or cards per review:</label>
+      <label for="num-per-review">Number of cards per review:</label>
       <InputNumber
         class="form-control"
-        v-model="deckStore.cardsPerReview"
+        v-model="settingsStore.cardsPerReview"
         inputId="num-per-review"
         mode="decimal"
         showButtons
