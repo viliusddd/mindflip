@@ -12,11 +12,11 @@ const deckStore = useDeckStore()
     v-model:visible="deckStore.deleteCardDialog"
   >
     <div class="confirmation-content">
-      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-      <span v-if="deckStore.card"
-        >Are you sure you want to delete <b>{{ deckStore.card.question }}</b
-        >?</span
-      >
+      <i class="pi pi-exclamation-triangle" />
+      <p v-if="deckStore.card">
+        Are you sure you want to delete&#32;<b>{{ deckStore.card.question }}</b
+        >?
+      </p>
     </div>
     <template #footer>
       <PButton
@@ -27,6 +27,7 @@ const deckStore = useDeckStore()
       />
       <PButton
         @click="deckStore.deleteCard"
+        severity="danger"
         icon="pi pi-check"
         label="Yes"
         text
@@ -34,3 +35,18 @@ const deckStore = useDeckStore()
     </template>
   </PDialog>
 </template>
+
+<style scoped>
+.confirmation-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.confirmation-content i {
+  font-size: 2rem;
+  margin-right: 10px;
+}
+.confirmation-content p {
+  margin: 0;
+}
+</style>

@@ -124,7 +124,6 @@ const menuMap: MenuMap = {
     </template>
   </PDialog>
   <PDialog
-    class="dialog"
     :modal="true"
     :style="{width: '450px'}"
     header="Confirm"
@@ -133,7 +132,7 @@ const menuMap: MenuMap = {
     <div class="confirmation-content">
       <i class="pi pi-exclamation-triangle" />
       <p>
-        Are you sure you want to reset &#32;
+        Are you sure you want to reset&#32;
         <b>{{ deckStore.decks[deckIndex].name }}</b>
         ?
       </p>
@@ -169,5 +168,8 @@ PButton {
 .confirmation-content i {
   font-size: 2rem;
   margin-right: 10px;
+}
+.confirmation-content p {
+  margin: 0;
 }
 </style>

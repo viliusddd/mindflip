@@ -13,9 +13,7 @@ const deckStore = useDeckStore()
   >
     <div class="confirmation-content">
       <i class="pi pi-exclamation-triangle" style="font-size: 2rem" />
-      <span v-if="deckStore.card"
-        >Are you sure you want to delete the selected cards?</span
-      >
+      <p>Are you sure you want to delete the selected cards?</p>
     </div>
     <template #footer>
       <PButton
@@ -27,9 +25,25 @@ const deckStore = useDeckStore()
       <PButton
         @click="deckStore.deleteSelectedCards"
         icon="pi pi-check"
+        severity="danger"
         label="Yes"
         text
       />
     </template>
   </PDialog>
 </template>
+
+<style scoped>
+.confirmation-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.confirmation-content i {
+  font-size: 2rem;
+  margin-right: 10px;
+}
+.confirmation-content p {
+  margin: 0;
+}
+</style>
