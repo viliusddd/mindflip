@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import {ref} from 'vue'
-</script>
-
 <template>
   <PButton class="logo-container flip" text>
     <span class="first-word">Mind</span>
