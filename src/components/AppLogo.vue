@@ -25,7 +25,8 @@ span {
   font-weight: 300;
 }
 
-.flip:hover {
+.flip:hover .first-word,
+.flip:hover .second-word {
   animation: flip-bottom 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
 }
 .flip:not(:hover) {
