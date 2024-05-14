@@ -35,7 +35,6 @@ const newDeck: ComputedRef<Deck> = computed(() => {
     description: deckDescription.value,
     icon: icon.value.name,
     id,
-    isHidden: false,
     name: deckName.value
   }
 })

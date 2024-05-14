@@ -22,7 +22,6 @@ export type Deck = {
   description: string
   icon: string
   id: number
-  isHidden: boolean
   name: string
 }
 
