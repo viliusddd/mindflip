@@ -14,7 +14,6 @@ export type Card = {
   scheduled_days: number
   stability: number
   state: number
-  status: string
 }
 
 export type Deck = {

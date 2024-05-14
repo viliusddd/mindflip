@@ -24,7 +24,7 @@ function deleteDeck() {
 
 function resetStats() {
   deckStore.decks[props.id].cards.forEach((card: Card) => {
-    card.status = 'new'
+    card.state = 0
   })
 }
 

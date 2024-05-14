@@ -24,8 +24,7 @@ const openNew = () => {
     reps: 0,
     scheduled_days: 0,
     stability: 0,
-    state: 0,
-    status: 'new'
+    state: 0
   }
   deckStore.cardDialog = true
   deckStore.submitted = false
@@ -63,7 +62,6 @@ function onUpload(event: FileUploadUploaderEvent) {
           if (!crd.scheduled_days) crd.scheduled_days = 0
           if (!crd.stability) crd.stability = 0
           if (!crd.state) crd.state = 0
-          if (!crd.status) crd.status = 'new'
           return crd
         })
 
