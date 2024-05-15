@@ -1,6 +1,6 @@
 # MindFlip
 
-<img style="float: right;" width='200px' src="./screenshots/decks.png">
+<img align=right width='200px' src="./screenshots/decks.png">
 
 Streamline your learning with our text-only flashcards app. Effortlessly create, organize, and study with simple, distraction-free cards. Perfect for focusing on the essentials and boosting your knowledge efficiently.
 
