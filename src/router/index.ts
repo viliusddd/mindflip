@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import HomeView from '@/views/ShowDecksView.vue'
+import HomeView from '@/views/ShowDecksView/ShowDecksView.vue'
 
 const routes = [
   {
@@ -24,7 +24,7 @@ const routes = [
   {
     path: '/deck/:id/edit',
     name: 'EditDeck',
-    component: () => import('@/components/EditDeck/index.vue'),
+    component: () => import('@/views/EditDeckView/EditDeckView.vue'),
     props: (route: any) => ({id: parseInt(route.params.id)})
   }
 ]

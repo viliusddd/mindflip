@@ -1,6 +1,6 @@
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 import {createPinia, setActivePinia} from 'pinia'
-import {useSettingsStore} from './SettingsStore'
+import {useSettingsStore} from '@/stores/SettingsStore'
 
 const key = 'settings'
 

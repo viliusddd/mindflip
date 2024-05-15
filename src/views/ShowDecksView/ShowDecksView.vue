@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useDeckStore} from '@/stores/DeckStore'
-import Deck from '@/components/DeckCard/index.vue'
+import Deck from '@/views/ShowDecksView/DeckCard/DeckCard.vue'
 
 const deckStore = useDeckStore()
 </script>
