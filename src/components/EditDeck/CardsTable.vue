@@ -65,6 +65,7 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
       header="Due"
       sortable
       style="min-width: 7rem; width: 10rem"
+      :exportable="false"
     >
       <template #body="slotProps">
         {{
@@ -75,7 +76,13 @@ watch(dataTable, () => (deckStore.dataTable = dataTable.value))
         }}
       </template>
     </Column>
-    <Column v-if="biggerMq" field="state" header="State" sortable>
+    <Column
+      v-if="biggerMq"
+      field="state"
+      header="State"
+      sortable
+      :exportable="false"
+    >
       <template #body="slotProps">
         <Tag
           :value="State[slotProps.data.state]"
