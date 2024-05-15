@@ -14,11 +14,11 @@ Streamline your learning with flashcards app. Effortlessly create, organize, and
 > Optionally check-out `screenshots/` on repo for quick preview of the app.
 
 ### Used technologies
-![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=flat&logo=vuedotjs)
-![TypeScript](https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat)
-![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat&logo=vite&logoColor=white)
-![Vitest](https://img.shields.io/badge/-Vitest-6E9F18?style=flat&logo=vitest&logoColor=white)
-![Playwright](https://img.shields.io/badge/-Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
+[<img src="https://img.shields.io/badge/Vue.js-%2335495e.svg?style=flat&logo=vuedotjs">](https://vuejs.org/)
+[<img src="https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat">](https://www.typescriptlang.org/)
+[<img src="https://img.shields.io/badge/-Vite-646CFF?style=flat&logo=vite&logoColor=white">](https://vitejs.dev/)
+[<img src="https://img.shields.io/badge/-Vitest-6E9F18?style=flat&logo=vitest&logoColor=white">](https://vitest.dev/)
+[<img src="https://img.shields.io/badge/-Playwright-2EAD33?style=flat&logo=playwright&logoColor=white">](https://playwright.dev/)
 
 ## Project Setup
 
