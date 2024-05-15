@@ -12,11 +12,20 @@ Streamline your learning with flashcards app. Effortlessly create, organize, and
 2. In the newly opened page - press `Import` and import one of the `.CSV` files from the project `examples` directory. It will populate current deck with data.
 3. To start reviewing flashcards - go back to `decks` and press `Review` on your deck.
 > Optionally check-out `screenshots/` on repo for quick preview of the app.
+
+### Used technologies
+![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=flat&logo=vuedotjs)
+![TypeScript](https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat)
+![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![Vitest](https://img.shields.io/badge/-Vitest-6E9F18?style=flat&logo=vitest&logoColor=white)
+![Playwright](https://img.shields.io/badge/-Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
+
 ## Project Setup
 
 ```sh
 npm install
 ```
+
 
 ### Compile and Hot-Reload for Development
 
