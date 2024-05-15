@@ -1,4 +1,4 @@
-[![GH Pages Deployment](https://github.com/viliusddd/mindflip/actions/workflows/deploy.yaml/badge.svg)](https://github.com/viliusddd/mindflip/actions/workflows/deploy.yaml)
+[![GH Pages Deployment & tests ](https://github.com/viliusddd/mindflip/actions/workflows/deploy.yaml/badge.svg)](https://github.com/viliusddd/mindflip/actions/workflows/deploy.yaml)
 
 # MindFlip
 
@@ -11,7 +11,7 @@ Streamline your learning with our text-only flashcards app. Effortlessly create,
 1. Create a new deck going to `create a deck`, fill all fields and press `Create Deck`
 2. In the newly opened page - press `Import` and import one of the `.CSV` files from the project `examples` directory. It will populate current deck with data.
 3. To start reviewing flashcards - go back to `decks` and press `Review` on your deck.
-
+> Optionally check-out `screenshots/` on repo for quick preview of the app.
 ## Project Setup
 
 ```sh
