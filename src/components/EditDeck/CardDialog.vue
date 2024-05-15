@@ -34,7 +34,7 @@ const saveCard = () => {
     v-model:visible="deckStore.cardDialog"
   >
     <div class="field">
-      <label for="name">Name</label>
+      <label for="name">Question</label>
       <InputText
         :invalid="deckStore.submitted && !deckStore.card.question"
         autofocus
