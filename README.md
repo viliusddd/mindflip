@@ -1,3 +1,5 @@
+[![GH Pages Deployment](https://github.com/viliusddd/mindflip/actions/workflows/deploy.yaml/badge.svg)](https://github.com/viliusddd/mindflip/actions/workflows/deploy.yaml)
+
 # MindFlip
 
 <img align=right width='200px' src="./screenshots/decks.png">
