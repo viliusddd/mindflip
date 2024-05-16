@@ -81,7 +81,6 @@ onKeyUp('h', () => markAsDifficult())
 </script>
 
 <template>
-  <!-- <pre>{{ $route }}</pre> -->
   <div class="container">
     <header class="header">
       <div class="header__container">

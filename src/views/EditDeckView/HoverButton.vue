@@ -72,7 +72,6 @@ const vFocus = {
   display: flex;
 }
 .icon {
-  /* background: transparent; */
   cursor: pointer;
   outline: 0;
   border: 0;
