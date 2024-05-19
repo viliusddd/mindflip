@@ -13,7 +13,7 @@ Streamline your learning with flashcards app. Effortlessly create, organize, and
 3. To start reviewing flashcards - go back to `decks` and press `Review` on your deck.
 > Optionally check-out `screenshots/` on repo for quick preview of the app.
 
-### Used technologies
+### Tech Stack
 [<img src="https://img.shields.io/badge/Vue.js-%2335495e.svg?style=flat&logo=vuedotjs">](https://vuejs.org/)
 [<img src="https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat">](https://www.typescriptlang.org/)
 [<img src="https://img.shields.io/badge/-Vite-646CFF?style=flat&logo=vite&logoColor=white">](https://vitejs.dev/)
