@@ -36,6 +36,11 @@ Level up your brain game with flashcards, powered by the snazzy new FSRS algorit
 
 ## Screenshots
 
+<details open>
+    <summary>page responsivness</summary>
+    <img width='75%' src="./screenshots/edit.gif">
+</details>
+
 <details>
     <summary>create new deck page</summary>
     <img width='50%' src="./screenshots/create-new-deck.png">
@@ -64,11 +69,6 @@ Level up your brain game with flashcards, powered by the snazzy new FSRS algorit
 <details>
     <summary>edit deck title or description</summary>
     <img width='50%' src="./screenshots/edit-title.png">
-</details>
-
-<details>
-    <summary>edit page responsivness</summary>
-    <img width='75%' src="./screenshots/edit.gif">
 </details>
 
 <details>
