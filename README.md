@@ -28,11 +28,15 @@ Level up your brain game with flashcards, powered by the snazzy new FSRS algorit
 
 ## Tech Stack
 
-[<img src="https://img.shields.io/badge/Vue.js-%2335495e.svg?style=flat&logo=vuedotjs">](https://vuejs.org/)
-[<img src="https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat">](https://www.typescriptlang.org/)
-[<img src="https://img.shields.io/badge/-Vite-646CFF?style=flat&logo=vite&logoColor=white">](https://vitejs.dev/)
-[<img src="https://img.shields.io/badge/-Vitest-6E9F18?style=flat&logo=vitest&logoColor=white">](https://vitest.dev/)
-[<img src="https://img.shields.io/badge/-Playwright-2EAD33?style=flat&logo=playwright&logoColor=white">](https://playwright.dev/)
+![TypeScript](https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat)
+![Vue.js](https://img.shields.io/badge/Vue.js-%2335495e.svg?style=flat&logo=vuedotjs)
+![ESLint](https://img.shields.io/badge/ESlint-4B32C3?style=flat&logo=eslint&logoColor=white)
+![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat&logo=vite&logoColor=FFD12A)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-%232671E5.svg?style=flat&logo=githubactions&logoColor=white)
+![Vitest](https://img.shields.io/badge/-Vitest-6E9F18?style=flat&logo=vitest&logoColor=FCC72B)
+![Playwright](https://img.shields.io/badge/-Playwright-2EAD33?style=flat&logo=playwright&logoColor=D65348)
+![PrimeVue](https://img.shields.io/badge/PrimeVue-fff.svg?style=flat&logoColor=white&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNSIgaGVpZ2h0PSI0MCIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iIzQxQjg4MyIgZD0ibTI1LjYgMTgtMi43LS42IDIgM3Y5LjRsNy4zLTZWMTMuNWwtMy4zIDEuMi0zLjMgMy4zWk04LjcgMThsMi43LS42LTIgM3Y5LjRsLTcuMy02VjEzLjVsMy4zIDEuMkw4LjcgMThaIi8+PHBhdGggZmlsbD0iIzQxQjg4MyIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJtMTAuMiAyMSAyLjQtMy42IDEuNSAxaDZsMS42LTEgMi40IDMuN3YxMy41bC0xLjggMi43LTIuMSAyLjFoLTZMMTIgMzcuM2wtMS44LTIuN1YyMVoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjxwYXRoIGZpbGw9IiM0MUI4ODMiIGQ9Im0yNSAzNS41IDMuOS00di0zLjhsLTQgMy4zdjQuNVpNOS4zIDM1LjVsLTMuOS00di0zLjhsNCAzLjN2NC41WiIvPjxwYXRoIGZpbGw9IiM0NTVDNzEiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTIxIDBoLS44djUuOGwxLjYtNC0uNy0xLjhabS0xLjQgNy4yLS42LjNWMGgtMS4ydjExLjZsMS44LTQuNFptLTEuOCA3IDQuNi0xMS4xIDEgMi42TDIwIDE3LjFoLTIuMXYtMi45Wm0tMS4zLTIuNVYwaC0xLjJ2Ny41bC0uNS0uMiAxLjcgNC40Wm0tMi40LTYuMlYwaC0uOWwtLjYgMS41IDEuNSA0Wm0tMi0yLjcgNC40IDExLjZ2Mi43aC0xLjhMMTAuOCA1LjcgMTIgMi44WiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PHBhdGggZmlsbD0iIzQxQjg4MyIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJtMS44IDEyLjMgMTMgNC44aC4yTDExLjEgNS43IDAgNC44bDEuOCA3LjVabTMxIDAtMTMgNC44aC0uMmwzLjYtMTEuNCAxMS40LS45LTEuOCA3LjVaIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz48cGF0aCBmaWxsPSIjNDU1QzcxIiBkPSJtMjQgNC44IDYuNC0uNkwyNi4yIDBIMjJsMiA0LjhaTTEwLjIgNC44IDQgNC4yIDguMSAwaDQuMmwtMiA0LjhaTTQuNyA1LjJsNi41LjUgMy45IDExLjRoLS40bC00LjItMS41TDQuNyA1LjJaTTI5LjggNS4ybC02LjcuNS0zLjcgMTEuNGguNWwzLjktMS40IDYtMTAuNVpNMTIuMSAxOC4ybC41LS44IDEuNy44aDZsMS4zLS44LjYuOC01IDguNi01LjEtOC42WiIvPjxwYXRoIGZpbGw9IiM0MUI4ODMiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0ibTEyIDAgNS4xIDEzLjJMMjIuNiAwSDEyWiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PC9zdmc+)
+![Github Pages](https://img.shields.io/badge/GitHub%20Pages-121013?style=flat&logo=github&logoColor=white)
 
 ## Screenshots
 
